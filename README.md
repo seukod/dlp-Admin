@@ -7,6 +7,4 @@
 |crear repositorio para el proyecto|FC,ML|terminada|
 |confeccionar mockup de página principal de catalogo|?|en proceso|
 ||?|-|
-uwu
-
 |desarrollar prototipo semifuncional|?|-|
