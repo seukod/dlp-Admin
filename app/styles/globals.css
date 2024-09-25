@@ -1,0 +1,54 @@
+div {
+    padding: 10px;
+}
+h1 {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    color: #ffffff;
+    font-size: 2em;
+    text-align: center;
+}
+
+.contenedor {
+    margin: 0;
+    text-align: left;
+    border: 1px solid #000000;
+    background-color: hsl(121, 95%, 48%);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.cabecera {
+
+    background-color: #000000;
+}
+.contenido {
+    display: flex;
+}
+.contenido-izquierdo, .contenido-derecho {
+    flex: 1;
+}
+.numero {
+    font-size: 4em;
+}
+.ramo {
+    margin: 0;  
+    padding: 10px;
+    font-size: 1.2em;
+    background-color: #bb00ff;
+    border: 1px solid #999999;
+    display: flex;
+    flex-direction: row;
+}
+.impar {
+    background-color: #ffcc00;
+}
+.parte1 {
+    flex: 3;
+}
+.parte2 {
+    flex: 2;
+}
+.critico {
+    color: red;
+    font-weight: bold;
+}

@@ -1,0 +1,26 @@
+{
+    "pageTitle": "Mis Pruebas",
+    "tests": [
+      {
+        "subjectId": "BAIN069-14",
+        "subjectName": "Química para Ingeniería",
+        "testDate": "2024-08-31 17:30:00"
+      },
+      {
+        "subjectId": "BAIN065-14",
+        "subjectName": "Álgebra para Ingeniería",
+        "testDate": "2024-09-12 17:30:00"
+      },
+      {
+        "subjectId": "BAIN067-14",
+        "subjectName": "Geometría para Ingeniería",
+        "testDate": "2024-09-08 17:30:00"
+      },
+      {
+        "subjectId": "BAIN073-14",
+        "subjectName": "Álgebra Lineal para Ingeniería",
+        "testDate": "2024-09-13 17:30:00"
+      }
+    ]
+  }
+ 
