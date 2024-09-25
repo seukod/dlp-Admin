@@ -8,3 +8,4 @@
 |confeccionar mockup de página principal de catalogo|?|en proceso|
 ||?|-|
 |desarrollar prototipo semifuncional|?|-|
+aa
