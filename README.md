@@ -17,12 +17,12 @@
 
 | ID       | TÍTULO           | ESTADO     |
 |----------|------------------|------------|
-| 1011001  | /Titulo_Generico/ | Prestado   |
+| 1011001  | /Titulo_Generico/ | /Prestado/   |
 | ...      | ...              | ...        |
-
-- **Rojo**: Prestado
-- **Verde**: Disponible
-- **Amarillo**: Extraviado o Irregular
+- **Botones**: Dentro de la tabla los / " " / elementos redireccionan a la Pestaña 2 y 3 respectivamente
+  - **Rojo**: Prestado
+  - **Verde**: Disponible
+  - **Amarillo**: Extraviado o Irregular
 
 ### Pestaña 2: Detalles del Libro
 
