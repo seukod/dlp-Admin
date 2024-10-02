@@ -62,7 +62,7 @@ export default function Home() {
   return (
     <>
       <LeftDrawer />
-      <h1>CATALOGO LIBROS</h1>
+      <h1>PRESTAMOS</h1>
       
       <div className='tabla'>
         <Button onClick={toggleModoEdicion}>
