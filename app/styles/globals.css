@@ -1,54 +1,48 @@
-div {
-    padding: 10px;
+.tabla{
+    padding: 2em;
 }
+
 h1 {
-    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-    color: #ffffff;
-    font-size: 2em;
-    text-align: center;
+    text-align: center;             /* Centrar el texto */
+    font-size: 3em;                /* Aumentar el tamaño de la fuente */
+    font-weight: bold;             /* Hacer la fuente más gruesa */
+    color: #333;                   /* Cambiar el color del texto */
+    margin: 20px 0;                /* Espaciado superior e inferior */
+    text-transform: uppercase;      /* Convertir el texto a mayúsculas (opcional) */
+    letter-spacing: 2px;           /* Aumentar el espaciado entre letras (opcional) */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil (opcional) */
+    font-family: 'Arial', sans-serif; /* Cambiar la fuente (opcional) */
 }
 
-.contenedor {
-    margin: 0;
-    text-align: left;
-    border: 1px solid #000000;
-    background-color: hsl(121, 95%, 48%);
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-}
-.cabecera {
 
-    background-color: #000000;
+table {
+    border-collapse: collapse; /* Esto asegura que los bordes de las celdas y la tabla no se dupliquen */
+    width: 100%;
+    padding: 2em;
 }
-.contenido {
-    display: flex;
+  
+th, td { /*th = table header, td = table data*/
+    border: 20px; /* Borde para las celdas */
+    padding: 8px; /* Espacio interno en las celdas */
+    text-align: left; /* Alineación del texto */
+    border-left-color: black;
+    border-right-color: black;
+    border-color: black;
 }
-.contenido-izquierdo, .contenido-derecho {
-    flex: 1;
+  
+/* Para darle color a los títulos de las columnas */
+th {
+    background-color: rgb(248, 161, 161); /* Color de fondo verde para los encabezados */
+    color: rgb(0, 0, 0); /* Color del texto negro */
 }
-.numero {
-    font-size: 4em;
+
+.esqizq{
+    border-top-left-radius: 20px;
 }
-.ramo {
-    margin: 0;  
-    padding: 10px;
-    font-size: 1.2em;
-    background-color: #bb00ff;
-    border: 1px solid #999999;
-    display: flex;
-    flex-direction: row;
+.esqder{
+    border-top-right-radius: 20px;
 }
-.impar {
-    background-color: #ffcc00;
-}
-.parte1 {
-    flex: 3;
-}
-.parte2 {
-    flex: 2;
-}
-.critico {
-    color: red;
-    font-weight: bold;
+.container {
+    position: relative; /* Hace que el contenedor sea el referente para el posicionamiento absoluto */
+    height: 100vh; /* Ajusta la altura de la página */
 }
