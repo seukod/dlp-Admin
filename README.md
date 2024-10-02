@@ -47,3 +47,18 @@
 | **FechaPréstamo** | "Fecha de retiro del libro"        |
 | **FechaDevolución** | "Última fecha de devolución"     |
 | **Estado**        | "Estado actual del libro: En biblioteca, prestado, irregular" |
+
+
+## Retroalimentacion de Clase 02/10/2024
+
+-**Comentarios**: No hemos definidos el historial de actividades, devido a la no definicion de los logs.
+
+Acomodar los campos de la pestaña Prestamo, ademas los siguientes casos.
+Ordenar por fecha de los prestamos en forma descendente
+Evitar de un prestamo prestado, devuelto y siga en la pestaña prestamo.
+Evitar si tiene prestamos anteriores no cerrado. (Consitencia en el guardado de los estados en toda su ocupación)
+Hay libros que pueden no estar en la biblioteca pero siguen en la base de datos, para tener una consistencia de su presencia en su historial.
+
+
+
+
