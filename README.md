@@ -6,7 +6,9 @@
 |---------|----------|---------------------------------|
 |crear repositorio para el proyecto|FC,ML|terminada|
 |confeccionar mockup de página principal de catalogo|GC|terminada|
-||?|-|
+|Cdesarrollar prototipo semifuncional,paginas principal historial,prestamo|FH,FC|Terminada|
+|Desarrollo de funcionalidades|ML,GC,AL|En proceso|
+|Modularización del código |ML,GC,AL|En proceso|
 |desarrollar prototipo semifuncional|?|-|
 
 ![image](https://github.com/user-attachments/assets/e331fd73-0083-4c4f-973d-1b5ef2e6daff)
