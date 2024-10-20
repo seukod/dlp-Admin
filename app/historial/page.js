@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react'; // Asegúrate de importar useState
+import React, { useState } from 'react'; 
 import Image from 'next/image';
 import Link from 'next/link'; // Importa Link
 import {

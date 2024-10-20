@@ -46,3 +46,10 @@ th {
     position: relative; /* Hace que el contenedor sea el referente para el posicionamiento absoluto */
     height: 100vh; /* Ajusta la altura de la página */
 }
+.camposEdit {
+    background-color: #f0f8ff; /* Color claro para resaltar */
+    border: 1px solid #007acc; /* Borde azul para resaltar */
+    outline: none; /* Quitar el contorno */
+    padding: 4px; /* Añadir un poco de espacio interno */
+  }
+  
