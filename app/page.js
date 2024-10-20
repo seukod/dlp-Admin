@@ -58,8 +58,6 @@ function LeftDrawer() {
 }
 
 export default function Home() {
-  const [modoEdicion, setModoEdicion] = useState(false);
- 
 const [libros, setLibros] = useState(() => {
   const librosGuardados = localStorage.getItem('libros');
   return librosGuardados ? JSON.parse(librosGuardados) : [
@@ -72,9 +70,7 @@ const [libros, setLibros] = useState(() => {
 });
 
   const [libroEditado, setLibroEditado] = useState(null);
-  const toggleModoEdicion = () => {
-    setModoEdicion(!modoEdicion);
-  };
+
   const editarLibro = (index) => {
     if (libroEditado === index) {
       setLibroEditado(null); // Si ya está en modo edición, lo desactiva
