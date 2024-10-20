@@ -18,7 +18,12 @@ import {
   Th,
   Td,
   TableCaption,
-  TableContainer
+  TableContainer,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
 } from '@chakra-ui/react';
 
 function LeftDrawer() {
@@ -54,9 +59,36 @@ function LeftDrawer() {
 
 export default function Home() {
   const [modoEdicion, setModoEdicion] = useState(false);
+  const [libros, setLibros] = useState([
+    { id: '#92', titulo: 'Un golpe de suerte', autores: 'Lucho Jara', tags: 'comedia', donante: 'Francisco', fecha: '20/04/2001', estado: 'no prestado' },
+    { id: '#88', titulo: 'El llamado de mi madre', autores: 'Javier Tauler', tags: 'romance, BL, horror, acción', donante: 'Fosox', fecha: '30/02/2024', estado: 'prestado' },
+    { id: '#32', titulo: 'SOMOS QUINTILLIZAS', autores: 'NEGI HARUBA', tags: 'cine, comedia', donante: 'Angel Leal', fecha: '18/09/2024', estado: 'No disponible' },
+    { id: '#97', titulo: 'Nana', autores: 'Ai Yazawa', tags: 'drama', donante: 'Francisco', fecha: '22/07/2024', estado: 'no prestado' },
+    { id: '#95', titulo: 'Gatos', autores: 'Juan Herrera', tags: 'comedia', donante: 'Franco Alun', fecha: '22/06/2023', estado: 'no prestado' },
+  ]);
   
   const toggleModoEdicion = () => {
-      setModoEdicion(!modoEdicion);
+    setModoEdicion(!modoEdicion);
+  };
+
+  const ordenarPorTituloAZ = () => {
+    const librosOrdenados = [...libros].sort((a, b) => a.titulo.localeCompare(b.titulo));
+    setLibros(librosOrdenados);
+  };
+
+  const ordenarPorTituloZA = () => {
+    const librosOrdenados = [...libros].sort((a, b) => b.titulo.localeCompare(a.titulo));
+    setLibros(librosOrdenados);
+  };
+
+  const ordenarPorFechaReciente = () => {
+    const librosOrdenados = [...libros].sort((a, b) => new Date(b.fecha.split('/').reverse().join('-')) - new Date(a.fecha.split('/').reverse().join('-')));
+    setLibros(librosOrdenados);
+  };
+
+  const ordenarPorFechaAntiguo = () => {
+    const librosOrdenados = [...libros].sort((a, b) => new Date(a.fecha.split('/').reverse().join('-')) - new Date(b.fecha.split('/').reverse().join('-')));
+    setLibros(librosOrdenados);
   };
 
   return (
@@ -76,6 +108,21 @@ export default function Home() {
         <div className={`modoedicion ${modoEdicion ? 'activo' : ''}`}>
           {modoEdicion ? "Modo Edición Activo" : "Modo Edición Inactivo"}
         </div>
+        
+        <Menu>
+          <MenuButton as={Button} colorScheme='teal' mt={4}>
+            Ordenar / Filtrar
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={ordenarPorTituloAZ}>Ordenar por Título (A-Z)</MenuItem>
+            <MenuItem onClick={ordenarPorTituloZA}>Ordenar por Título (Z-A)</MenuItem>
+            <MenuDivider />
+            <MenuItem onClick={ordenarPorFechaReciente}>Ordenar por Fecha (Más Reciente)</MenuItem>
+            <MenuItem onClick={ordenarPorFechaAntiguo}>Ordenar por Fecha (Más Antiguo)</MenuItem>
+            {/* Puedes agregar más opciones aquí */}
+          </MenuList>
+        </Menu>
+
         <TableContainer>
           <Table variant='simple'>
             <TableCaption>Haga click en el lápiz para editar</TableCaption>
@@ -91,51 +138,17 @@ export default function Home() {
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>#92</Td>
-                <Td>Un golpe de suerte</Td>
-                <Td>Lucho Jara</Td>
-                <Td>comedia</Td>
-                <Td>Francisco</Td>
-                <Td>20/04/2001</Td>
-                <Td>no prestado</Td>
-              </Tr>
-              <Tr>
-                <Td>#88</Td>
-                <Td>El llamado de mi madre</Td>
-                <Td>Javier Tauler</Td>
-                <Td>romance, BL, horror, acción</Td>
-                <Td>Fosox</Td>
-                <Td>30/02/2024</Td>
-                <Td>prestado</Td>
-              </Tr>
-              <Tr>
-                <Td>#32</Td>
-                <Td>SOMOS QUINTILLIZAS</Td>
-                <Td>NEGI HARUBA</Td>
-                <Td>cine, comedia</Td>
-                <Td>Angel Leal</Td>
-                <Td>18/09/2024</Td>
-                <Td>No disponible</Td>
-              </Tr>
-              <Tr>
-                <Td>#97</Td>
-                <Td>Nana</Td>
-                <Td>Ai Yazawa</Td>
-                <Td>drama</Td>
-                <Td>Francisco</Td>
-                <Td>22/07/2024</Td>
-                <Td>no prestado</Td>
-              </Tr>
-              <Tr>
-                <Td>#95</Td>
-                <Td>Gatos</Td>
-                <Td>Juan Herrera</Td>
-                <Td>comedia</Td>
-                <Td>Franco Alun</Td>
-                <Td>22/06/2023</Td>
-                <Td>no prestado</Td>
-              </Tr>
+              {libros.map((libro, index) => (
+                <Tr key={index}>
+                  <Td>{libro.id}</Td>
+                  <Td>{libro.titulo}</Td>
+                  <Td>{libro.autores}</Td>
+                  <Td>{libro.tags}</Td>
+                  <Td>{libro.donante}</Td>
+                  <Td>{libro.fecha}</Td>
+                  <Td>{libro.estado}</Td>
+                </Tr>
+              ))}
             </Tbody>
             <Tfoot>
             </Tfoot>
