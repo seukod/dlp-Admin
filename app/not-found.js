@@ -20,7 +20,7 @@ function Error404() {
       <div className="container-404-general">
         <h1 className="title-404">404</h1>
         <div className="container-404">
-          <h2 className="text">This page could not be found</h2>
+          <h2 className="text">This page could not be foundlmao</h2>
           <Link href="/" className="btn">
             Volver
           </Link>

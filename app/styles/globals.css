@@ -51,5 +51,37 @@ th {
     border: 1px solid #007acc; /* Borde azul para resaltar */
     outline: none; /* Quitar el contorno */
     padding: 4px; /* Añadir un poco de espacio interno */
+}
+
+.drawer {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0; /* Cambia el color según lo que necesites */
+    padding: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.drawer button {
+    margin: 5px 0; /* Espaciado entre botones */
+    padding: 10px; /* Padding para hacerlos más clicables */
+    background-color: #0070f3; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin bordes */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+}
+
+.drawer button:hover {
+    background-color: #005bb5; /* Cambio de color al pasar el mouse */
+}
+.edit-button {
+    transition: background-color 0.3s, color 0.3s;
   }
+  
+  .edit-button:hover {
+    background-color: #3182ce; /* Color de fondo para el hover */
+    color: white; /* Cambia el color del icono en hover */
+  }
+  
+
   
