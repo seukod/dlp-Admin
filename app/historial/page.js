@@ -1,93 +1,95 @@
 "use client";
-import React, { useState, useEffect } from 'react'; 
-import { Table, Thead, Tbody, Tr, Th, TableCaption, TableContainer } from '@chakra-ui/react';
-import LeftDrawer from '@/app/components/LeftDrawer';
-import HistorialRow from './HistorialRow'; 
-import FilterButton from '@/app/components/FilterButton';
+import React, { useState } from 'react'; 
+import Image from 'next/image';
+import Link from 'next/link'; // Importa Link
+import {
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  Button,
+  useDisclosure,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer
+} from '@chakra-ui/react';
 
-export default function HistorialPage() {
-  const [historialEditado, setHistorialEditado] = useState(null);
-  const [historial, setHistorial] = useState(() => {
-    const datosGuardados = localStorage.getItem('historial');
-    return datosGuardados ? JSON.parse(datosGuardados) : [
-      { id: '#1', libro: 'El gran Gatsby', usuario: 'Juan Pérez', fecha: '01/01/2024', estado: 'prestado' },
-      { id: '#2', libro: 'Cien años de soledad', usuario: 'María López', fecha: '05/01/2024', estado: 'no prestado' },
-      { id: '#3', libro: '1984', usuario: 'Carlos Fernández', fecha: '10/01/2024', estado: 'prestado' },
-      { id: '#4', libro: 'El amor en los tiempos del cólera', usuario: 'Laura García', fecha: '15/01/2024', estado: 'no prestado' },
-    ];
-  });
+function LeftDrawer() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const placement = 'left';
 
-  const [historialFiltrado, setHistorialFiltrado] = useState(historial);
+  return (
+    <>
+      <Button colorScheme='blue' onClick={onOpen}>
+        MENU
+      </Button>
+      <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader borderBottomWidth='1px'>ADMIN</DrawerHeader>
+          <DrawerBody>
+            {/* Botones en lugar de texto */}
+            <Button w="100%" mb={2} as={Link} href="/">
+              Libros
+            </Button>
+            <Button w="100%" mb={2} as={Link} href="/prestamo">
+              Préstamo
+            </Button>
+            <Button w="100%" mb={2} as={Link} href="/historial">
+              Historial de actividades
+            </Button>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </>
+  );
+}
 
-  useEffect(() => {
-    localStorage.setItem('historial', JSON.stringify(historial));
-  }, [historial]);
-
-  const editarHistorial = (index) => {
-    if (historialEditado === index) {
-      setHistorialEditado(null); // Desactivar edición si ya está activa
-    } else {
-      setHistorialEditado(index); // Activar edición para la fila seleccionada
-    }
-  };
-
-  const aplicarFiltro = (filtro) => {
-    if (filtro === '') {
-      setHistorialFiltrado(historial); // Mostrar todos
-    } else {
-      const historialFiltrado = historial.filter(item => item.estado === filtro);
-      setHistorialFiltrado(historialFiltrado);
-    }
-  };
-
-  const aplicarOrdenamiento = (campo, orden) => {
-    const ordenado = [...historialFiltrado].sort((a, b) => {
-      if (campo === 'titulo') {
-        return orden === 'asc'
-          ? a.libro.localeCompare(b.libro)
-          : b.libro.localeCompare(a.libro);
-      } else if (campo === 'fecha') {
-        return orden === 'reciente'
-          ? new Date(b.fecha) - new Date(a.fecha)
-          : new Date(a.fecha) - new Date(b.fecha);
-      }
-      return 0;
-    });
-    setHistorialFiltrado(ordenado);
+export default function Home() {
+  const [modoEdicion, setModoEdicion] = useState(false);
+  
+  const toggleModoEdicion = () => {
+      setModoEdicion(!modoEdicion);
   };
 
   return (
     <>
       <LeftDrawer />
       <h1>HISTORIAL</h1>
-
-      <FilterButton onSort={aplicarOrdenamiento} onFilter={aplicarFiltro} /> {/* Aquí se usa el botón de filtro */}
-
+      
       <div className='tabla'>
+        <Button onClick={toggleModoEdicion}>
+          <Image 
+            src="/lapiz.png"  // Aquí se refiere a la imagen en public
+            alt="Lápiz"
+            width={20}
+            height={20}
+          />
+        </Button>
+        <div className={`modoedicion ${modoEdicion ? 'activo' : ''}`}>
+          {modoEdicion ? "Modo Edición Activo" : "Modo Edición Inactivo"}
+        </div>
         <TableContainer>
           <Table variant='simple'>
             <TableCaption>Haga click en el lápiz para editar</TableCaption>
             <Thead>
               <Tr>
-                <Th className='esqizq'></Th>
-                <Th>ID</Th>
-                <Th>Libro</Th>
-                <Th>Usuario</Th>
-                <Th>Fecha</Th>
-                <Th className='esqder'>Estado</Th>
+                <Th></Th>
+
               </Tr>
             </Thead>
             <Tbody>
-              {historialFiltrado.map((item, index) => (
-                <HistorialRow
-                  key={index}
-                  historial={item}
-                  index={index}
-                  editarHistorial={editarHistorial}
-                  historialEditado={historialEditado}
-                />
-              ))}
+        
             </Tbody>
+            <Tfoot>
+            </Tfoot>
           </Table>
         </TableContainer>
       </div>
