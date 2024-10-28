@@ -1,55 +1,10 @@
+// Home.js
 "use client";
 import React, { useState, useEffect } from 'react'; 
-import Image from 'next/image';
-import Link from 'next/link';
-import {
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  Button,
-  useDisclosure,
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-} from '@chakra-ui/react';
-
-function LeftDrawer() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const placement = 'left';
-
-  return (
-    <>
-      <Button colorScheme='blue' onClick={onOpen}>
-        MENU
-      </Button>
-      <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader borderBottomWidth='1px'>ADMIN</DrawerHeader>
-          <DrawerBody>
-            <Button w="100%" mb={2} as={Link} href="/">
-              Libros
-            </Button>
-            <Button w="100%" mb={2} as={Link} href="/prestamo">
-              Préstamo
-            </Button>
-            <Button w="100%" mb={2} as={Link} href="/historial">
-              Historial de actividades
-            </Button>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-    </>
-  );
-}
+import { Table, Thead, Tbody, Tr, Th, TableCaption, TableContainer } from '@chakra-ui/react';
+import LeftDrawer from '@/app/components/LeftDrawer';
+import PrestamoRow from './PrestamoRow'; 
+import FilterButton from '@/app/components/FilterButton';
 
 export default function Home() {
   const [prestamoEditado, setPrestamoEditado] = useState(null);
@@ -64,16 +19,18 @@ export default function Home() {
     ];
   });
 
+  const [prestamosFiltrados, setPrestamosFiltrados] = useState(prestamos);
+
   useEffect(() => {
-    // Guardar en localStorage cada vez que se actualiza el estado de prestamos
     localStorage.setItem('prestamos', JSON.stringify(prestamos));
+    setPrestamosFiltrados(prestamos);
   }, [prestamos]);
 
   const editarPrestamo = (index) => {
     if (prestamoEditado === index) {
-      setPrestamoEditado(null); // Desactivar edición si ya está activa
+      setPrestamoEditado(null);
     } else {
-      setPrestamoEditado(index); // Activar edición para la fila seleccionada
+      setPrestamoEditado(index);
     }
   };
 
@@ -83,10 +40,39 @@ export default function Home() {
     setPrestamos(nuevosPrestamos);
   };
 
+  const aplicarFiltro = (filtro) => {
+    if (filtro === '') {
+      setPrestamosFiltrados(prestamos);
+    } else {
+      const prestamosFiltrados = prestamos.filter(prestamo => prestamo.estado === filtro);
+      setPrestamosFiltrados(prestamosFiltrados);
+    }
+  };
+
+  const ordenarPrestamos = (campo, direccion) => {
+    let prestamosOrdenados = [...prestamos];
+
+    if (campo === 'libro') {
+      prestamosOrdenados.sort((a, b) => {
+        return direccion === 'asc' ? a.libro.localeCompare(b.libro) : b.libro.localeCompare(a.libro);
+      });
+    } else if (campo === 'fechaLimite') {
+      prestamosOrdenados.sort((a, b) => {
+        const fechaA = new Date(a.fechaLimite.split('/').reverse().join('-'));
+        const fechaB = new Date(b.fechaLimite.split('/').reverse().join('-'));
+        return direccion === 'reciente' ? fechaB - fechaA : fechaA - fechaB;
+      });
+    }
+
+    setPrestamos(prestamosOrdenados);
+  };
+
   return (
     <>
       <LeftDrawer />
       <h1>PRESTAMOS</h1>
+
+      <FilterButton onSort={ordenarPrestamos} onFilter={aplicarFiltro} />
 
       <div className='tabla'>
         <TableContainer>
@@ -105,95 +91,17 @@ export default function Home() {
               </Tr>
             </Thead>
             <Tbody>
-              {prestamos.map((prestamo, index) => (
-                <Tr key={index}>
-                  <Td>
-                    <Button onClick={() => editarPrestamo(index)}>
-                      <Image 
-                        src="/lapiz.png"  // Referencia al ícono de lápiz
-                        alt="Lápiz"
-                        width={20}
-                        height={20}
-                      />
-                    </Button>
-                  </Td>
-                  <Td>{prestamo.id}</Td>
-                  <Td>
-                    {prestamoEditado === index ? (
-                      <input
-                        type='text'
-                        value={prestamo.libro}
-                        className='camposEdit'
-                        onChange={(e) => manejarCambio(e, index, 'libro')}
-                      />
-                    ) : (
-                      prestamo.libro
-                    )}
-                  </Td>
-                  <Td>
-                    {prestamoEditado === index ? (
-                      <input
-                      type='text'
-                      value={prestamo.usuario}
-                      className='camposEdit'
-                      onChange={(e) => manejarCambio(e, index, 'usuario')}
-                      />
-                    ) : (
-                      prestamo.usuario
-                    )}
-                  </Td>
-                  <Td>
-                    {prestamoEditado === index ? (
-                      <input
-                      type='text'
-                      value={prestamo.fechaPrestamo}
-                      className='camposEdit'
-                      onChange={(e) => manejarCambio(e, index, 'fechaPrestamo')}
-                      />
-                    ) : ( 
-                      prestamo.fechaPrestamo
-                    )}
-                  </Td>
-                  <Td>
-                    {prestamoEditado === index ? (
-                      <input
-                      type='text'
-                      value={prestamo.fechaDevolucion}
-                      className='camposEdit'
-                      onChange={(e) => manejarCambio(e, index, 'fechaDevolucion')}
-                      />
-                    ) : (
-                      prestamo.fechaDevolucion
-                    )}
-                  </Td>
-                  <Td>
-                    {prestamoEditado === index ? (
-                      <input
-                      type='text'
-                      value={prestamo.fechaLimite}
-                      className='camposEdit'
-                      onChange={(e) => manejarCambio(e, index, 'fechaLimite')}
-                      />
-                    ) : ( 
-                      prestamo.fechaLimite
-                    )}
-                  </Td>
-                  <Td>
-                    {prestamoEditado === index ? (
-                      <input
-                      type='text'
-                      value={prestamo.estado}
-                      className='camposEdit'
-                      onChange={(e) => manejarCambio(e, index, 'estado')}
-                      />
-                    ) : (
-                      prestamo.estado
-                    )}
-                  </Td>
-                </Tr>
+              {prestamosFiltrados.map((prestamo, index) => (
+                <PrestamoRow
+                  key={index}
+                  prestamo={prestamo}
+                  index={index}
+                  editarPrestamo={editarPrestamo}
+                  prestamoEditado={prestamoEditado}
+                  manejarCambio={manejarCambio}
+                />
               ))}
             </Tbody>
-            <Tfoot />
           </Table>
         </TableContainer>
       </div>
