@@ -83,7 +83,6 @@ export default function Home() {
                 <Th className='esqizq'></Th>
                 <Th>ID</Th>
                 <Th>Libro</Th>
-                <Th>Usuario</Th>
                 <Th>Fecha Préstamo</Th>
                 <Th>Fecha Devolución</Th>
                 <Th>Fecha Límite</Th>

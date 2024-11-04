@@ -25,18 +25,7 @@ const PrestamoRow = ({ prestamo, index, editarPrestamo, prestamoEditado, manejar
           prestamo.libro
         )}
       </Td>
-      <Td>
-        {enEdicion ? (
-          <input
-            type="text"
-            value={prestamo.usuario}
-            className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, 'usuario')}
-          />
-        ) : (
-          prestamo.usuario
-        )}
-      </Td>
+      
       <Td>
         {enEdicion ? (
           <input
