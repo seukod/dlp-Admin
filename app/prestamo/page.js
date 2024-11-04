@@ -86,7 +86,7 @@ export default function Home() {
   return (
     <>
       <LeftDrawer />
-      <h1>PRESTAMOS</h1>
+      <h2>PRESTAMOS</h2>
 
       <div className='tabla'>
         <TableContainer>

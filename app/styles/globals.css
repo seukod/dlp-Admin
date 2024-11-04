@@ -3,15 +3,32 @@
 }
 
 h1 {
-    text-align: center;             /* Centrar el texto */
-    font-size: 3em;                /* Aumentar el tamaño de la fuente */
-    font-weight: bold;             /* Hacer la fuente más gruesa */
-    color: #333;                   /* Cambiar el color del texto */
-    margin: 20px 0;                /* Espaciado superior e inferior */
-    text-transform: uppercase;      /* Convertir el texto a mayúsculas (opcional) */
-    letter-spacing: 2px;           /* Aumentar el espaciado entre letras (opcional) */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil (opcional) */
-    font-family: 'Arial', sans-serif; /* Cambiar la fuente (opcional) */
+    text-align: center;             
+    font-size: 3em;                
+    font-weight: bold;             
+    color: #333;                   
+    margin: 20px 0;                
+    text-transform: uppercase;      
+    letter-spacing: 2px;           
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); 
+    font-family: 'Arial', sans-serif; 
+    background-color: #17cb2f;       /* Fondo de color gris claro */
+    padding: 10px 20px;              /* Espaciado interno para hacer el fondo más visible */
+    border-radius: 8px;              /* Bordes redondeados para suavizar el diseño */
+}
+h2 {
+    text-align: center;             
+    font-size: 3em;                
+    font-weight: bold;             
+    color: #333;                   
+    margin: 20px 0;                
+    text-transform: uppercase;      
+    letter-spacing: 2px;           
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); 
+    font-family: 'Arial', sans-serif; 
+    background-color: #ceef3b;       /* Fondo de color gris claro */
+    padding: 10px 20px;              /* Espaciado interno para hacer el fondo más visible */
+    border-radius: 8px;              /* Bordes redondeados para suavizar el diseño */
 }
 
 th {
