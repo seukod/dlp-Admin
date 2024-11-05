@@ -1,5 +1,5 @@
 .tabla{
-    padding: 2em;
+    padding: 1.5em;
 }
 
 h1 {
@@ -14,23 +14,6 @@ h1 {
     font-family: 'Arial', sans-serif; /* Cambiar la fuente (opcional) */
 }
 
-
-table {
-    border-collapse: collapse; /* Esto asegura que los bordes de las celdas y la tabla no se dupliquen */
-    width: 100%;
-    padding: 2em;
-}
-  
-th, td { /*th = table header, td = table data*/
-    border: 20px; /* Borde para las celdas */
-    padding: 8px; /* Espacio interno en las celdas */
-    text-align: left; /* Alineación del texto */
-    border-left-color: black;
-    border-right-color: black;
-    border-color: black;
-}
-  
-/* Para darle color a los títulos de las columnas */
 th {
     background-color: rgb(248, 161, 161); /* Color de fondo verde para los encabezados */
     color: rgb(0, 0, 0); /* Color del texto negro */
@@ -38,9 +21,18 @@ th {
 
 .esqizq{
     border-top-left-radius: 20px;
+    background-color: transparent;
+    border-color: transparent;
 }
 .esqder{
     border-top-right-radius: 20px;
+}
+.segcolumna{
+    border-top-left-radius: 20px;
+}
+.columnalapiz{
+    border-color: transparent;
+    padding: 1em 0.2em;
 }
 .container {
     position: relative; /* Hace que el contenedor sea el referente para el posicionamiento absoluto */
@@ -51,37 +43,9 @@ th {
     border: 1px solid #007acc; /* Borde azul para resaltar */
     outline: none; /* Quitar el contorno */
     padding: 4px; /* Añadir un poco de espacio interno */
-}
-
-.drawer {
-    display: flex;
-    flex-direction: column;
-    background-color: #f0f0f0; /* Cambia el color según lo que necesites */
-    padding: 10px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.drawer button {
-    margin: 5px 0; /* Espaciado entre botones */
-    padding: 10px; /* Padding para hacerlos más clicables */
-    background-color: #0070f3; /* Color de fondo del botón */
-    color: white; /* Color del texto */
-    border: none; /* Sin bordes */
-    border-radius: 4px; /* Bordes redondeados */
-    cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
-}
-
-.drawer button:hover {
-    background-color: #005bb5; /* Cambio de color al pasar el mouse */
-}
-.edit-button {
-    transition: background-color 0.3s, color 0.3s;
+    border-radius: 10px;
+    box-sizing: border-box; /* Asegura que padding no aumente el tamaño */
+    width: 100px; /* Ajusta el ancho fijo según tus necesidades */
+    max-width: 100%; /* Limita el ancho máximo para que no se desborde */
   }
-  
-  .edit-button:hover {
-    background-color: #3182ce; /* Color de fondo para el hover */
-    color: white; /* Cambia el color del icono en hover */
-  }
-  
-
   
