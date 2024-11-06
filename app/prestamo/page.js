@@ -39,7 +39,10 @@ export default function Home() {
     // Actualiza el estado de libros al iniciar la pagina
     const prestamosActualizados = prestamos.map(prestamo => {
       if (esFechaLimiteVencida(prestamo.fechaLimite)) {
-        return { ...prestamo, estado: 'atrasado' };
+        return { ...prestamo, estado: 'Cerrado' };
+      }
+      else {
+        return { ...prestamo, estado: 'Abierto' };
       }
       return prestamo;
     });
@@ -75,8 +78,11 @@ export default function Home() {
       if (/^\d{2}\/\d{2}\/\d{4}$/.test(nuevaFechaLimite) ) {
         if (esFechaLimiteVencida(nuevaFechaLimite)){
         nuevosPrestamos[index].estado = 'Abierto';}
+        else{
+          nuevosPrestamos[index].estado = 'Cerrado';
+        }
       } else {
-        nuevosPrestamos[index].estado = 'Cerrado';
+        nuevosPrestamos[index].estado = 'fecha incorrecta';
       }
     }
     setPrestamos(nuevosPrestamos);
