@@ -22,9 +22,18 @@ export default function Home() {
   const [prestamosFiltrados, setPrestamosFiltrados] = useState(prestamos);
 
   useEffect(() => {
-    localStorage.setItem('prestamos', JSON.stringify(prestamos));
-    setPrestamosFiltrados(prestamos);
-  }, [prestamos]);
+    // Actualiza el estado de libros al iniciar la pagina
+    const prestamosActualizados = prestamos.map(prestamo => {
+      if (esFechaLimiteVencida(prestamo.fechaLimite)) {
+        return { ...prestamo, estado: 'atrasado' };
+      }
+      return prestamo;
+    });
+  
+    setPrestamos(prestamosActualizados);
+    localStorage.setItem('prestamos', JSON.stringify(prestamosActualizados));
+    setPrestamosFiltrados(prestamosActualizados);
+  }, []);
   
   const fechaPasada = (fecha) =>{
     const limite = new Date(fecha);
