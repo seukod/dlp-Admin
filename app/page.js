@@ -201,8 +201,8 @@ export default function Home() {
                             : "/lapiz.png"
                         }
                         alt="Lápiz"
-                        width={60}
-                        height={60}
+                        width={20}
+                        height={20}
                       />
                     </Button>
                   </Td>
