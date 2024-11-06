@@ -21,6 +21,20 @@ export default function Home() {
 
   const [prestamosFiltrados, setPrestamosFiltrados] = useState(prestamos);
 
+  const ordenarFechas = (direction) => {
+    const librosOrdenados = [...libros].sort((a, b) => {
+      const fechaA = new Date(a.fecha.split('/').reverse().join('-'));
+      const fechaB = new Date(b.fecha.split('/').reverse().join('-'));
+      return direction === 'asc' ? fechaA - fechaB : fechaB - fechaA;
+    });
+    setLibros(librosOrdenados);
+  };
+  const getSortIcon = (key) => {
+    if (sortConfig.key !== key) return '⇅';
+    return sortConfig.direction === 'asc' ? '↑' : sortConfig.direction === 'desc' ? '↓' : '⇅';
+  };
+
+  
   useEffect(() => {
     // Actualiza el estado de libros al iniciar la pagina
     const prestamosActualizados = prestamos.map(prestamo => {
@@ -35,11 +49,6 @@ export default function Home() {
     setPrestamosFiltrados(prestamosActualizados);
   }, []);
   
-  const fechaPasada = (fecha) =>{
-    const limite = new Date(fecha);
-    const actual = new Date();
-    return  limite < actual;
-  };
 
   const esFechaLimiteVencida = (fechaLimite) => {
     const [dia, mes, año] = fechaLimite.split('/');
@@ -63,10 +72,11 @@ export default function Home() {
 
     if (campo === 'fechaLimite') {
       const nuevaFechaLimite = e.target.value;
-      if (esFechaLimiteVencida(nuevaFechaLimite)) {
-        nuevosPrestamos[index].estado = 'atrasado';
+      if (/^\d{2}\/\d{2}\/\d{4}$/.test(nuevaFechaLimite) ) {
+        if (esFechaLimiteVencida(nuevaFechaLimite)){
+        nuevosPrestamos[index].estado = 'Abierto';}
       } else {
-        nuevosPrestamos[index].estado = 'no prestado';
+        nuevosPrestamos[index].estado = 'Cerrado';
       }
     }
     setPrestamos(nuevosPrestamos);
@@ -104,7 +114,7 @@ export default function Home() {
       <LeftDrawer />
       <h1>PRESTAMOS</h1>
 
-      <FilterButton onSort={ordenarPrestamos} onFilter={aplicarFiltro} />
+      {/*<FilterButton onSort={ordenarPrestamos} onFilter={aplicarFiltro} />*/}
 
       <div className='tabla'>
         <TableContainer>
