@@ -201,8 +201,9 @@ export default function Home() {
                             : "/lapiz.png"
                         }
                         alt="Lápiz"
-                        width={60}
-                        height={60}
+                        width={20}
+                        height={20}
+                        className='imagenlapiz'
                       />
                     </Button>
                   </Td>
@@ -220,7 +221,16 @@ export default function Home() {
                     )}
                   </Td>
                   <Td>
-                    {libro.ISBN || "N/A"}
+                    {libroEditado === index ? (
+                        <input
+                          type="text"
+                          value={libro.ISBN}
+                          className="camposEdit"
+                          onChange={(e) => manejarCambio(e, index, "ISBN")}
+                        />
+                      ) : (
+                        libro.ISBN
+                      )}
                   </Td>
                   <Td>
                     {libroEditado === index ? (
