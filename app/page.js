@@ -133,151 +133,169 @@ export default function Home() {
     <>
       <LeftDrawer />
       <h1>CATÁLOGO LIBROS</h1>
-      
-      <div className='tabla'>
+
+      <div className="tabla">
         <TableContainer>
-          <Table variant='simple'>
+          <Table variant="simple">
             <TableCaption>Haga click en el lápiz para editar</TableCaption>
             <Thead>
               <Tr>
-                <Th className='esqizq'></Th>
-                <Th className='segcolumna'>
-                  ID
+                <Th className="esqizq"></Th>
+                <Th className="segcolumna">ID</Th>
+                <Th
+                  onClick={() => ordenarLibros("titulo")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Título {getSortIcon("titulo")}
                 </Th>
-                <Th onClick={() => ordenarLibros('titulo')} style={{ cursor: 'pointer' }}>
-                  Título {getSortIcon('titulo')}
-                </Th>
-                <Th>
-                    ISBN
-                </Th>
-                <Th onClick={() => ordenarLibros('autores')} style={{ cursor: 'pointer' }}>
-                  Autores {getSortIcon('autores')}
+                <Th>ISBN</Th>
+                <Th
+                  onClick={() => ordenarLibros("autores")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Autores {getSortIcon("autores")}
                 </Th>
                 <Th>Tags</Th>
-                <Th onClick={() => ordenarLibros('donante')} style={{ cursor: 'pointer'}}>
-                  Donante {getSortIcon('donante')}
-                  </Th>
-                <Th onClick={() => ordenarLibros('fecha')} style={{ cursor: 'pointer' }}>
-                  Fecha de donación {getSortIcon('fecha')}
+                <Th
+                  onClick={() => ordenarLibros("donante")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Donante {getSortIcon("donante")}
                 </Th>
-                <Th>
-                    GenerarQR
+                <Th
+                  onClick={() => ordenarLibros("fecha")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Fecha de donación {getSortIcon("fecha")}
                 </Th>
-                <Th className='esqder' onClick={() => ordenarLibros('estado')} style={{ cursor: 'pointer' }}>
-                  Estado {getSortIcon('estado')}
+                <Th>GenerarQR</Th>
+                <Th
+                  className="esqder"
+                  onClick={() => ordenarLibros("estado")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Estado {getSortIcon("estado")}
                 </Th>
               </Tr>
-            </Thead>         
+            </Thead>
             <Tbody>
-                {libros.map((libro, index) => (
+              {libros.map((libro, index) => (
                 <Tr key={index}>
-                    <Td className='columnalapiz'>
+                  <Td className="columnalapiz">
                     <Button onClick={() => editarLibro(index)}>
-                    <Image 
-                    src={libroEditado === index ? '/tick-icon.png' : '/lapiz.png'}
-                    alt="Lápiz"
-                    width={20}
-                    height={20}
-                    />
-        </Button>
-      </Td>
-      <Td>{libro.id}</Td>
-      <Td>
-        {libroEditado === index ? (
-          <input 
-            type="text" 
-            value={libro.titulo}
-            className='camposEdit'
-            onChange={(e) => manejarCambio(e, index, 'titulo')}
-          />
-        ) : (
-          libro.titulo
-        )}
-      </Td>
-      <Td>
-  {libroEditado === index ? (
-    <input 
-      type="text" 
-      value={libro.ISBN}
-      className='camposEdit'
-      onChange={(e) => manejarCambio(e, index, 'ISBN')}
-    />
-  ) : (
-    libro.ISBN
-  )}
-</Td>
+                      <Image
+                        src={
+                          libroEditado === index
+                            ? "/tick-icon.png"
+                            : "/lapiz.png"
+                        }
+                        alt="Lápiz"
+                        width={20}
+                        height={20}
+                      />
+                    </Button>
+                  </Td>
+                  <Td>{libro.id}</Td>
+                  <Td>
+                    {libroEditado === index ? (
+                      <input
+                        type="text"
+                        value={libro.titulo}
+                        className="camposEdit"
+                        onChange={(e) => manejarCambio(e, index, "titulo")}
+                      />
+                    ) : (
+                      libro.titulo
+                    )}
+                  </Td>
+                  <Td>
+                    {libroEditado === index ? (
+                      <input
+                        type="text"
+                        value={libro.ISBN}
+                        className="camposEdit"
+                        onChange={(e) => manejarCambio(e, index, "ISBN")}
+                      />
+                    ) : (
+                      libro.ISBN
+                    )}
+                  </Td>
 
-      <Td>
-        {libroEditado === index ? (
-          <input 
-            type="text" 
-            value={libro.autores}
-            className='camposEdit'
-            onChange={(e) => manejarCambio(e, index, 'autores')}
-          />
-        ) : (
-          libro.autores
-        )}
-      </Td>
-      <Td>
-        {libroEditado === index ? (
-          <input 
-            type="text" 
-            value={libro.tags}
-            className='camposEdit'
-            onChange={(e) => manejarCambio(e, index, 'tags')}
-          />
-        ) : (
-          libro.tags
-        )}
-      </Td>
-      <Td>
-        {libroEditado === index ? (
-          <input 
-            type="text" 
-            value={libro.donante}
-            className='camposEdit'
-            onChange={(e) => manejarCambio(e, index, 'donante')}
-          />
-        ) : (
-          libro.donante
-        )}
-      </Td>
-      <Td>
-        {libroEditado === index ? (
-          <input 
-            type="text" 
-            value={libro.fecha}
-            className='camposEdit'
-            onChange={(e) => manejarCambio(e, index, 'fecha')}
-          />
-        ) : (
-          libro.fecha
-        )}
-      </Td>
-      <Td>
-      <Button w="100%" mb={2} as={Link} href={`/qr?id=${libro.id}`}>
-  Generar QR
-</Button>
-    </Td>   
-      <Td>
-        {libroEditado === index ? (
-          <input 
-            type="text" 
-            value={libro.estado}
-            className='camposEdit'
-            onChange={(e) => manejarCambio(e, index, 'estado')}
-          />
-        ) : (
-          libro.estado
-              )}
-            </Td>
-            </Tr>
-             ))}
+                  <Td>
+                    {libroEditado === index ? (
+                      <input
+                        type="text"
+                        value={libro.autores}
+                        className="camposEdit"
+                        onChange={(e) => manejarCambio(e, index, "autores")}
+                      />
+                    ) : (
+                      libro.autores
+                    )}
+                  </Td>
+                  <Td>
+                    {libroEditado === index ? (
+                      <input
+                        type="text"
+                        value={libro.tags}
+                        className="camposEdit"
+                        onChange={(e) => manejarCambio(e, index, "tags")}
+                      />
+                    ) : (
+                      libro.tags
+                    )}
+                  </Td>
+                  <Td>
+                    {libroEditado === index ? (
+                      <input
+                        type="text"
+                        value={libro.donante}
+                        className="camposEdit"
+                        onChange={(e) => manejarCambio(e, index, "donante")}
+                      />
+                    ) : (
+                      libro.donante
+                    )}
+                  </Td>
+                  <Td>
+                    {libroEditado === index ? (
+                      <input
+                        type="text"
+                        value={libro.fecha}
+                        className="camposEdit"
+                        onChange={(e) => manejarCambio(e, index, "fecha")}
+                      />
+                    ) : (
+                      libro.fecha
+                    )}
+                  </Td>
+                  <Td>
+                    <Button
+                      w="100%"
+                      mb={2}
+                      as={Link}
+                      href={`/qr?id=${libro.id}`}
+                    >
+                      Generar QR
+                    </Button>
+                  </Td>
+                  <Td>
+                    {libroEditado === index ? (
+                      <input
+                        type="text"
+                        value={libro.estado}
+                        className="camposEdit"
+                        onChange={(e) => manejarCambio(e, index, "estado")}
+                      />
+                    ) : (
+                      libro.estado
+                    )}
+                  </Td>
+                </Tr>
+              ))}
             </Tbody>
 
-            <Tfoot>
-            </Tfoot>
+            <Tfoot></Tfoot>
           </Table>
         </TableContainer>
       </div>
