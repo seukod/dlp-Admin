@@ -56,21 +56,32 @@ export default function Home() {
   const [libros, setLibros] = useState([]);
   useEffect(() => {
     const librosGuardados = localStorage.getItem('libros');
- 
-
-    setLibros(librosGuardados ? JSON.parse(librosGuardados) : [
-      { id: '92', titulo: 'Un golpe de suerte',ISBN: "23483", autores: 'Lucho Jara', tags: 'comedia', donante: 'Francisco', fecha: '20/04/2001',generarQR, estado: 'no prestado' },
-      { id: '#88', titulo: 'El llamado de mi madre',ISBN:'2348123', autores: 'Javier Tauler', tags: 'romance, BL, horror, acción', donante: 'Fosox', fecha: '30/02/2024',generarQR, estado: 'prestado' },
-      { id: '#32', titulo: 'SOMOS QUINTILLIZAS',ISBN:'2348123', autores: 'NEGI HARUBA', tags: 'cine, comedia', donante: 'Angel Leal', fecha: '18/09/2024',generarQR, estado: 'No disponible' },
-      { id: '#97', titulo: 'Nana',ISBN:'2348123', autores: 'Ai Yazawa', tags: 'drama', donante: 'Francisco', fecha: '22/07/2024',generarQR, estado: 'no prestado' },
-      { id: '#95', titulo: 'Gatos',ISBN:'2348123', autores: 'Juan Herrera', tags: 'comedia', donante: 'Franco Alun', fecha: '22/06/2023',generarQR, estado: 'no prestado' },
-    ]);
-  }, []);
+  
+    // Si no hay libros en localStorage o el array es vacío, usa los datos iniciales
+    const librosIniciales = librosGuardados
+      ? JSON.parse(librosGuardados)
+      : [
+          { id: '92', titulo: 'Un golpe de suerte', ISBN: "23483", autores: 'Lucho Jara', tags: 'comedia', donante: 'Francisco', fecha: '20/04/2001', estado: 'no prestado' },
+          { id: '#88', titulo: 'El llamado de mi madre', ISBN: '2348123', autores: 'Javier Tauler', tags: 'romance, BL, horror, acción', donante: 'Fosox', fecha: '30/02/2024', estado: 'prestado' },
+          { id: '#32', titulo: 'SOMOS QUINTILLIZAS', ISBN: '2348123', autores: 'NEGI HARUBA', tags: 'cine, comedia', donante: 'Angel Leal', fecha: '18/09/2024', estado: 'No disponible' },
+          { id: '#97', titulo: 'Nana', ISBN: '2348123', autores: 'Ai Yazawa', tags: 'drama', donante: 'Francisco', fecha: '22/07/2024', estado: 'no prestado' },
+          { id: '#95', titulo: 'Gatos', ISBN: '2348123', autores: 'Juan Herrera', tags: 'comedia', donante: 'Franco Alun', fecha: '22/06/2023', estado: 'no prestado' },
+        ];
+  
+    // Guarda los datos iniciales en caso de que no existan en localStorage
+    if (!librosGuardados || librosGuardados === "[]") {
+      localStorage.setItem('libros', JSON.stringify(librosIniciales));
+    }
+  
+    // Cargar los libros en el estado
+    setLibros(librosIniciales);
+  }, []);  
 
   const [libroEditado, setLibroEditado] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'initial' });
 
   const guardarEnLocalStorage = (nuevosLibros) => {
+    localStorage.removeItem('libros');
     localStorage.setItem('libros', JSON.stringify(nuevosLibros));
   };
 
@@ -190,8 +201,8 @@ export default function Home() {
                             : "/lapiz.png"
                         }
                         alt="Lápiz"
-                        width={20}
-                        height={20}
+                        width={60}
+                        height={60}
                       />
                     </Button>
                   </Td>
@@ -209,18 +220,8 @@ export default function Home() {
                     )}
                   </Td>
                   <Td>
-                    {libroEditado === index ? (
-                      <input
-                        type="text"
-                        value={libro.ISBN}
-                        className="camposEdit"
-                        onChange={(e) => manejarCambio(e, index, "ISBN")}
-                      />
-                    ) : (
-                      libro.ISBN
-                    )}
+                    {libro.ISBN || "N/A"}
                   </Td>
-
                   <Td>
                     {libroEditado === index ? (
                       <input

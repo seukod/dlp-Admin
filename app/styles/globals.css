@@ -32,7 +32,7 @@ th {
 }
 .columnalapiz{
     border-color: transparent;
-    padding: 1em 0.2em;
+    padding: 1em 0.3em;
 }
 .container {
     position: relative; /* Hace que el contenedor sea el referente para el posicionamiento absoluto */
@@ -48,4 +48,3 @@ th {
     width: 100px; /* Ajusta el ancho fijo según tus necesidades */
     max-width: 100%; /* Limita el ancho máximo para que no se desborde */
   }
-  
