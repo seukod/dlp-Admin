@@ -25,6 +25,20 @@ export default function Home() {
     localStorage.setItem('prestamos', JSON.stringify(prestamos));
     setPrestamosFiltrados(prestamos);
   }, [prestamos]);
+  
+  const fechaPasada = (fecha) =>{
+    const limite = new Date(fecha);
+    const actual = new Date();
+    return  limite < actual;
+  };
+
+  const esFechaLimiteVencida = (fechaLimite) => {
+    const [dia, mes, año] = fechaLimite.split('/');
+    const fecha = new Date(`${año}-${mes}-${dia}`); // Convertir a yyyy-mm-dd
+    const fechaActual = new Date();
+    return fecha < fechaActual;
+  };
+
 
   const editarPrestamo = (index) => {
     if (prestamoEditado === index) {
@@ -37,6 +51,15 @@ export default function Home() {
   const manejarCambio = (e, index, campo) => {
     const nuevosPrestamos = [...prestamos];
     nuevosPrestamos[index][campo] = e.target.value;
+
+    if (campo === 'fechaLimite') {
+      const nuevaFechaLimite = e.target.value;
+      if (esFechaLimiteVencida(nuevaFechaLimite)) {
+        nuevosPrestamos[index].estado = 'atrasado';
+      } else {
+        nuevosPrestamos[index].estado = 'no prestado';
+      }
+    }
     setPrestamos(nuevosPrestamos);
   };
 
@@ -89,7 +112,7 @@ export default function Home() {
                 <Th className='esqder'>Estado</Th>
               </Tr>
             </Thead>
-            <Tbody>
+            <Tbody> 
               {prestamosFiltrados.map((prestamo, index) => (
                 <PrestamoRow
                   key={index}
