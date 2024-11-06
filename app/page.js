@@ -220,7 +220,16 @@ export default function Home() {
                     )}
                   </Td>
                   <Td>
-                    {libro.ISBN || "N/A"}
+                    {libroEditado === index ? (
+                        <input
+                          type="text"
+                          value={libro.ISBN}
+                          className="camposEdit"
+                          onChange={(e) => manejarCambio(e, index, "ISBN")}
+                        />
+                      ) : (
+                        libro.ISBN
+                      )}
                   </Td>
                   <Td>
                     {libroEditado === index ? (
