@@ -203,7 +203,6 @@ export default function Home() {
                         alt="Lápiz"
                         width={20}
                         height={20}
-                        className='imagenlapiz'
                       />
                     </Button>
                   </Td>
