@@ -63,16 +63,7 @@ const PrestamoRow = ({ prestamo, index, editarPrestamo, prestamoEditado, manejar
         )}
       </Td>
       <Td>
-        {enEdicion ? (
-          <input
-            type="text"
-            value={prestamo.estado}
-            className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, 'estado')}
-          />
-        ) : (
-          prestamo.estado
-        )}
+        {prestamo.estado}
       </Td>
     </Tr>
   );
