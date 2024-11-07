@@ -22,7 +22,9 @@
 ## Sprint 2
 (conjunto de actualizaciones de ajustes dentro del Sprint 2 y la clase del 6/11/24)
 -Implementacion codigo de generacion de QR del grupo, junto con la presentación de las tablas de libro y prestamos 
-Casos de presentacion de estado de prestamos\n
+
+##Casos de presentacion de estado de prestamos
+
 //ABIERTO (Prestamo vigente para revision)
 fecha dev nula; fecha actual > fecha limite = atrasado no duvuelto ()
 fecha dev nula; fecha actual <= fecha limite = a tiempo no duvuelto ()
