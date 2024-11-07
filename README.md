@@ -21,8 +21,13 @@
 
 ## Sprint 2
 (conjunto de actualizaciones de ajustes dentro del Sprint 2 y la clase del 6/11/24)
--Implementacion codigo de generacion de QR del grupo, junto con la presentación de las tablas de libro y prestamos 
-
+-Implementacion codigo de generacion de QR del grupo, junto con la presentación de las tablas de libro y prestamos. 
+-Acuerdo de colores frios determinados por la clase.
+-Concenso del uso de ISBN para la presentación de las portadas.
+-Uso del datapicker de chakra/java (Por determinar).
+-Uso de botones en la linea superior de las tablas (Prestamos y listado librado) para ordenarlas por Titulo, donante, Autor, fecha de donación/limite/entrega/devolución y estado.
+-DropDown para la edición de estado del prestamo del libro (por determinar).
+-Gestión del ID del prestamo.
 ## Casos de presentacion de estado de prestamos
 
 //ABIERTO (Prestamo vigente para revision)
@@ -32,6 +37,15 @@ fecha dev nula; fecha actual <= fecha limite = a tiempo no duvuelto ()
 //CERRADO (Libro devuelto presenta prestamo ya concluido)
 fecha dev > fecha limite = devuelto atrasado  ()
 fecha dev <= fecha limite = devuelto a tiempo ()
+
+
+
+## Presentacion Paginas Prestamo y Listado del libros 
+![image](https://github.com/user-attachments/assets/5f96c438-6f0d-4f34-9e67-058a905b6520)
+
+![image](https://github.com/user-attachments/assets/7922df99-f526-4960-89c5-156ceea718c3)
+
+
 
 # Sistema de Administración de Libros
 
