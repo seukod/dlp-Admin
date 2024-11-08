@@ -44,7 +44,6 @@ export default function Home() {
       else {
         return { ...prestamo, estado: 'Abierto' };
       }
-      return prestamo;
     });
   
     setPrestamos(prestamosActualizados);
@@ -77,9 +76,9 @@ export default function Home() {
       const nuevaFechaLimite = e.target.value;
       if (/^\d{2}\/\d{2}\/\d{4}$/.test(nuevaFechaLimite) ) {
         if (esFechaLimiteVencida(nuevaFechaLimite)){
-        nuevosPrestamos[index].estado = 'Abierto';}
+        nuevosPrestamos[index].estado = 'Cerrado';}
         else{
-          nuevosPrestamos[index].estado = 'Cerrado';
+          nuevosPrestamos[index].estado = 'Abierto';
         }
       } else {
         nuevosPrestamos[index].estado = 'fecha incorrecta';
