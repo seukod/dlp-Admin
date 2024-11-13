@@ -3,7 +3,6 @@ import React from 'react';
 import { Tr, Td } from '@chakra-ui/react';
 import EditButton from '@/app/components/EditButton';
 
-
 const PrestamoRow = ({ prestamo, index, editarPrestamo, prestamoEditado, manejarCambio }) => {
   const enEdicion = prestamoEditado === index;
 
@@ -25,7 +24,6 @@ const PrestamoRow = ({ prestamo, index, editarPrestamo, prestamoEditado, manejar
           prestamo.libro
         )}
       </Td>
-      
       <Td>
         {enEdicion ? (
           <input
@@ -62,9 +60,9 @@ const PrestamoRow = ({ prestamo, index, editarPrestamo, prestamoEditado, manejar
           prestamo.fechaLimite
         )}
       </Td>
-      <Td>
-        {prestamo.estado}
-      </Td>
+      
+      <Td>{prestamo.estado}</Td>
+      <Td>{prestamo.asunto}</Td>
     </Tr>
   );
 };

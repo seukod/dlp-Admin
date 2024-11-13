@@ -1,126 +1,106 @@
-// Home.js
 "use client";
 import React, { useState, useEffect } from 'react'; 
 import { Table, Thead, Tbody, Tr, Th, TableCaption, TableContainer } from '@chakra-ui/react';
 import LeftDrawer from '@/app/components/LeftDrawer';
 import PrestamoRow from './PrestamoRow'; 
-import FilterButton from '@/app/components/FilterButton';
 
 export default function Home() {
   const [prestamoEditado, setPrestamoEditado] = useState(null);
   const [prestamos, setPrestamos] = useState(() => {
     const datosGuardados = localStorage.getItem('prestamos');
     return datosGuardados ? JSON.parse(datosGuardados) : [
-      { id: '#92', libro: 'Un golpe de suerte', usuario: 'Lucho Jara', fechaPrestamo: '00/00/00', fechaDevolucion: '00/00/00', fechaLimite: '20/04/2001', estado: 'no prestado' },
-      { id: '#88', libro: 'El llamado de mi madre', usuario: 'Javier Tauler', fechaPrestamo: '00/00/00', fechaDevolucion: '00/00/00', fechaLimite: '30/02/2024', estado: 'prestado' },
-      { id: '#32', libro: 'SOMOS QUINTILLIZAS', usuario: 'NEGI HARUBA', fechaPrestamo: '00/00/00', fechaDevolucion: '00/00/00', fechaLimite: '18/09/2024', estado: 'No disponible' },
-      { id: '#97', libro: 'Nana', usuario: 'Ai Yazawa', fechaPrestamo: '00/00/00', fechaDevolucion: '00/00/00', fechaLimite: '22/07/2024', estado: 'no prestado' },
-      { id: '#95', libro: 'Gatos', usuario: 'Juan Herrera', fechaPrestamo: '00/00/00', fechaDevolucion: '00/00/00', fechaLimite: '22/06/2023', estado: 'no prestado' },
+      { id: '#92', libro: 'Un golpe de suerte', usuario: 'Lucho Jara', fechaPrestamo: '00/00/00', fechaDevolucion: '00/00/00', fechaLimite: '20/04/2001', estado: 'c',asunto:'prestado' },
+      { id: '#88', libro: 'El llamado de mi madre', usuario: 'Javier Tauler', fechaPrestamo: '00/00/00', fechaDevolucion: '00/00/00', fechaLimite: '30/02/2024', estado: 'c', asunto:'prestado'},
+      { id: '#32', libro: 'SOMOS QUINTILLIZAS', usuario: 'NEGI HARUBA', fechaPrestamo: '00/00/00', fechaDevolucion: '00/00/00', fechaLimite: '18/09/2024', estado: 'c', asunto:'prestado'},
+      { id: '#97', libro: 'Nana', usuario: 'Ai Yazawa', fechaPrestamo: '00/00/00', fechaDevolucion: '00/00/00', fechaLimite: '22/07/2024', estado: 'c', asunto:'prestado' },
+      { id: '#95', libro: 'Gatos', usuario: 'Juan Herrera', fechaPrestamo: '00/00/00', fechaDevolucion: '00/00/00', fechaLimite: '00/00/00', estado: 'c', asunto:'prestado' },
     ];
   });
 
+
   const [prestamosFiltrados, setPrestamosFiltrados] = useState(prestamos);
 
-  const ordenarFechas = (direction) => {
-    const librosOrdenados = [...libros].sort((a, b) => {
-      const fechaA = new Date(a.fecha.split('/').reverse().join('-'));
-      const fechaB = new Date(b.fecha.split('/').reverse().join('-'));
-      return direction === 'asc' ? fechaA - fechaB : fechaB - fechaA;
-    });
-    setLibros(librosOrdenados);
-  };
-  const getSortIcon = (key) => {
-    if (sortConfig.key !== key) return '⇅';
-    return sortConfig.direction === 'asc' ? '↑' : sortConfig.direction === 'desc' ? '↓' : '⇅';
-  };
-
-  
   useEffect(() => {
-    // Actualiza el estado de libros al iniciar la pagina
     const prestamosActualizados = prestamos.map(prestamo => {
-      if (esFechaLimiteVencida(prestamo.fechaLimite)) {
-        return { ...prestamo, estado: 'Cerrado' };
+      if (prestamo.fechaPrestamo !== '00/00/00') {
+        prestamo.estado = 'abierto';
+        if (esFechaLimiteVencida(prestamo.fechaLimite)) {
+          prestamo.asunto = 'atrasado' ;
+        } else {
+          prestamo.asunto = 'prestado';
+        }
+      } else {
+        prestamo.estado = 'cerrado';
+        prestamo.asunto = ''
       }
-      else {
-        return { ...prestamo, estado: 'Abierto' };
-      }
+
+      return prestamo;
     });
-  
+
     setPrestamos(prestamosActualizados);
     localStorage.setItem('prestamos', JSON.stringify(prestamosActualizados));
     setPrestamosFiltrados(prestamosActualizados);
+
+
+    {/*localStorage.clear();  por si se necesita borrar el localStorage*/}
+
+
   }, []);
-  
 
   const esFechaLimiteVencida = (fechaLimite) => {
     const [dia, mes, año] = fechaLimite.split('/');
-    const fecha = new Date(`${año}-${mes}-${dia}`); // Convertir a yyyy-mm-dd
+    const fecha = new Date(`${año}-${mes}-${dia}`);
     const fechaActual = new Date();
     return fecha < fechaActual;
   };
 
-
   const editarPrestamo = (index) => {
-    if (prestamoEditado === index) {
-      setPrestamoEditado(null);
-    } else {
-      setPrestamoEditado(index);
-    }
+    setPrestamoEditado(prestamoEditado === index ? null : index);
   };
 
   const manejarCambio = (e, index, campo) => {
     const nuevosPrestamos = [...prestamos];
     nuevosPrestamos[index][campo] = e.target.value;
-
-    if (campo === 'fechaLimite') {
-      const nuevaFechaLimite = e.target.value;
-      if (/^\d{2}\/\d{2}\/\d{4}$/.test(nuevaFechaLimite) ) {
-        if (esFechaLimiteVencida(nuevaFechaLimite)){
-        nuevosPrestamos[index].estado = 'Cerrado';}
-        else{
-          nuevosPrestamos[index].estado = 'Abierto';
+  
+    if (campo === 'fechaDevolucion') {
+      const nuevaFechaDevolucion = e.target.value;
+      if (/^\d{2}\/\d{2}\/\d{4}$/.test(nuevaFechaDevolucion)) {
+        if (esFechaLimiteVencida(nuevaFechaDevolucion)) {
+          nuevosPrestamos[index].estado = 'cerrado';
+          nuevosPrestamos[index].asunto = 'atrasado';
+        } else {
+          nuevosPrestamos[index].estado = 'abierto';
+          nuevosPrestamos[index].asunto = 'prestado';
         }
       } else {
-        nuevosPrestamos[index].estado = 'fecha incorrecta';
+        nuevosPrestamos[index].estado = 'cerrado';
+        nuevosPrestamos[index].asunto = '';
       }
     }
+  
+    if (campo === 'fechaPrestamo') {
+      const nuevaFechaPrestamo = e.target.value;
+      if (nuevaFechaPrestamo === '00/00/0000') {
+        nuevosPrestamos[index].estado = 'cerrado';
+        nuevosPrestamos[index].asunto = ''; // Vacío si la fecha es '00/00/0000'
+      } else if (/^\d{2}\/\d{2}\/\d{4}$/.test(nuevaFechaPrestamo)) {
+        nuevosPrestamos[index].estado = 'abierto';
+        nuevosPrestamos[index].asunto = 'prestado';
+      } else {
+        nuevosPrestamos[index].estado = 'cerrado';
+        nuevosPrestamos[index].asunto = ''; // Vacío si la fecha no es válida
+      }
+    }
+  
     setPrestamos(nuevosPrestamos);
+    localStorage.setItem('prestamos', JSON.stringify(nuevosPrestamos)); 
   };
-
-  const aplicarFiltro = (filtro) => {
-    if (filtro === '') {
-      setPrestamosFiltrados(prestamos);
-    } else {
-      const prestamosFiltrados = prestamos.filter(prestamo => prestamo.estado === filtro);
-      setPrestamosFiltrados(prestamosFiltrados);
-    }
-  };
-
-  const ordenarPrestamos = (campo, direccion) => {
-    let prestamosOrdenados = [...prestamos];
-
-    if (campo === 'libro') {
-      prestamosOrdenados.sort((a, b) => {
-        return direccion === 'asc' ? a.libro.localeCompare(b.libro) : b.libro.localeCompare(a.libro);
-      });
-    } else if (campo === 'fechaLimite') {
-      prestamosOrdenados.sort((a, b) => {
-        const fechaA = new Date(a.fechaLimite.split('/').reverse().join('-'));
-        const fechaB = new Date(b.fechaLimite.split('/').reverse().join('-'));
-        return direccion === 'reciente' ? fechaB - fechaA : fechaA - fechaB;
-      });
-    }
-
-    setPrestamos(prestamosOrdenados);
-  };
+  
 
   return (
     <>
       <LeftDrawer />
       <h1>PRESTAMOS</h1>
-
-      {/*<FilterButton onSort={ordenarPrestamos} onFilter={aplicarFiltro} />*/}
-
       <div className='tabla'>
         <TableContainer>
           <Table variant='simple'>
@@ -133,10 +113,11 @@ export default function Home() {
                 <Th>Fecha Préstamo</Th>
                 <Th>Fecha Devolución</Th>
                 <Th>Fecha Límite</Th>
-                <Th className='esqder'>Estado</Th>
+                <Th>estado</Th>
+                <Th className='esqder'>asunto</Th>
               </Tr>
             </Thead>
-            <Tbody> 
+            <Tbody>
               {prestamosFiltrados.map((prestamo, index) => (
                 <PrestamoRow
                   key={index}
