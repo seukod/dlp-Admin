@@ -20,7 +20,7 @@ export default function Home() {
 
   const [prestamosFiltrados, setPrestamosFiltrados] = useState(prestamos);
 
-  useEffect(() => {
+  useEffect(() => { {/* cuando se recarge la pagina se activa esto*/}
     const prestamosActualizados = prestamos.map(prestamo => {
       if (prestamo.fechaPrestamo !== '00/00/00') {
         prestamo.estado = 'abierto';
@@ -52,7 +52,7 @@ export default function Home() {
     const fecha = new Date(`${año}-${mes}-${dia}`);
     const fechaActual = new Date();
     return fecha < fechaActual;
-  };
+  }; 
 
   const editarPrestamo = (index) => {
     setPrestamoEditado(prestamoEditado === index ? null : index);
