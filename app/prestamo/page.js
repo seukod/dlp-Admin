@@ -19,6 +19,7 @@ export default function Home() {
 
 
   const [prestamosFiltrados, setPrestamosFiltrados] = useState(prestamos);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'initial' });
 
   useEffect(() => { {/* cuando se recarge la pagina se activa esto*/}
     const prestamosActualizados = prestamos.map(prestamo => {
@@ -95,7 +96,42 @@ export default function Home() {
     setPrestamos(nuevosPrestamos);
     localStorage.setItem('prestamos', JSON.stringify(nuevosPrestamos)); 
   };
+
+  const ordenarLibros = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    } else if (sortConfig.key === key && sortConfig.direction === 'desc') {
+      direction = 'initial';
+    }
   
+    setSortConfig({ key, direction });
+  
+    if (direction === 'initial') {
+      const prestamosGuardados = JSON.parse(localStorage.getItem('prestamos')) || prestamos;
+      setPrestamos(prestamosGuardados);
+      setPrestamosFiltrados(prestamosGuardados);
+    } else {
+      const prestamosOrdenados = [...prestamos].sort((a, b) => {
+        if (key.includes("fecha")) {
+          const fechaA = new Date(a[key].split('/').reverse().join('-'));
+          const fechaB = new Date(b[key].split('/').reverse().join('-'));
+          return direction === 'asc' ? fechaA - fechaB : fechaB - fechaA;
+        } else {
+          if (a[key] < b[key]) return direction === 'asc' ? -1 : 1;
+          if (a[key] > b[key]) return direction === 'asc' ? 1 : -1;
+          return 0;
+        }
+      });
+      setPrestamos(prestamosOrdenados);
+      setPrestamosFiltrados(prestamosOrdenados);
+    }
+  };
+
+  const getSortIcon = (key) => {
+    if (sortConfig.key !== key) return '⇅';
+    return sortConfig.direction === 'asc' ? '↑' : sortConfig.direction === 'desc' ? '↓' : '⇅';
+  };
 
   return (
     <>
@@ -109,10 +145,30 @@ export default function Home() {
               <Tr>
                 <Th className='esqizq'></Th>
                 <Th>ID</Th>
-                <Th>Libro</Th>
-                <Th>Fecha Préstamo</Th>
-                <Th>Fecha Devolución</Th>
-                <Th>Fecha Límite</Th>
+                <Th
+                  onClick={() => ordenarLibros("libro")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Libro {getSortIcon("libro")}
+                </Th>
+                <Th
+                  onClick={() => ordenarLibros("fechaPrestamo")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Fecha Prestamo {getSortIcon("fechaPrestamo")}
+                </Th>
+                <Th
+                  onClick={() => ordenarLibros("fechaDevolucion")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Fecha Devolución {getSortIcon("fechaDevolucion")}
+                </Th>
+                <Th
+                  onClick={() => ordenarLibros("fechaLimite")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Fecha Límite {getSortIcon("fechaLimite")}
+                </Th>
                 <Th>estado</Th>
                 <Th className='esqder'>asunto</Th>
               </Tr>

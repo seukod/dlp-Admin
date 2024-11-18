@@ -33,6 +33,7 @@ th {
 .columnalapiz{
     border-color: transparent;
     padding: 0.3em 0.3em;
+    border-bottom: transparent;
 }
 .container {
     position: relative; /* Hace que el contenedor sea el referente para el posicionamiento absoluto */

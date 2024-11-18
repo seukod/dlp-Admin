@@ -56,7 +56,7 @@ export default function Home() {
   const [libros, setLibros] = useState([]);
   useEffect(() => {
     const librosGuardados = localStorage.getItem('libros');
-  
+
     // Si no hay libros en localStorage o el array es vacío, usa los datos iniciales
     const librosIniciales = librosGuardados
       ? JSON.parse(librosGuardados)
