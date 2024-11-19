@@ -12,18 +12,7 @@ const PrestamoRow = ({ prestamo, index, editarPrestamo, prestamoEditado, manejar
         <EditButton onClick={() => editarPrestamo(index)} isEditing={enEdicion} />
       </Td>
       <Td>{prestamo.id}</Td>
-      <Td>
-        {enEdicion ? (
-          <input
-            type="text"
-            value={prestamo.libro}
-            className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, 'libro')}
-          />
-        ) : (
-          prestamo.libro
-        )}
-      </Td>
+      <Td>{prestamo.libro}</Td>
       <Td>
         {enEdicion ? (
           <input

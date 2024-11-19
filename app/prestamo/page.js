@@ -47,7 +47,21 @@ export default function Home() {
 
 
   }, []);
-
+  const esFechaValida = (fecha) => {
+    const regexFecha = /^\d{2}\/\d{2}\/\d{4}$/; // Formato DD/MM/AAAA
+    if (!regexFecha.test(fecha)) return false; // Verifica formato
+  
+    const [dia, mes, año] = fecha.split('/').map(Number); // Divide en partes numéricas
+    const fechaObjeto = new Date(año, mes - 1, dia); // Crea el objeto Date (mes empieza en 0)
+  
+    // Verifica que los valores originales coincidan con los del objeto Date
+    return (
+      fechaObjeto.getFullYear() === año &&
+      fechaObjeto.getMonth() === mes - 1 &&
+      fechaObjeto.getDate() === dia
+    );
+  };
+  
   const esFechaLimiteVencida = (fechaLimite) => {
     const [dia, mes, año] = fechaLimite.split('/');
     const fecha = new Date(`${año}-${mes}-${dia}`);
@@ -65,7 +79,7 @@ export default function Home() {
   
     if (campo === 'fechaDevolucion') {
       const nuevaFechaDevolucion = e.target.value;
-      if (/^\d{2}\/\d{2}\/\d{4}$/.test(nuevaFechaDevolucion)) {
+      if (esFechaValida(nuevaFechaDevolucion)) {
         if (esFechaLimiteVencida(nuevaFechaDevolucion)) {
           nuevosPrestamos[index].estado = 'cerrado';
           nuevosPrestamos[index].asunto = 'atrasado';
@@ -81,6 +95,8 @@ export default function Home() {
   
     if (campo === 'fechaPrestamo') {
       const nuevaFechaPrestamo = e.target.value;
+
+      if(esFechaValida(nuevaFechaPrestamo)){
       if (nuevaFechaPrestamo === '00/00/0000') {
         nuevosPrestamos[index].estado = 'cerrado';
         nuevosPrestamos[index].asunto = ''; // Vacío si la fecha es '00/00/0000'
@@ -90,6 +106,10 @@ export default function Home() {
       } else {
         nuevosPrestamos[index].estado = 'cerrado';
         nuevosPrestamos[index].asunto = ''; // Vacío si la fecha no es válida
+      }
+      }else {
+        nuevosPrestamos[index].estado = 'cerrado';
+       nuevosPrestamos[index].asunto = ''; // Vacío si la fecha no es válida
       }
     }
   
