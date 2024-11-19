@@ -77,6 +77,7 @@ export default function Home() {
     setLibros(librosIniciales);
   }, []);  
 
+  const [enEdicion, setEnEdicion] = useState(false);
   const [libroEditado, setLibroEditado] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'initial' });
 
@@ -88,10 +89,12 @@ export default function Home() {
   const editarLibro = (index) => {
     if (libroEditado === index) {
       setLibroEditado(null); // Si ya está en modo edición, lo desactiva
+      setEnEdicion(false);   // No hay libros en edición
     } else {
       setLibroEditado(index); // Activa el modo edición para el libro seleccionado
+      setEnEdicion(true);     // Indica que hay un libro en edición
     }
-  };
+  };  
 
   const manejarCambio = (e, index, campo) => {
     const nuevosLibros = [...libros];
@@ -148,7 +151,7 @@ export default function Home() {
       <div className="tabla">
         <TableContainer>
           <Table variant="simple">
-            <TableCaption>Haga click en el lápiz para editar</TableCaption>
+          <TableCaption>{enEdicion ? "Presione en el tick para guardar" : "Haga click en el lápiz para editar"}</TableCaption>
             <Thead>
               <Tr>
                 <Th className="esqizq"></Th>
@@ -193,7 +196,12 @@ export default function Home() {
               {libros.map((libro, index) => (
                 <Tr key={index}>
                   <Td className="columnalapiz">
-                    <Button onClick={() => editarLibro(index)}>
+                    <Button 
+                      onClick={() => editarLibro(index)}
+                      p={2}
+                      w="auto" //ajusta automaticamente al contenido
+                      h="auto" //ajusta automaticamente al contenido
+                      >
                       <Image
                         src={
                           libroEditado === index
@@ -201,8 +209,8 @@ export default function Home() {
                             : "/lapiz.png"
                         }
                         alt="Lápiz"
-                        width={20}
-                        height={20}
+                        width={22}
+                        height={22}
                       />
                     </Button>
                   </Td>
