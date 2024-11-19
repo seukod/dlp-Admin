@@ -1,16 +1,25 @@
 // HistorialRow.js
 "use client";
-import React from 'react';
-import { Tr, Td } from '@chakra-ui/react';
-import EditButton from '@/app/components/EditButton';
+import React from "react";
+import { Tr, Td } from "@chakra-ui/react";
+import EditButton from "@/app/components/EditButton";
 
-const HistorialRow = ({ historial, index, editarHistorial, historialEditado, manejarCambio }) => {
+const HistorialRow = ({
+  historial,
+  index,
+  editarHistorial,
+  historialEditado,
+  manejarCambio,
+}) => {
   const enEdicion = historialEditado === index;
 
   return (
     <Tr key={index}>
       <Td>
-        <EditButton onClick={() => editarHistorial(index)} isEditing={enEdicion} />
+        <EditButton
+          onClick={() => editarHistorial(index)}
+          isEditing={enEdicion}
+        />
       </Td>
       <Td>{historial.id}</Td>
       <Td>
@@ -19,7 +28,7 @@ const HistorialRow = ({ historial, index, editarHistorial, historialEditado, man
             type="text"
             value={historial.libro}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, 'libro')}
+            onChange={(e) => manejarCambio(e, index, "libro")}
           />
         ) : (
           historial.libro
@@ -31,7 +40,7 @@ const HistorialRow = ({ historial, index, editarHistorial, historialEditado, man
             type="text"
             value={historial.usuario}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, 'usuario')}
+            onChange={(e) => manejarCambio(e, index, "usuario")}
           />
         ) : (
           historial.usuario
@@ -43,7 +52,7 @@ const HistorialRow = ({ historial, index, editarHistorial, historialEditado, man
             type="text"
             value={historial.fechaPrestamo}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, 'fechaPrestamo')}
+            onChange={(e) => manejarCambio(e, index, "fechaPrestamo")}
           />
         ) : (
           historial.fechaPrestamo
@@ -55,7 +64,7 @@ const HistorialRow = ({ historial, index, editarHistorial, historialEditado, man
             type="text"
             value={historial.fechaDevolucion}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, 'fechaDevolucion')}
+            onChange={(e) => manejarCambio(e, index, "fechaDevolucion")}
           />
         ) : (
           historial.fechaDevolucion
@@ -67,7 +76,7 @@ const HistorialRow = ({ historial, index, editarHistorial, historialEditado, man
             type="text"
             value={historial.estado}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, 'estado')}
+            onChange={(e) => manejarCambio(e, index, "estado")}
           />
         ) : (
           historial.estado
@@ -78,5 +87,3 @@ const HistorialRow = ({ historial, index, editarHistorial, historialEditado, man
 };
 
 export default HistorialRow;
-
-

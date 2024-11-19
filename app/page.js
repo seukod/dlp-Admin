@@ -53,13 +53,12 @@ function LeftDrawer() {
 }
 
 export default function Home() {
-  const [libros, setLibros] = useState([]);
-  useEffect(() => {
+    const [libros, setLibros] = useState([]);            
+    useEffect(() => {
     const librosGuardados = localStorage.getItem('libros');
 
     // Si no hay libros en localStorage o el array es vacío, usa los datos iniciales
-    const librosIniciales = librosGuardados
-      ? JSON.parse(librosGuardados)
+    const librosIniciales = librosGuardados ? JSON.parse(librosGuardados)
       : [
           { id: '92', titulo: 'Un golpe de suerte', ISBN: "23483", autores: 'Lucho Jara', tags: 'comedia', donante: 'Francisco', fecha: '20/04/2001', estado: 'no prestado' },
           { id: '#88', titulo: 'El llamado de mi madre', ISBN: '2348123', autores: 'Javier Tauler', tags: 'romance, BL, horror, acción', donante: 'Fosox', fecha: '30/02/2024', estado: 'prestado' },
