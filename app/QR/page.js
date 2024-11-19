@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useSearchParams } from 'next/navigation';
 import QRCode from 'react-qr-code';
@@ -42,15 +42,39 @@ export default function QRPage() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f0f0f0', fontFamily: 'Arial, sans-serif' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>¡Gracias por tu donación!</h1>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        backgroundColor: '#f0f0f0',
+        fontFamily: 'Arial, sans-serif',
+      }}
+    >
+      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>
+        ¡Gracias por tu donación!
+      </h1>
       <div ref={qrRef} style={{ marginBottom: '20px' }}>
-        <QRCode value={linkqr} size={256} style={{border: "5px solid black"}} />
+        <QRCode
+          value={linkqr}
+          size={256}
+          style={{ border: '5px solid black' }}
+        />
       </div>
-      <p style={{ fontSize: '14px', color: '#666' }}>Descarga e imprime este código para pegarlo en tu libro. Id de tu libro: {id}</p>
-      <button 
-        onClick={downloadQR} 
-        style={{ padding: '10px 20px', marginTop: '20px', fontSize: '16px', cursor: 'pointer' }}
+      <p style={{ fontSize: '14px', color: '#666' }}>
+        Descarga e imprime este código para pegarlo en tu libro. Id de tu libro:{' '}
+        {id}
+      </p>
+      <button
+        onClick={downloadQR}
+        style={{
+          padding: '10px 20px',
+          marginTop: '20px',
+          fontSize: '16px',
+          cursor: 'pointer',
+        }}
       >
         Descarga tu código QR
       </button>

@@ -1,51 +1,54 @@
-.tabla{
-    padding: 1.5em;
+.tabla {
+  padding: 1.5em;
 }
 
 h1 {
-    text-align: center;             /* Centrar el texto */
-    font-size: 3em;                /* Aumentar el tamaño de la fuente */
-    font-weight: bold;             /* Hacer la fuente más gruesa */
-    color: #333;                   /* Cambiar el color del texto */
-    margin: 20px 0;                /* Espaciado superior e inferior */
-    text-transform: uppercase;      /* Convertir el texto a mayúsculas (opcional) */
-    letter-spacing: 2px;           /* Aumentar el espaciado entre letras (opcional) */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil (opcional) */
-    font-family: 'Arial', sans-serif; /* Cambiar la fuente (opcional) */
+  text-align: center; /* Centrar el texto */
+  font-size: 3em; /* Aumentar el tamaño de la fuente */
+  font-weight: bold; /* Hacer la fuente más gruesa */
+  color: #333; /* Cambiar el color del texto */
+  margin: 20px 0; /* Espaciado superior e inferior */
+  text-transform: uppercase; /* Convertir el texto a mayúsculas (opcional) */
+  letter-spacing: 2px; /* Aumentar el espaciado entre letras (opcional) */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil (opcional) */
+  font-family: 'Arial', sans-serif; /* Cambiar la fuente (opcional) */
 }
 
 th {
-    background-color: rgb(248, 161, 161); /* Color de fondo verde para los encabezados */
-    color: rgb(0, 0, 0); /* Color del texto negro */
+  background-color: rgb(
+    248,
+    161,
+    161
+  ); /* Color de fondo verde para los encabezados */
+  color: rgb(0, 0, 0); /* Color del texto negro */
 }
-
-.esqizq{
-    border-top-left-radius: 20px;
-    background-color: transparent;
-    border-color: transparent;
+.esqizq {
+  border-top-left-radius: 20px;
+  background-color: transparent;
+  border-bottom: transparent !important;
 }
-.esqder{
-    border-top-right-radius: 20px;
+.esqder {
+  border-top-right-radius: 20px;
 }
-.segcolumna{
-    border-top-left-radius: 20px;
+.segcolumna {
+  border-top-left-radius: 20px;
 }
-.columnalapiz{
-    border-color: transparent;
-    padding: 0.3em 0.3em;
-    border-bottom: transparent;
+.columnalapiz {
+  border-color: transparent;
+  padding: 0.3em 0.3em !important;
+  border-bottom: transparent !important;
 }
 .container {
-    position: relative; /* Hace que el contenedor sea el referente para el posicionamiento absoluto */
-    height: 100vh; /* Ajusta la altura de la página */
+  position: relative; /* Hace que el contenedor sea el referente para el posicionamiento absoluto */
+  height: 100vh; /* Ajusta la altura de la página */
 }
 .camposEdit {
-    background-color: #f0f8ff; /* Color claro para resaltar */
-    border: 1px solid #007acc; /* Borde azul para resaltar */
-    outline: none; /* Quitar el contorno */
-    padding: 4px; /* Añadir un poco de espacio interno */
-    border-radius: 10px;
-    box-sizing: border-box; /* Asegura que padding no aumente el tamaño */
-    width: 100px; /* Ajusta el ancho fijo según tus necesidades */
-    max-width: 100%; /* Limita el ancho máximo para que no se desborde */
-  }
+  background-color: #f0f8ff; /* Color claro para resaltar */
+  border: 1px solid #007acc; /* Borde azul para resaltar */
+  outline: none; /* Quitar el contorno */
+  padding: 4px; /* Añadir un poco de espacio interno */
+  border-radius: 10px;
+  box-sizing: border-box; /* Asegura que padding no aumente el tamaño */
+  width: 100px; /* Ajusta el ancho fijo según tus necesidades */
+  max-width: 100%; /* Limita el ancho máximo para que no se desborde */
+}

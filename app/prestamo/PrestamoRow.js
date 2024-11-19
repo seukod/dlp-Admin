@@ -1,15 +1,24 @@
-"use client";
+'use client';
 import React from 'react';
 import { Tr, Td } from '@chakra-ui/react';
 import EditButton from '@/app/components/EditButton';
 
-const PrestamoRow = ({ prestamo, index, editarPrestamo, prestamoEditado, manejarCambio }) => {
+const PrestamoRow = ({
+  prestamo,
+  index,
+  editarPrestamo,
+  prestamoEditado,
+  manejarCambio,
+}) => {
   const enEdicion = prestamoEditado === index;
 
   return (
     <Tr key={index}>
       <Td>
-        <EditButton onClick={() => editarPrestamo(index)} isEditing={enEdicion} />
+        <EditButton
+          onClick={() => editarPrestamo(index)}
+          isEditing={enEdicion}
+        />
       </Td>
       <Td>{prestamo.id}</Td>
       <Td>{prestamo.libro}</Td>
@@ -49,7 +58,7 @@ const PrestamoRow = ({ prestamo, index, editarPrestamo, prestamoEditado, manejar
           prestamo.fechaLimite
         )}
       </Td>
-      
+
       <Td>{prestamo.estado}</Td>
       <Td>{prestamo.asunto}</Td>
     </Tr>

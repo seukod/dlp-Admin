@@ -5,10 +5,10 @@ const EditableCell = ({ isEditing, value, onChange }) => {
   return (
     <Td>
       {isEditing ? (
-        <input 
-          type="text" 
+        <input
+          type="text"
           value={value}
-          className='camposEdit'
+          className="camposEdit"
           onChange={onChange}
         />
       ) : (

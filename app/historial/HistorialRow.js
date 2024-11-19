@@ -1,16 +1,25 @@
 // HistorialRow.js
-"use client";
+'use client';
 import React from 'react';
 import { Tr, Td } from '@chakra-ui/react';
 import EditButton from '@/app/components/EditButton';
 
-const HistorialRow = ({ historial, index, editarHistorial, historialEditado, manejarCambio }) => {
+const HistorialRow = ({
+  historial,
+  index,
+  editarHistorial,
+  historialEditado,
+  manejarCambio,
+}) => {
   const enEdicion = historialEditado === index;
 
   return (
     <Tr key={index}>
       <Td>
-        <EditButton onClick={() => editarHistorial(index)} isEditing={enEdicion} />
+        <EditButton
+          onClick={() => editarHistorial(index)}
+          isEditing={enEdicion}
+        />
       </Td>
       <Td>{historial.id}</Td>
       <Td>
@@ -78,5 +87,3 @@ const HistorialRow = ({ historial, index, editarHistorial, historialEditado, man
 };
 
 export default HistorialRow;
-
-

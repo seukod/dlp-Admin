@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useEffect, useState } from 'react'; // Asegúrate de importar useState
 import Image from 'next/image';
 import Link from 'next/link'; // Importa Link
@@ -27,13 +27,13 @@ function LeftDrawer() {
 
   return (
     <>
-      <Button colorScheme='blue' onClick={onOpen}>
+      <Button colorScheme="blue" onClick={onOpen}>
         MENU
       </Button>
       <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth='1px'>ADMIN</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px">ADMIN</DrawerHeader>
           <DrawerBody>
             {/* Botones en lugar de texto */}
             <Button w="100%" mb={2} as={Link} href="/">
@@ -61,24 +61,73 @@ export default function Home() {
     const librosIniciales = librosGuardados
       ? JSON.parse(librosGuardados)
       : [
-          { id: '92', titulo: 'Un golpe de suerte', ISBN: "23483", autores: 'Lucho Jara', tags: 'comedia', donante: 'Francisco', fecha: '20/04/2001', estado: 'no prestado' },
-          { id: '#88', titulo: 'El llamado de mi madre', ISBN: '2348123', autores: 'Javier Tauler', tags: 'romance, BL, horror, acción', donante: 'Fosox', fecha: '30/02/2024', estado: 'prestado' },
-          { id: '#32', titulo: 'SOMOS QUINTILLIZAS', ISBN: '2348123', autores: 'NEGI HARUBA', tags: 'cine, comedia', donante: 'Angel Leal', fecha: '18/09/2024', estado: 'No disponible' },
-          { id: '#97', titulo: 'Nana', ISBN: '2348123', autores: 'Ai Yazawa', tags: 'drama', donante: 'Francisco', fecha: '22/07/2024', estado: 'no prestado' },
-          { id: '#95', titulo: 'Gatos', ISBN: '2348123', autores: 'Juan Herrera', tags: 'comedia', donante: 'Franco Alun', fecha: '22/06/2023', estado: 'no prestado' },
+          {
+            id: '92',
+            titulo: 'Un golpe de suerte',
+            ISBN: '23483',
+            autores: 'Lucho Jara',
+            tags: 'comedia',
+            donante: 'Francisco',
+            fecha: '20/04/2001',
+            estado: 'no prestado',
+          },
+          {
+            id: '#88',
+            titulo: 'El llamado de mi madre',
+            ISBN: '2348123',
+            autores: 'Javier Tauler',
+            tags: 'romance, BL, horror, acción',
+            donante: 'Fosox',
+            fecha: '30/02/2024',
+            estado: 'prestado',
+          },
+          {
+            id: '#32',
+            titulo: 'SOMOS QUINTILLIZAS',
+            ISBN: '2348123',
+            autores: 'NEGI HARUBA',
+            tags: 'cine, comedia',
+            donante: 'Angel Leal',
+            fecha: '18/09/2024',
+            estado: 'No disponible',
+          },
+          {
+            id: '#97',
+            titulo: 'Nana',
+            ISBN: '2348123',
+            autores: 'Ai Yazawa',
+            tags: 'drama',
+            donante: 'Francisco',
+            fecha: '22/07/2024',
+            estado: 'no prestado',
+          },
+          {
+            id: '#95',
+            titulo: 'Gatos',
+            ISBN: '2348123',
+            autores: 'Juan Herrera',
+            tags: 'comedia',
+            donante: 'Franco Alun',
+            fecha: '22/06/2023',
+            estado: 'no prestado',
+          },
         ];
-  
+
     // Guarda los datos iniciales en caso de que no existan en localStorage
-    if (!librosGuardados || librosGuardados === "[]") {
+    if (!librosGuardados || librosGuardados === '[]') {
       localStorage.setItem('libros', JSON.stringify(librosIniciales));
     }
-  
+
     // Cargar los libros en el estado
     setLibros(librosIniciales);
-  }, []);  
+  }, []);
 
+  const [enEdicion, setEnEdicion] = useState(false);
   const [libroEditado, setLibroEditado] = useState(null);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'initial' });
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: 'initial',
+  });
 
   const guardarEnLocalStorage = (nuevosLibros) => {
     localStorage.removeItem('libros');
@@ -88,8 +137,10 @@ export default function Home() {
   const editarLibro = (index) => {
     if (libroEditado === index) {
       setLibroEditado(null); // Si ya está en modo edición, lo desactiva
+      setEnEdicion(false); // No hay libros en edición
     } else {
       setLibroEditado(index); // Activa el modo edición para el libro seleccionado
+      setEnEdicion(true); // Indica que hay un libro en edición
     }
   };
 
@@ -97,7 +148,7 @@ export default function Home() {
     const nuevosLibros = [...libros];
     nuevosLibros[index][campo] = e.target.value;
     setLibros(nuevosLibros);
-    
+
     // Guardar en localStorage
     guardarEnLocalStorage(nuevosLibros);
   };
@@ -137,7 +188,11 @@ export default function Home() {
 
   const getSortIcon = (key) => {
     if (sortConfig.key !== key) return '⇅';
-    return sortConfig.direction === 'asc' ? '↑' : sortConfig.direction === 'desc' ? '↓' : '⇅';
+    return sortConfig.direction === 'asc'
+      ? '↑'
+      : sortConfig.direction === 'desc'
+        ? '↓'
+        : '⇅';
   };
 
   return (
@@ -148,44 +203,48 @@ export default function Home() {
       <div className="tabla">
         <TableContainer>
           <Table variant="simple">
-            <TableCaption>Haga click en el lápiz para editar</TableCaption>
+            <TableCaption>
+              {enEdicion
+                ? 'Presione en el tick para guardar'
+                : 'Haga click en el lápiz para editar'}
+            </TableCaption>
             <Thead>
               <Tr>
                 <Th className="esqizq"></Th>
                 <Th className="segcolumna">ID</Th>
                 <Th
-                  onClick={() => ordenarLibros("titulo")}
-                  style={{ cursor: "pointer" }}
+                  onClick={() => ordenarLibros('titulo')}
+                  style={{ cursor: 'pointer' }}
                 >
-                  Título {getSortIcon("titulo")}
+                  Título {getSortIcon('titulo')}
                 </Th>
                 <Th>ISBN</Th>
                 <Th
-                  onClick={() => ordenarLibros("autores")}
-                  style={{ cursor: "pointer" }}
+                  onClick={() => ordenarLibros('autores')}
+                  style={{ cursor: 'pointer' }}
                 >
-                  Autores {getSortIcon("autores")}
+                  Autores {getSortIcon('autores')}
                 </Th>
                 <Th>Tags</Th>
                 <Th
-                  onClick={() => ordenarLibros("donante")}
-                  style={{ cursor: "pointer" }}
+                  onClick={() => ordenarLibros('donante')}
+                  style={{ cursor: 'pointer' }}
                 >
-                  Donante {getSortIcon("donante")}
+                  Donante {getSortIcon('donante')}
                 </Th>
                 <Th
-                  onClick={() => ordenarLibros("fecha")}
-                  style={{ cursor: "pointer" }}
+                  onClick={() => ordenarLibros('fecha')}
+                  style={{ cursor: 'pointer' }}
                 >
-                  Fecha de donación {getSortIcon("fecha")}
+                  Fecha de donación {getSortIcon('fecha')}
                 </Th>
                 <Th>GenerarQR</Th>
                 <Th
                   className="esqder"
-                  onClick={() => ordenarLibros("estado")}
-                  style={{ cursor: "pointer" }}
+                  onClick={() => ordenarLibros('estado')}
+                  style={{ cursor: 'pointer' }}
                 >
-                  Estado {getSortIcon("estado")}
+                  Estado {getSortIcon('estado')}
                 </Th>
               </Tr>
             </Thead>
@@ -193,16 +252,21 @@ export default function Home() {
               {libros.map((libro, index) => (
                 <Tr key={index}>
                   <Td className="columnalapiz">
-                    <Button onClick={() => editarLibro(index)}>
+                    <Button
+                      onClick={() => editarLibro(index)}
+                      p={2}
+                      w="auto" //ajusta automaticamente al contenido
+                      h="auto" //ajusta automaticamente al contenido
+                    >
                       <Image
                         src={
                           libroEditado === index
-                            ? "/tick-icon.png"
-                            : "/lapiz.png"
+                            ? '/tick-icon.png'
+                            : '/lapiz.png'
                         }
                         alt="Lápiz"
-                        width={20}
-                        height={20}
+                        width={22}
+                        height={22}
                       />
                     </Button>
                   </Td>
@@ -213,7 +277,7 @@ export default function Home() {
                         type="text"
                         value={libro.titulo}
                         className="camposEdit"
-                        onChange={(e) => manejarCambio(e, index, "titulo")}
+                        onChange={(e) => manejarCambio(e, index, 'titulo')}
                       />
                     ) : (
                       libro.titulo
@@ -221,15 +285,15 @@ export default function Home() {
                   </Td>
                   <Td>
                     {libroEditado === index ? (
-                        <input
-                          type="text"
-                          value={libro.ISBN}
-                          className="camposEdit"
-                          onChange={(e) => manejarCambio(e, index, "ISBN")}
-                        />
-                      ) : (
-                        libro.ISBN
-                      )}
+                      <input
+                        type="text"
+                        value={libro.ISBN}
+                        className="camposEdit"
+                        onChange={(e) => manejarCambio(e, index, 'ISBN')}
+                      />
+                    ) : (
+                      libro.ISBN
+                    )}
                   </Td>
                   <Td>
                     {libroEditado === index ? (
@@ -237,7 +301,7 @@ export default function Home() {
                         type="text"
                         value={libro.autores}
                         className="camposEdit"
-                        onChange={(e) => manejarCambio(e, index, "autores")}
+                        onChange={(e) => manejarCambio(e, index, 'autores')}
                       />
                     ) : (
                       libro.autores
@@ -249,7 +313,7 @@ export default function Home() {
                         type="text"
                         value={libro.tags}
                         className="camposEdit"
-                        onChange={(e) => manejarCambio(e, index, "tags")}
+                        onChange={(e) => manejarCambio(e, index, 'tags')}
                       />
                     ) : (
                       libro.tags
@@ -261,7 +325,7 @@ export default function Home() {
                         type="text"
                         value={libro.donante}
                         className="camposEdit"
-                        onChange={(e) => manejarCambio(e, index, "donante")}
+                        onChange={(e) => manejarCambio(e, index, 'donante')}
                       />
                     ) : (
                       libro.donante
@@ -273,7 +337,7 @@ export default function Home() {
                         type="text"
                         value={libro.fecha}
                         className="camposEdit"
-                        onChange={(e) => manejarCambio(e, index, "fecha")}
+                        onChange={(e) => manejarCambio(e, index, 'fecha')}
                       />
                     ) : (
                       libro.fecha
@@ -295,7 +359,7 @@ export default function Home() {
                         type="text"
                         value={libro.estado}
                         className="camposEdit"
-                        onChange={(e) => manejarCambio(e, index, "estado")}
+                        onChange={(e) => manejarCambio(e, index, 'estado')}
                       />
                     ) : (
                       libro.estado
@@ -312,4 +376,3 @@ export default function Home() {
     </>
   );
 }
-

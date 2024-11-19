@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 // Esto es una página de error 404 personalizada
 // Solo debemos crear un archivo not-found.js en la carpeta pages y Next.js lo detectará automáticamente
@@ -9,12 +9,12 @@ function Error404() {
       style={{
         fontFamily:
           "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'",
-        textAlign: "center",
-        display: "flex",
+        textAlign: 'center',
+        display: 'flex',
         flex: 1,
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       <div className="container-404-general">
