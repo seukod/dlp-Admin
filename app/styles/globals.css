@@ -22,11 +22,10 @@ th {
   ); /* Color de fondo verde para los encabezados */
   color: rgb(0, 0, 0); /* Color del texto negro */
 }
-
-.esqizq {
-  border-top-left-radius: 20px;
-  background-color: transparent;
-  border-color: transparent;
+.esqizq{
+    border-top-left-radius: 20px;
+    background-color: transparent;
+    border-bottom: transparent !important;
 }
 .esqder {
   border-top-right-radius: 20px;
@@ -34,10 +33,10 @@ th {
 .segcolumna {
   border-top-left-radius: 20px;
 }
-.columnalapiz {
-  border-color: transparent;
-  padding: 0.3em 0.3em;
-  border-bottom: transparent;
+.columnalapiz{
+    border-color: transparent;
+    padding: 0.3em 0.3em !important;
+    border-bottom: transparent !important;
 }
 .container {
   position: relative; /* Hace que el contenedor sea el referente para el posicionamiento absoluto */
