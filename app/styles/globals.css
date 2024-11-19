@@ -11,7 +11,7 @@ h1 {
   text-transform: uppercase; /* Convertir el texto a mayúsculas (opcional) */
   letter-spacing: 2px; /* Aumentar el espaciado entre letras (opcional) */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil (opcional) */
-  font-family: "Arial", sans-serif; /* Cambiar la fuente (opcional) */
+  font-family: 'Arial', sans-serif; /* Cambiar la fuente (opcional) */
 }
 
 th {
@@ -22,10 +22,10 @@ th {
   ); /* Color de fondo verde para los encabezados */
   color: rgb(0, 0, 0); /* Color del texto negro */
 }
-.esqizq{
-    border-top-left-radius: 20px;
-    background-color: transparent;
-    border-bottom: transparent !important;
+.esqizq {
+  border-top-left-radius: 20px;
+  background-color: transparent;
+  border-bottom: transparent !important;
 }
 .esqder {
   border-top-right-radius: 20px;
@@ -33,10 +33,10 @@ th {
 .segcolumna {
   border-top-left-radius: 20px;
 }
-.columnalapiz{
-    border-color: transparent;
-    padding: 0.3em 0.3em !important;
-    border-bottom: transparent !important;
+.columnalapiz {
+  border-color: transparent;
+  padding: 0.3em 0.3em !important;
+  border-bottom: transparent !important;
 }
 .container {
   position: relative; /* Hace que el contenedor sea el referente para el posicionamiento absoluto */

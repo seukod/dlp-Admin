@@ -1,6 +1,6 @@
 // FilterButton.js
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 import {
   Button,
   Menu,
@@ -8,7 +8,7 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 const FilterButton = ({ onSort }) => {
   return (
@@ -17,17 +17,17 @@ const FilterButton = ({ onSort }) => {
         Ordenar / Filtrar
       </MenuButton>
       <MenuList>
-        <MenuItem onClick={() => onSort("titulo", "asc")}>
+        <MenuItem onClick={() => onSort('titulo', 'asc')}>
           Ordenar por Título (A-Z)
         </MenuItem>
-        <MenuItem onClick={() => onSort("titulo", "desc")}>
+        <MenuItem onClick={() => onSort('titulo', 'desc')}>
           Ordenar por Título (Z-A)
         </MenuItem>
         <MenuDivider />
-        <MenuItem onClick={() => onSort("fecha", "reciente")}>
+        <MenuItem onClick={() => onSort('fecha', 'reciente')}>
           Ordenar por Fecha (Más Reciente)
         </MenuItem>
-        <MenuItem onClick={() => onSort("fecha", "antiguo")}>
+        <MenuItem onClick={() => onSort('fecha', 'antiguo')}>
           Ordenar por Fecha (Más Antiguo)
         </MenuItem>
       </MenuList>

@@ -1,7 +1,7 @@
-"use client";
-import React from "react";
-import { Tr, Td } from "@chakra-ui/react";
-import EditButton from "@/app/components/EditButton";
+'use client';
+import React from 'react';
+import { Tr, Td } from '@chakra-ui/react';
+import EditButton from '@/app/components/EditButton';
 
 const PrestamoRow = ({
   prestamo,
@@ -27,7 +27,7 @@ const PrestamoRow = ({
             type="text"
             value={prestamo.libro}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, "libro")}
+            onChange={(e) => manejarCambio(e, index, 'libro')}
           />
         ) : (
           prestamo.libro
@@ -39,7 +39,7 @@ const PrestamoRow = ({
             type="text"
             value={prestamo.fechaPrestamo}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, "fechaPrestamo")}
+            onChange={(e) => manejarCambio(e, index, 'fechaPrestamo')}
           />
         ) : (
           prestamo.fechaPrestamo
@@ -51,7 +51,7 @@ const PrestamoRow = ({
             type="text"
             value={prestamo.fechaDevolucion}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, "fechaDevolucion")}
+            onChange={(e) => manejarCambio(e, index, 'fechaDevolucion')}
           />
         ) : (
           prestamo.fechaDevolucion
@@ -63,7 +63,7 @@ const PrestamoRow = ({
             type="text"
             value={prestamo.fechaLimite}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, "fechaLimite")}
+            onChange={(e) => manejarCambio(e, index, 'fechaLimite')}
           />
         ) : (
           prestamo.fechaLimite

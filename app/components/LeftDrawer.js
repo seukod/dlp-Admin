@@ -1,6 +1,6 @@
 // LeftDrawer.js
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -9,12 +9,12 @@ import {
   DrawerContent,
   Button,
   useDisclosure,
-} from "@chakra-ui/react";
-import Link from "next/link";
+} from '@chakra-ui/react';
+import Link from 'next/link';
 
 const LeftDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const placement = "left";
+  const placement = 'left';
 
   return (
     <>
