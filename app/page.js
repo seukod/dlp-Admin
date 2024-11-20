@@ -57,6 +57,10 @@ function LeftDrawer() {
 export default function Home() {
   const [libros, setLibros] = useState([]);
   const [libroEditado, setLibroEditado] = useState(null);
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: 'initial',
+  });
   const apiUrl = 'https://openlibrary.org/api/books?bibkeys=ISBN:0451526538&format=json&jscmd=data';
 
   useEffect(() => {
@@ -82,17 +86,44 @@ export default function Home() {
     setLibroEditado(libroEditado === index ? null : index);
   };
 
-  const getSortIcon = (campo) => {
-    // Implementa la lógica para obtener el ícono de ordenamiento
-    return '⇅'; // Cambia esto según tu lógica de ordenamiento
+  const getSortIcon = (key) => {
+    if (sortConfig.key !== key) return '⇅';
+    return sortConfig.direction === 'asc'
+      ? '↑'
+      : sortConfig.direction === 'desc'
+        ? '↓'
+        : '⇅';
   };
 
-  const ordenarLibros = (campo) => {
-    // Implementa la lógica para ordenar los libros
+  const ordenarLibros = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    } else if (sortConfig.key === key && sortConfig.direction === 'desc') {
+      direction = 'initial';
+    }
+
+    setSortConfig({ key, direction });
+
+    if (direction === 'initial') {
+      setLibros(JSON.parse(localStorage.getItem('libros')) || libros);
+    } else if (key === 'fecha') {
+      ordenarFechas(direction);
+    } else {
+      const librosOrdenados = [...libros].sort((a, b) => {
+        if (a[key] < b[key]) return direction === 'asc' ? -1 : 1;
+        if (a[key] > b[key]) return direction === 'asc' ? 1 : -1;
+        return 0;
+      });
+      setLibros(librosOrdenados);
+    }
+  };
+
+  const ordenarFechas = (direction) => {
     const librosOrdenados = [...libros].sort((a, b) => {
-      if (a[campo] < b[campo]) return -1;
-      if (a[campo] > b[campo]) return 1;
-      return 0;
+      const fechaA = new Date(a.fecha.split('/').reverse().join('-'));
+      const fechaB = new Date(b.fecha.split('/').reverse().join('-'));
+      return direction === 'asc' ? fechaA - fechaB : fechaB - fechaA;
     });
     setLibros(librosOrdenados);
   };
