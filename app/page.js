@@ -1,5 +1,7 @@
 'use client';
-import React, { useEffect, useState } from 'react'; // Asegúrate de importar useState
+//catalogo
+import React, { useState, useEffect } from 'react';
+import { fetchAndRenderData } from './API/miniapi'; 
 import Image from 'next/image';
 import Link from 'next/link'; // Importa Link
 import {
@@ -54,145 +56,45 @@ function LeftDrawer() {
 
 export default function Home() {
   const [libros, setLibros] = useState([]);
-  useEffect(() => {
-    const librosGuardados = localStorage.getItem('libros');
-
-    // Si no hay libros en localStorage o el array es vacío, usa los datos iniciales
-    const librosIniciales = librosGuardados
-      ? JSON.parse(librosGuardados)
-      : [
-          {
-            id: '92',
-            titulo: 'Un golpe de suerte',
-            ISBN: '23483',
-            autores: 'Lucho Jara',
-            tags: 'comedia',
-            donante: 'Francisco',
-            fecha: '20/04/2001',
-            estado: 'no prestado',
-          },
-          {
-            id: '#88',
-            titulo: 'El llamado de mi madre',
-            ISBN: '2348123',
-            autores: 'Javier Tauler',
-            tags: 'romance, BL, horror, acción',
-            donante: 'Fosox',
-            fecha: '30/02/2024',
-            estado: 'prestado',
-          },
-          {
-            id: '#32',
-            titulo: 'SOMOS QUINTILLIZAS',
-            ISBN: '2348123',
-            autores: 'NEGI HARUBA',
-            tags: 'cine, comedia',
-            donante: 'Angel Leal',
-            fecha: '18/09/2024',
-            estado: 'No disponible',
-          },
-          {
-            id: '#97',
-            titulo: 'Nana',
-            ISBN: '2348123',
-            autores: 'Ai Yazawa',
-            tags: 'drama',
-            donante: 'Francisco',
-            fecha: '22/07/2024',
-            estado: 'no prestado',
-          },
-          {
-            id: '#95',
-            titulo: 'Gatos',
-            ISBN: '2348123',
-            autores: 'Juan Herrera',
-            tags: 'comedia',
-            donante: 'Franco Alun',
-            fecha: '22/06/2023',
-            estado: 'no prestado',
-          },
-        ];
-
-    // Guarda los datos iniciales en caso de que no existan en localStorage
-    if (!librosGuardados || librosGuardados === '[]') {
-      localStorage.setItem('libros', JSON.stringify(librosIniciales));
-    }
-
-    // Cargar los libros en el estado
-    setLibros(librosIniciales);
-  }, []);
-
-  const [enEdicion, setEnEdicion] = useState(false);
   const [libroEditado, setLibroEditado] = useState(null);
-  const [sortConfig, setSortConfig] = useState({
-    key: null,
-    direction: 'initial',
-  });
+  const apiUrl = 'https://openlibrary.org/api/books?bibkeys=ISBN:0451526538&format=json&jscmd=data';
 
-  const guardarEnLocalStorage = (nuevosLibros) => {
-    localStorage.removeItem('libros');
-    localStorage.setItem('libros', JSON.stringify(nuevosLibros));
-  };
+  useEffect(() => {
+    const fetchLibros = async () => {
+      const apiData = await fetchAndRenderData(apiUrl);
+      if (apiData) {
+        setLibros(apiData); // Asumiendo que fetchAndRenderData retorna los datos procesados
+        localStorage.setItem('libros', JSON.stringify(apiData)); // Guarda los datos en localStorage
+      }
+    };
 
-  const editarLibro = (index) => {
-    if (libroEditado === index) {
-      setLibroEditado(null); // Si ya está en modo edición, lo desactiva
-      setEnEdicion(false); // No hay libros en edición
-    } else {
-      setLibroEditado(index); // Activa el modo edición para el libro seleccionado
-      setEnEdicion(true); // Indica que hay un libro en edición
-    }
-  };
+    fetchLibros();
+  }, []);
 
   const manejarCambio = (e, index, campo) => {
     const nuevosLibros = [...libros];
     nuevosLibros[index][campo] = e.target.value;
     setLibros(nuevosLibros);
-
-    // Guardar en localStorage
-    guardarEnLocalStorage(nuevosLibros);
+    localStorage.setItem('libros', JSON.stringify(nuevosLibros)); // Actualiza localStorage
   };
 
-  const ordenarLibros = (key) => {
-    let direction = 'asc';
-    if (sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
-    } else if (sortConfig.key === key && sortConfig.direction === 'desc') {
-      direction = 'initial';
-    }
-
-    setSortConfig({ key, direction });
-
-    if (direction === 'initial') {
-      setLibros(JSON.parse(localStorage.getItem('libros')) || libros);
-    } else if (key === 'fecha') {
-      ordenarFechas(direction);
-    } else {
-      const librosOrdenados = [...libros].sort((a, b) => {
-        if (a[key] < b[key]) return direction === 'asc' ? -1 : 1;
-        if (a[key] > b[key]) return direction === 'asc' ? 1 : -1;
-        return 0;
-      });
-      setLibros(librosOrdenados);
-    }
+  const editarLibro = (index) => {
+    setLibroEditado(libroEditado === index ? null : index);
   };
 
-  const ordenarFechas = (direction) => {
+  const getSortIcon = (campo) => {
+    // Implementa la lógica para obtener el ícono de ordenamiento
+    return '⇅'; // Cambia esto según tu lógica de ordenamiento
+  };
+
+  const ordenarLibros = (campo) => {
+    // Implementa la lógica para ordenar los libros
     const librosOrdenados = [...libros].sort((a, b) => {
-      const fechaA = new Date(a.fecha.split('/').reverse().join('-'));
-      const fechaB = new Date(b.fecha.split('/').reverse().join('-'));
-      return direction === 'asc' ? fechaA - fechaB : fechaB - fechaA;
+      if (a[campo] < b[campo]) return -1;
+      if (a[campo] > b[campo]) return 1;
+      return 0;
     });
     setLibros(librosOrdenados);
-  };
-
-  const getSortIcon = (key) => {
-    if (sortConfig.key !== key) return '⇅';
-    return sortConfig.direction === 'asc'
-      ? '↑'
-      : sortConfig.direction === 'desc'
-        ? '↓'
-        : '⇅';
   };
 
   return (
@@ -204,7 +106,7 @@ export default function Home() {
         <TableContainer>
           <Table variant="simple">
             <TableCaption>
-              {enEdicion
+              {libroEditado !== null
                 ? 'Presione en el tick para guardar'
                 : 'Haga click en el lápiz para editar'}
             </TableCaption>
@@ -227,7 +129,7 @@ export default function Home() {
                 </Th>
                 <Th>Tags</Th>
                 <Th
-                  onClick={() => ordenarLibros('donante')}
+                  onClick={()=> ordenarLibros('donante')}
                   style={{ cursor: 'pointer' }}
                 >
                   Donante {getSortIcon('donante')}
