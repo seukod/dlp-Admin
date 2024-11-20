@@ -1,5 +1,11 @@
+<<<<<<< Updated upstream
 "use client";
 import React, { useEffect, useState } from 'react'; // Asegúrate de importar useState
+=======
+'use client'
+import React, { useState, useEffect } from 'react';
+import { fetchAndRenderData } from './api/miniapi'; 
+>>>>>>> Stashed changes
 import Image from 'next/image';
 import Link from 'next/link'; // Importa Link
 import {
@@ -54,6 +60,7 @@ function LeftDrawer() {
 
 export default function Home() {
   const [libros, setLibros] = useState([]);
+<<<<<<< Updated upstream
   useEffect(() => {
     const librosGuardados = localStorage.getItem('libros');
     setLibros(librosGuardados ? JSON.parse(librosGuardados) : [
@@ -69,14 +76,44 @@ export default function Home() {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'initial' });
 
   const guardarEnLocalStorage = (nuevosLibros) => {
+=======
+  const [libroEditado, setLibroEditado] = useState(null);
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: 'initial',
+  });
+  const apiUrl = 'https://openlibrary.org/api/books?bibkeys=ISBN:0451526538&format=json&jscmd=data';
+
+  useEffect(() => {
+    const fetchLibros = async () => {
+      const apiData = await fetchAndRenderData(apiUrl);
+      if (apiData) {
+        setLibros(apiData);
+        localStorage.setItem('libros', JSON.stringify(apiData));
+      }
+    };
+
+    fetchLibros();
+  }, []);
+
+  const guardarEnLocalStorage = (nuevosLibros) => {
+    localStorage.removeItem('libros');
+>>>>>>> Stashed changes
     localStorage.setItem('libros', JSON.stringify(nuevosLibros));
   };
 
   const editarLibro = (index) => {
     if (libroEditado === index) {
       setLibroEditado(null); // Si ya está en modo edición, lo desactiva
+<<<<<<< Updated upstream
     } else {
       setLibroEditado(index); // Activa el modo edición para el libro seleccionado
+=======
+      setEnEdicion(false); // No hay libros en edición
+    } else {
+      setLibroEditado(index); // Activa el modo edición para el libro seleccionado
+      setEnEdicion(true); // Indica que hay un libro en edición
+>>>>>>> Stashed changes
     }
   };
 
@@ -84,7 +121,11 @@ export default function Home() {
     const nuevosLibros = [...libros];
     nuevosLibros[index][campo] = e.target.value;
     setLibros(nuevosLibros);
+<<<<<<< Updated upstream
     
+=======
+
+>>>>>>> Stashed changes
     // Guardar en localStorage
     guardarEnLocalStorage(nuevosLibros);
   };
@@ -124,7 +165,30 @@ export default function Home() {
 
   const getSortIcon = (key) => {
     if (sortConfig.key !== key) return '⇅';
+<<<<<<< Updated upstream
     return sortConfig.direction === 'asc' ? '↑' : sortConfig.direction === 'desc' ? '↓' : '⇅';
+=======
+    return sortConfig.direction === 'asc'
+      ? '↑'
+      : sortConfig.direction === 'desc'
+        ? '↓'
+        : '⇅';
+  };
+
+  const mostrarTags = (tags) => {
+    const tagsArray = tags.split(', '); // Suponiendo que los tags están separados por comas
+    const maxTags = 5; // Número máximo de tags a mostrar
+    const displayedTags = tagsArray.slice(0, maxTags).join(', '); // Mostrar solo los primeros maxTags
+
+    return (
+      <div>
+        {displayedTags}
+        {tagsArray.length > maxTags && (
+          <Button size="sm" onClick={() => alert(tags)}>Ver más</Button> // Muestra un alert con todos los tags
+        )}
+      </div>
+    );
+>>>>>>> Stashed changes
   };
 
   return (
@@ -138,6 +202,7 @@ export default function Home() {
             <TableCaption>Haga click en el lápiz para editar</TableCaption>
             <Thead>
               <Tr>
+<<<<<<< Updated upstream
                 <Th className='esqizq'></Th>
                 <Th className='segcolumna'>
                   ID
@@ -145,10 +210,19 @@ export default function Home() {
                 <Th onClick={() => ordenarLibros('titulo')} style={{ cursor: 'pointer' }}>
                   Título {getSortIcon('titulo')}
                 </Th>
+=======
+                <Th className="esqizq"></Th>
+                <Th className="segcolumna">ID</Th>
+                <Th onClick={() => ordenarLibros('titulo')} style={{ cursor: 'pointer' }}>
+                  Título {getSortIcon('titulo')}
+                </Th>
+                <Th>ISBN</Th>
+>>>>>>> Stashed changes
                 <Th onClick={() => ordenarLibros('autores')} style={{ cursor: 'pointer' }}>
                   Autores {getSortIcon('autores')}
                 </Th>
                 <Th>Tags</Th>
+<<<<<<< Updated upstream
                 <Th onClick={() => ordenarLibros('donante')} style={{ cursor: 'pointer'}}>
                   Donante {getSortIcon('donante')}
                   </Th>
@@ -156,17 +230,44 @@ export default function Home() {
                   Fecha de donación {getSortIcon('fecha')}
                 </Th>
                 <Th className='esqder' onClick={() => ordenarLibros('estado')} style={{ cursor: 'pointer' }}>
+=======
+                <Th onClick={() => ordenarLibros('donante')} style={{ cursor: 'pointer' }}>
+                  Donante {getSortIcon('donante')}
+                </Th>
+                <Th onClick={() => ordenarLibros('fecha')} style={{ cursor: 'pointer' }}>
+                  Fecha de donación {getSortIcon('fecha')}
+                </Th>
+                <Th>GenerarQR</Th>
+                <Th className="esqder" onClick={() => ordenarLibros('estado')} style={{ cursor: 'pointer' }}>
+>>>>>>> Stashed changes
                   Estado {getSortIcon('estado')}
                 </Th>
               </Tr>
             </Thead>
             <Tbody>
               {libros.map((libro, index) => (
+<<<<<<< Updated upstream
                 <Tr key={index}>
                   <Td className='columnalapiz'>
                     <Button onClick={() => editarLibro(index)}>
                       <Image 
                         src={libroEditado === index ? '/tick-icon.png' : '/lapiz.png'}  // Referencia al ícono de lápiz
+=======
+                <Tr key ={index}>
+                  <Td className="columnalapiz">
+                    <Button
+                      onClick={() => editarLibro(index)}
+                      p={2}
+                      w="auto"
+                      h="auto"
+                    >
+                      <Image
+                        src={
+                          libroEditado === index
+                            ? '/tick-icon.png'
+                            : '/lapiz.png'
+                        }
+>>>>>>> Stashed changes
                         alt="Lápiz"
                         width={20}
                         height={20}
@@ -207,7 +308,7 @@ export default function Home() {
                         onChange={(e) => manejarCambio(e, index, 'tags')}
                       />
                     ) : (
-                      libro.tags
+                      mostrarTags(libro.tags) // Llama a la función para mostrar los tags
                     )}
                   </Td>
                   <Td>
