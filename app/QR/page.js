@@ -1,5 +1,5 @@
-'use client';
-
+/*'use client';
+import { Suspense } from "react";
 import { useSearchParams } from 'next/navigation';
 import QRCode from 'react-qr-code';
 import { useRef } from 'react';
@@ -81,3 +81,4 @@ export default function QRPage() {
     </div>
   );
 }
+*/
