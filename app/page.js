@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { fetchAndRenderData } from './API/miniapi'; 
+import { fetchAndRenderData } from './API/miniapi';
+import LeftDrawer from './components/LeftDrawer'; 
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -22,35 +23,7 @@ import {
   TableContainer,
 } from '@chakra-ui/react';
 
-function LeftDrawer() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const placement = 'left';
 
-  return (
-    <>
-      <Button colorScheme="blue" onClick={onOpen}>
-        MENU
-      </Button>
-      <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">ADMIN</DrawerHeader>
-          <DrawerBody>
-            <Button w="100%" mb={2} as={Link} href="/">
-              Libros
-            </Button>
-            <Button w="100%" mb={2} as={Link} href="/prestamo">
-              Préstamo
-            </Button>
-            <Button w="100%" mb={2} as={Link} href="/historial">
-              Historial de actividades
-            </Button>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-    </>
-  );
-}
 
 export default function Home() {
   const [libros, setLibros] = useState([]);
@@ -120,6 +93,7 @@ const manejarCambio = (e, index, campo) => {
 
   return (
     <>
+      <LeftDrawer />
       <h1>CATÁLOGO LIBROS</h1>
       <TableContainer>
         <Table variant="simple">
@@ -190,11 +164,11 @@ const manejarCambio = (e, index, campo) => {
                     {libroEditado === index ? (
                       <input
                         type="text"
-                        value={libro.tags.join(', ')} // Asegúrate de que los tags se muestren correctamente
+                        value={Array.isArray(libro.tags) ? libro.tags.join(', ') : ''} // Asegúrate de que los tags se muestren correctamente
                         onChange={(e) => manejarCambio(e, index, 'tags')}
                       />
                     ) : (
-                      libro.tags.join(', ') // Asegúrate de que los tags se muestren correctamente
+                      Array.isArray(libro.tags) ? libro.tags.join(', ') : ''
                     )}
                   </Td>
                   <Td>
