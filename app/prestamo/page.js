@@ -132,46 +132,36 @@ export default function Home() {
     setPrestamoEditado(prestamoEditado === index ? null : index);
   };
 
-  const manejarCambio = (e, index, campo) => {
+  const manejarCambio = (nuevoValor, index, campo) => {
+    if (
+      (campo === 'fechaPrestamo' || campo === 'fechaDevolucion' || campo === 'fechaLimite') &&
+      !esFechaValida(nuevoValor)
+    ) {
+      alert('La fecha ingresada no es válida. Por favor, usa el formato DD/MM/AAAA.');
+      return; // Detener si la fecha no es válida
+    }
+    
     const nuevosPrestamos = [...prestamos];
-    nuevosPrestamos[index][campo] = e.target.value;
+    nuevosPrestamos[index][campo] = nuevoValor;
 
     if (campo === 'fechaDevolucion') {
-      const nuevaFechaDevolucion = e.target.value;
-      if (esFechaValida(nuevaFechaDevolucion)) {
-        if (esFechaLimiteVencida(nuevaFechaDevolucion)) {
-          nuevosPrestamos[index].estado = 'cerrado';
-          nuevosPrestamos[index].asunto = 'atrasado';
-        } else {
-          nuevosPrestamos[index].estado = 'abierto';
-          nuevosPrestamos[index].asunto = 'prestado';
-        }
-      } else {
+      //Cambiar estado al marcar devolución
+      if (nuevoValor !== '00/00/00') {
         nuevosPrestamos[index].estado = 'cerrado';
-        nuevosPrestamos[index].asunto = '';
+        nuevosPrestamos[index].asunto = 'devuelto';
       }
     }
-
-    if (campo === 'fechaPrestamo') {
-      const nuevaFechaPrestamo = e.target.value;
-
-      if(esFechaValida(nuevaFechaPrestamo)){
-      if (nuevaFechaPrestamo === '00/00/0000') {
-        nuevosPrestamos[index].estado = 'cerrado';
-        nuevosPrestamos[index].asunto = ''; // Vacío si la fecha es '00/00/0000'
-      } else if (/^\d{2}\/\d{2}\/\d{4}$/.test(nuevaFechaPrestamo)) {
+    //Cambiar estado al marcar fecha límite
+    if(campo === 'fechaLimite'){
+      if (esFechaLimiteVencida(nuevoValor)){
         nuevosPrestamos[index].estado = 'abierto';
-        nuevosPrestamos[index].asunto = 'prestado';
-      } else {
-        nuevosPrestamos[index].estado = 'cerrado';
-        nuevosPrestamos[index].asunto = ''; // Vacío si la fecha no es válida
+        nuevosPrestamos[index].asunto = 'prestado' 
       }
-      }else {
-        nuevosPrestamos[index].estado = 'cerrado';
-       nuevosPrestamos[index].asunto = ''; // Vacío si la fecha no es válida
+      else{
+        nuevosPrestamos[index].estado = 'abierto'
+        nuevosPrestamos[index].asunto = 'atrasado'
       }
     }
-
     setPrestamos(nuevosPrestamos);
     localStorage.setItem('prestamos', JSON.stringify(nuevosPrestamos));
   };

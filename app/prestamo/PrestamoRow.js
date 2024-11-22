@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { Tr, Td } from '@chakra-ui/react';
 import EditButton from '@/app/components/EditButton';
 
@@ -11,6 +11,24 @@ const PrestamoRow = ({
   manejarCambio,
 }) => {
   const enEdicion = prestamoEditado === index;
+
+  // Estados temporales para los campos en edición
+  const [valoresTemporales, setValoresTemporales] = useState({
+    fechaPrestamo: prestamo.fechaPrestamo,
+    fechaDevolucion: prestamo.fechaDevolucion,
+    fechaLimite: prestamo.fechaLimite,
+  });
+  
+    // Manejar cambio en estado temporal
+  const manejarCambioTemporal = (campo, valor) => {
+    setValoresTemporales((prev) => ({ ...prev, [campo]: valor }));
+  };
+
+    // Guardar cambios al dejar de interactuar
+  const guardarCambios = (campo) => {
+    manejarCambio(valoresTemporales[campo], index, campo);
+  };
+
 
   return (
     <Tr key={index}>
@@ -26,9 +44,10 @@ const PrestamoRow = ({
         {enEdicion ? (
           <input
             type="text"
-            value={prestamo.fechaPrestamo}
+            value={valoresTemporales.fechaPrestamo}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, 'fechaPrestamo')}
+            onChange={(e) => manejarCambioTemporal('fechaPrestamo', e.target.value)}
+            onBlur={() => guardarCambios('fechaPrestamo')}
           />
         ) : (
           prestamo.fechaPrestamo
@@ -38,9 +57,10 @@ const PrestamoRow = ({
         {enEdicion ? (
           <input
             type="text"
-            value={prestamo.fechaDevolucion}
+            value={valoresTemporales.fechaDevolucion}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, 'fechaDevolucion')}
+            onChange={(e) => manejarCambioTemporal('fechaDevolucion', e.target.value)}
+            onBlur ={() => guardarCambios('fechaDevolucion')}
           />
         ) : (
           prestamo.fechaDevolucion
@@ -50,9 +70,10 @@ const PrestamoRow = ({
         {enEdicion ? (
           <input
             type="text"
-            value={prestamo.fechaLimite}
+            value={valoresTemporales.fechaLimite}
             className="camposEdit"
-            onChange={(e) => manejarCambio(e, index, 'fechaLimite')}
+            onChange={(e) => manejarCambioTemporal('fechaLimite', e.target.value)}
+            onBlur={() => guardarCambios('fechaLimite')}
           />
         ) : (
           prestamo.fechaLimite
