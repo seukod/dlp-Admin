@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { fetchAndRenderData } from './API/miniapi';
+import { fetchAndRenderData } from './miniapi';
 import LeftDrawer from './components/LeftDrawer'; 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,32 +29,8 @@ export default function Home() {
   const [libros, setLibros] = useState([]);
   const [libroEditado, setLibroEditado] = useState(null);
   
-  // Cambia el ID aquí según sea necesario
-  const apiUrl = 'https://dlp-api.vercel.app/libros?id=2'; // Reemplaza '1' con el ID que deseas
-
-  const fetchLibros = async () => {
-    try {
-      const librosGuardados = localStorage.getItem('libros');
-      if (librosGuardados) {
-        setLibros(JSON.parse(librosGuardados));
-        return; // No realiza el fetch si hay datos locales
-      }
-      const apiData = await fetchAndRenderData(apiUrl);
-      console.log(apiData); // Verifica la respuesta de la API
-      if (apiData && apiData.libros) {
-        setLibros(apiData.libros);
-        localStorage.setItem('libros', JSON.stringify(apiData.libros)); // Guarda datos iniciales
-      } else {
-        console.error("No se encontraron libros en la respuesta de la API");
-      }
-    } catch (error) {
-      console.error("Error al obtener datos de la API:", error);
-    }
-  };
-  
-  
   useEffect(() => {
-    fetchLibros();
+    fetchAndRenderData("API/libro").then((data) => setLibros(data));
   }, []);
   useEffect(() => {
     console.log(libros); // Monitorea el estado de libros cada vez que cambia
@@ -113,104 +89,104 @@ const manejarCambio = (e, index, campo) => {
             </Tr>
           </Thead>
           <Tbody>
-            {libros.length > 0 ? (
-              libros.map((libro, index) => (
-                <Tr key={libro.id}>
-                  <Td>
-                    <Button onClick={() => editarLibro(index)} p={2}>
-                      <Image
-                        src={libroEditado === index ? '/tick-icon.png' : '/lapiz.png'}
-                        alt="Editar"
-                        width={22}
-                        height={22}
-                      />
-                    </Button>
-                  </Td>
-                  <Td>{libro.id}</Td>
-                  <Td>
-                    {libroEditado === index ? (
-                      <input
-                        type="text"
-                        value={libro.titulo}
-                        onChange={(e) => manejarCambio(e, index, 'titulo')}
-                      />
-                    ) : (
-                      libro.titulo
-                    )}
-                  </Td>
-                  <Td>
-                    {libroEditado === index ? (
-                      <input
-                        type="text"
-                        value={libro.caratula} // Cambié ISBN por carátula
-                        onChange={(e) => manejarCambio(e, index, 'caratula')}
-                      />
-                    ) : (
-                      libro.caratula // Cambié ISBN por carátula
-                    )}
-                  </Td>
-                  <Td>
-                    {libroEditado === index ? (
-                      <input
-                        type="text"
-                        value={libro.autores}
-                        onChange={(e) => manejarCambio(e, index, 'autores')}
-                      />
-                    ) : (
-                      libro.autores
-                    )}
-                  </Td>
-                  <Td>
-                    {libroEditado === index ? (
-                      <input
-                        type="text"
-                        value={Array.isArray(libro.tags) ? libro.tags.join(', ') : ''} // Asegúrate de que los tags se muestren correctamente
-                        onChange={(e) => manejarCambio(e, index, 'tags')}
-                      />
-                    ) : (
-                      Array.isArray(libro.tags) ? libro.tags.join(', ') : ''
-                    )}
-                  </Td>
-                  <Td>
-                    {libroEditado === index ? (
-                      <input
-                        type="text"
-                        value={libro.donante}
-                        onChange={(e) => manejarCambio(e, index, 'donante')}
-                      />
-                    ) : (
-                      libro.donante
-                    )}
-                  </Td>
-                  <Td>
-                    {libroEditado === index ? (
-                      <input
-                        type="text"
-                        value={new Date(libro.fecha_donacion).toLocaleDateString()} // Formatea la fecha
-                        onChange={(e) => manejarCambio(e, index, 'fecha_donacion')}
-                      />
-                    ) : (
-                      new Date(libro.fecha_donacion).toLocaleDateString() // Formatea la fecha
-                    )}
-                  </Td>
-                  <Td>
-                    {libroEditado === index ? (
-                      <input
-                        type="text"
-                        value={libro.prestado ? 'Prestado' : 'Disponible'} // Muestra el estado
-                        onChange={(e) => manejarCambio(e, index, 'prestado')}
-                      />
-                    ) : (
-                      libro.prestado ? 'Prestado' : 'Disponible' // Muestra el estado
-                    )}
-                  </Td>
+              {libros && libros.libros && libros.libros.length > 0 ? (
+                libros.libros.map((libro, index) => (
+                  <Tr key={libro.id}>
+                    <Td>
+                      <Button onClick={() => editarLibro(index)} p={2}>
+                        <Image
+                          src={libroEditado === index ? '/tick-icon.png' : '/lapiz.png'}
+                          alt="Editar"
+                          width={22}
+                          height={22}
+                        />
+                      </Button>
+                    </Td>
+                    <Td>{libro.id}</Td>
+                    <Td>
+                      {libroEditado === index ? (
+                        <input
+                          type="text"
+                          value={libro.titulo}
+                          onChange={(e) => manejarCambio(e, index, 'titulo')}
+                        />
+                      ) : (
+                        libro.titulo
+                      )}
+                    </Td>
+                    <Td>
+                      {libroEditado === index ? (
+                        <input
+                          type="text"
+                          value={libro.caratula || ''} // Asegúrate de manejar el caso de carátula nula
+                          onChange={(e) => manejarCambio(e, index, 'caratula')}
+                        />
+                      ) : (
+                        libro.caratula ? <Image src={`data:image/jpeg;base64,${(libro.caratula)}`} alt={libro.titulo} width={50} height={75} /> : 'Sin Carátula'
+                      )}
+                    </Td>
+                    <Td>
+                      {libroEditado === index ? (
+                        <input
+                          type="text"
+                          value={libro.autores}
+                          onChange={(e) => manejarCambio(e, index, 'autores')}
+                        />
+                      ) : (
+                        libro.autores
+                      )}
+                    </Td>
+                    <Td>
+                      {libroEditado === index ? (
+                        <input
+                          type="text"
+                          value={Array.isArray(libro.tags) ? libro.tags.join(', ') : ''} 
+                          onChange={(e) => manejarCambio(e, index, 'tags')}
+                        />
+                      ) : (
+                        Array.isArray(libro.tags) ? libro.tags.join(', ') : ''
+                      )}
+                    </Td>
+                    <Td>
+                      {libroEditado === index ? (
+                        <input
+                          type="text"
+                          value={libro.donante}
+                          onChange={(e) => manejarCambio(e, index, 'donante')}
+                        />
+                      ) : (
+                        libro.donante
+                      )}
+                    </Td>
+                    <Td>
+                      {libroEditado === index ? (
+                        <input
+                          type="text"
+                          value={libro.fecha_donacion ? new Date(libro.fecha_donacion).toLocaleDateString() : ''} 
+                          onChange={(e) => manejarCambio(e, index, 'fecha_donacion')}
+                        />
+                      ) : (
+                        libro.fecha_donacion ? new Date(libro.fecha_donacion).toLocaleDateString() : ''
+                      )}
+                    </Td>
+                    <Td>
+                      {libroEditado === index ? (
+                        <input
+                          type="text"
+                          value={libro.prestado ? 'Prestado' : 'Disponible'}
+                          onChange={(e) => manejarCambio(e, index, 'prestado')}
+                        />
+                      ) : (
+                        libro.prestado ? 'Prestado' : 'Disponible'
+                      )}
+                    </Td>
+                  </Tr>
+                ))
+              ) : (
+                <Tr>
+                  <Td colSpan={9}>No hay libros disponibles</Td>
                 </Tr>
-              ))
-            ) : (
-              <Tr>
-                <Td colSpan={9}>No hay libros disponibles</Td>
-              </Tr>
-            )}
+              )}
           </Tbody>
           <Tfoot></Tfoot>
         </Table>

@@ -7,6 +7,7 @@ export const fetchAndRenderData = async (apiUrl) => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+      console.log(data);
       return data; // Retorna los datos obtenidos
     } catch (error) {
       console.error('Error fetching data:', error);
