@@ -36,7 +36,7 @@ export default function Home() {
     key: null,
     direction: 'initial',
   });
-
+        
   useEffect(() => {
     const prestamosActualizados = prestamos.map((prestamo) => {
       if (prestamo.fechaDevolucion !== "00/00/00" && prestamo.fechaDevolucion !== "") {
