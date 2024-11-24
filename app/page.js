@@ -32,9 +32,6 @@ export default function Home() {
   useEffect(() => {
     fetchAndRenderData("API/libro").then((data) => setLibros(data));
   }, []);
-  useEffect(() => {
-    console.log(libros); // Monitorea el estado de libros cada vez que cambia
-  }, [libros]);
 
 const [cambiosLocales, setCambiosLocales] = useState(false);
 

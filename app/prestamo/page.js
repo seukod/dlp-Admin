@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import { fetchAndRenderData } from '.app/miniapi';
 import {
   Table,
   Thead,
@@ -16,6 +17,11 @@ export default function Home() {
   const [prestamoEditado, setPrestamoEditado] = useState(null);
   const [prestamos, setPrestamos] = useState(() => {
     const datosGuardados = localStorage.getItem('prestamos');
+
+
+    useEffect(() => {
+      fetchAndRenderData("API/libro").then((data) => setLibros(data));
+    }, []);
     return datosGuardados
       ? JSON.parse(datosGuardados)
       : [
@@ -79,24 +85,28 @@ export default function Home() {
   });
 
   useEffect(() => {
-    {
-      /* cuando se recarge la pagina se activa esto*/
-    }
     const prestamosActualizados = prestamos.map((prestamo) => {
-      if (prestamo.fechaPrestamo !== '00/00/00') {
-        prestamo.estado = 'abierto';
+      if (prestamo.fechaDevolucion !== "00/00/00" && prestamo.fechaDevolucion !== "") {
+        // Si hay fecha de devolución, marcar como cerrado y devuelto
+        prestamo.estado = "cerrado";
+        prestamo.asunto = "devuelto";
+      } else if (prestamo.fechaPrestamo !== "00/00/00") {
+        // Si no hay fecha de devolución pero hay fecha de préstamo
+        prestamo.estado = "abierto";
         if (esFechaLimiteVencida(prestamo.fechaLimite)) {
-          prestamo.asunto = 'atrasado';
+          prestamo.asunto = "atrasado";
         } else {
-          prestamo.asunto = 'prestado';
+          prestamo.asunto = "prestado";
         }
       } else {
-        prestamo.estado = 'cerrado';
-        prestamo.asunto = '';
+        // Si no hay fecha de préstamo
+        prestamo.estado = "cerrado";
+        prestamo.asunto = "devuelto";
       }
-
+  
       return prestamo;
     });
+  
 
     setPrestamos(prestamosActualizados);
     localStorage.setItem('prestamos', JSON.stringify(prestamosActualizados));
@@ -107,9 +117,11 @@ export default function Home() {
     }
   }, []);
   const esFechaValida = (fecha) => {
+
+    if (fecha === "00/00/0000") return true
     const regexFecha = /^\d{2}\/\d{2}\/\d{4}$/; // Formato DD/MM/AAAA
     if (!regexFecha.test(fecha)) return false; // Verifica formato
-  
+    
     const [dia, mes, año] = fecha.split('/').map(Number); // Divide en partes numéricas
     const fechaObjeto = new Date(año, mes - 1, dia); // Crea el objeto Date (mes empieza en 0)
   
