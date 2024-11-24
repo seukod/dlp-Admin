@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { fetchAndRenderData } from '.app/miniapi';
+import { fetchAndRenderData } from '../miniapi';
 import {
   Table,
   Thead,
@@ -15,68 +15,21 @@ import PrestamoRow from './PrestamoRow';
 
 export default function Home() {
   const [prestamoEditado, setPrestamoEditado] = useState(null);
-  const [prestamos, setPrestamos] = useState(() => {
-    const datosGuardados = localStorage.getItem('prestamos');
+  const [prestamos, setPrestamos] = useState([]); // Inicializa como un array vacío
 
+  useEffect(() => {
+    // Llama a la función para obtener los datos
+    fetchAndRenderData("API/prestamo").then((data) => {
+      // Asegúrate de que data tenga la propiedad 'prestamos'
+      if (data && data.prestamos) {
+        setPrestamos(data.prestamos);
+      } else {
+        console.error("Los datos obtenidos no contienen la propiedad 'prestamos':", data);
+      }
+    });
+  }, []);
 
-    useEffect(() => {
-      fetchAndRenderData("API/libro").then((data) => setLibros(data));
-    }, []);
-    return datosGuardados
-      ? JSON.parse(datosGuardados)
-      : [
-          {
-            id: '#92',
-            libro: 'Un golpe de suerte',
-            usuario: 'Lucho Jara',
-            fechaPrestamo: '00/00/00',
-            fechaDevolucion: '00/00/00',
-            fechaLimite: '20/04/2001',
-            estado: 'c',
-            asunto: 'prestado',
-          },
-          {
-            id: '#88',
-            libro: 'El llamado de mi madre',
-            usuario: 'Javier Tauler',
-            fechaPrestamo: '00/00/00',
-            fechaDevolucion: '00/00/00',
-            fechaLimite: '30/02/2024',
-            estado: 'c',
-            asunto: 'prestado',
-          },
-          {
-            id: '#32',
-            libro: 'SOMOS QUINTILLIZAS',
-            usuario: 'NEGI HARUBA',
-            fechaPrestamo: '00/00/00',
-            fechaDevolucion: '00/00/00',
-            fechaLimite: '18/09/2024',
-            estado: 'c',
-            asunto: 'prestado',
-          },
-          {
-            id: '#97',
-            libro: 'Nana',
-            usuario: 'Ai Yazawa',
-            fechaPrestamo: '00/00/00',
-            fechaDevolucion: '00/00/00',
-            fechaLimite: '22/07/2024',
-            estado: 'c',
-            asunto: 'prestado',
-          },
-          {
-            id: '#95',
-            libro: 'Gatos',
-            usuario: 'Juan Herrera',
-            fechaPrestamo: '00/00/00',
-            fechaDevolucion: '00/00/00',
-            fechaLimite: '00/00/00',
-            estado: 'c',
-            asunto: 'prestado',
-          },
-        ];
-  });
+  console.log(prestamos);
 
   const [prestamosFiltrados, setPrestamosFiltrados] = useState(prestamos);
   const [sortConfig, setSortConfig] = useState({
