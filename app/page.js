@@ -44,7 +44,23 @@ const manejarCambio = (e, index, campo) => {
   localStorage.setItem('libros', JSON.stringify(nuevosLibros));
   setCambiosLocales(true); // Marca que hay cambios no sincronizados
 };
+const guardarCambiosLibro = async (index) => {
+  const libroActualizado = libros[index]; // Obtén el libro actualizado de tu estado
+  const id = libroActualizado.id; // Asegúrate de tener el ID del libro
 
+  try {
+      const response = await PUT(id, libroActualizado); // Llama a la función PUT
+      if (response) {
+          console.log('Libro actualizado:', response);
+          // Salir del modo de edición
+          setLibroEditado(null);
+      } else {
+          console.error('Error al actualizar el libro');
+      }
+  } catch (error) {
+      console.error('Error al guardar cambios:', error);
+  }
+};
   
 
   const editarLibro = (index) => {
@@ -106,6 +122,7 @@ const manejarCambio = (e, index, campo) => {
                           type="text"
                           value={libro.titulo}
                           onChange={(e) => manejarCambio(e, index, 'titulo')}
+                          onBlur={() => guardarCambiosLibro(index)}
                         />
                       ) : (
                         libro.titulo
@@ -117,6 +134,7 @@ const manejarCambio = (e, index, campo) => {
                           type="text"
                           value={libro.caratula || ''} // Asegúrate de manejar el caso de carátula nula
                           onChange={(e) => manejarCambio(e, index, 'caratula')}
+                          onBlur={() => guardarCambiosLibro(index)}
                         />
                       ) : (
                         libro.caratula ? <Image src={`data:image/jpeg;base64,${(libro.caratula)}`} alt={libro.titulo} width={50} height={75} /> : 'Sin Carátula'
@@ -128,6 +146,7 @@ const manejarCambio = (e, index, campo) => {
                           type="text"
                           value={libro.autores}
                           onChange={(e) => manejarCambio(e, index, 'autores')}
+                          onBlur={() => guardarCambiosLibro(index)}
                         />
                       ) : (
                         libro.autores
@@ -139,6 +158,7 @@ const manejarCambio = (e, index, campo) => {
                           type="text"
                           value={Array.isArray(libro.tags) ? libro.tags.join(', ') : ''} 
                           onChange={(e) => manejarCambio(e, index, 'tags')}
+                          onBlur={() => guardarCambiosLibro(index)}
                         />
                       ) : (
                         Array.isArray(libro.tags) ? libro.tags.join(', ') : ''
@@ -150,6 +170,7 @@ const manejarCambio = (e, index, campo) => {
                           type="text"
                           value={libro.donante}
                           onChange={(e) => manejarCambio(e, index, 'donante')}
+                          onBlur={() => guardarCambiosLibro(index)}
                         />
                       ) : (
                         libro.donante
@@ -161,6 +182,7 @@ const manejarCambio = (e, index, campo) => {
                           type="text"
                           value={libro.fecha_donacion ? new Date(libro.fecha_donacion).toLocaleDateString() : ''} 
                           onChange={(e) => manejarCambio(e, index, 'fecha_donacion')}
+                          onBlur={() => guardarCambiosLibro(index)}
                         />
                       ) : (
                         libro.fecha_donacion ? new Date(libro.fecha_donacion).toLocaleDateString() : ''
@@ -172,6 +194,7 @@ const manejarCambio = (e, index, campo) => {
                           type="text"
                           value={libro.prestado ? 'Prestado' : 'Disponible'}
                           onChange={(e) => manejarCambio(e, index, 'prestado')}
+                          onBlur={() => guardarCambiosLibro(index)}
                         />
                       ) : (
                         libro.prestado ? 'Prestado' : 'Disponible'
