@@ -1,5 +1,6 @@
 // LeftDrawer.js
 'use client';
+import { forwardRef, useStyleConfig, omitThemingProps } from '@chakra-ui/react';
 import React from 'react';
 import {
   Drawer,
