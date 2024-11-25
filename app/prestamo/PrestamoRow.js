@@ -14,9 +14,9 @@ const PrestamoRow = ({
 
   // Estados temporales para los campos en edición
   const [valoresTemporales, setValoresTemporales] = useState({
-    fechaPrestamo: prestamo.fechaPrestamo,
-    fechaDevolucion: prestamo.fechaDevolucion,
-    fechaLimite: prestamo.fechaLimite,
+    fecha_prestamo: prestamo.fecha_prestamo,
+    fecha_devolucion: prestamo.fecha_devolucion,
+    fecha_limite: prestamo.fecha_limite,
   });
   
     // Manejar cambio en estado temporal
@@ -39,49 +39,49 @@ const PrestamoRow = ({
         />
       </Td>
       <Td>{prestamo.id}</Td>
-      <Td>{prestamo.libro}</Td>
+      <Td>{prestamo.id_libro}</Td>
       <Td>
         {enEdicion ? (
           <input
             type="text"
-            value={valoresTemporales.fechaPrestamo}
+            value={valoresTemporales.fecha_prestamo}
             className="camposEdit"
-            onChange={(e) => manejarCambioTemporal('fechaPrestamo', e.target.value)}
-            onBlur={() => guardarCambios('fechaPrestamo')}
+            onChange={(e) => manejarCambioTemporal('fecha_prestamo', e.target.value)}
+            onBlur={() => guardarCambios('fecha_prestamo')}
           />
         ) : (
-          prestamo.fechaPrestamo
+          prestamo.fecha_prestamo
         )}
       </Td>
       <Td>
         {enEdicion ? (
           <input
             type="text"
-            value={valoresTemporales.fechaDevolucion}
+            value={valoresTemporales.fecha_devolucion}
             className="camposEdit"
-            onChange={(e) => manejarCambioTemporal('fechaDevolucion', e.target.value)}
-            onBlur ={() => guardarCambios('fechaDevolucion')}
+            onChange={(e) => manejarCambioTemporal('fecha_devolucion', e.target.value)}
+            onBlur ={() => guardarCambios('fecha_devolucion')}
           />
         ) : (
-          prestamo.fechaDevolucion
+          prestamo.fecha_devolucion
         )}
       </Td>
       <Td>
         {enEdicion ? (
           <input
             type="text"
-            value={valoresTemporales.fechaLimite}
+            value={valoresTemporales.fecha_limite}
             className="camposEdit"
-            onChange={(e) => manejarCambioTemporal('fechaLimite', e.target.value)}
-            onBlur={() => guardarCambios('fechaLimite')}
+            onChange={(e) => manejarCambioTemporal('fecha_limite', e.target.value)}
+            onBlur={() => guardarCambios('fecha_limite')}
           />
         ) : (
-          prestamo.fechaLimite
+          prestamo.fecha_limite
         )}
       </Td>
 
-      <Td>{prestamo.estado}</Td>
-      <Td>{prestamo.asunto}</Td>
+      <Td>prestamo.estado</Td>
+      <Td>prestamo.asunto</Td>  
     </Tr>
   );
 };
