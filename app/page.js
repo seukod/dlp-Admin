@@ -57,7 +57,7 @@ export default function Home() {
     }
     setLibros(nuevosLibros);
   };
-
+  
   // Guardar cambios del libro editado
   const guardarCambiosLibro = async (index) => {
     const libroActualizado = libros[index];

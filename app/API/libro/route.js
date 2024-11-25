@@ -6,15 +6,24 @@ export async function GET() {
 }
 //crear funcion put
 export async function PUT(id, libro) {
-    const url = `https://dlp-api.vercel.app/libros/${id}`;
-    const resp = await fetch(url, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(libro)
-    });
-    const data = await resp.json();
-    return data; // Cambia aquí para devolver el objeto data
+    const url = `https://dlp-api.vercel.app/libros`;
+    try {
+        const resp = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(libro)
+        });
+        if (!resp.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = resp;
+        return data
+        ; // Devuelve los datos actualizados
+    } catch (error) {
+        console.error('Error updating data:', error);
+        throw new Error('Failed to update data exception'); // Lanza un error manejable
+    }
 }
         

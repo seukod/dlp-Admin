@@ -19,7 +19,9 @@ export const fetchAndRenderData = async (apiUrl) => {
     try {
         const response = await PUT(id, libroActualizado);
         if (response) {
-            console.log('Libro actualizado:', response);
+      
+          
+          console.log('Libro actualizado:', response);
             const nuevosLibros = [...libros];
             const index = nuevosLibros.findIndex(libro => libro.id === id); // Encuentra el índice del libro actualizado
             if (index !== -1) {
