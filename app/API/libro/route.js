@@ -11,10 +11,10 @@ export async function PUT(id, libro) {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(libro)
-            });
-            const data = await resp.json();
-            return Response.json(data);
+        },
+        body: JSON.stringify(libro)
+    });
+    const data = await resp.json();
+    return data; // Cambia aquí para devolver el objeto data
 }
         
