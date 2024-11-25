@@ -1,10 +1,11 @@
 'use client';
+
 import React, { useState, useEffect } from 'react';
 import { fetchAndRenderData } from './miniapi';
 import { cambioAPI } from './miniapi';
 import LeftDrawer from './components/LeftDrawer';
 import Image from 'next/image';
-import Link from 'next/link';
+
 import {
   Table,
   Thead,
