@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { fetchAndRenderData } from '../api/miniapi'; 
+import { fetchAndRenderData } from './API/miniapi'; 
 import Image from 'next/image';
 import Link from 'next/link';
 import {
