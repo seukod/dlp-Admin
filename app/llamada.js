@@ -1,25 +1,4 @@
-// aquí habrá una llamada a la API
-// para obtener los datos de la API
-// y luego se hará un llamado a la función que se encargará de
-// procesar los datos obtenidos de la API
-// y finalmente se hará un llamado a la función que se encargará de
-// renderizar la información en la página web
-//
-// La función `getApiData` se encargará de obtener los datos de la API
-// y la función `processApiData` se encargará de procesar los datos obtenidos
-// de la API y la función `renderApiData` se encargará de renderizar la
-// información en la página web
-//
-// La función `getApiData` se puede llamar desde cualquier parte del código
-// y se puede utilizar para obtener los datos de la API de manera asíncrona
-//
-// La función `processApiData` se puede llamar desde cualquier parte del código
-// y se puede utilizar para procesar los datos obtenidos de la API de manera asíncron
-//
-// La función `renderApiData` se puede llamar desde cualquier parte del código
-// y se puede utilizar para renderizar la información en la página web de manera asíncrona
-//
-// Función para obtener datos de la API
+
 export async function getApiData(url) {
     try {
         const response = await fetch(url);

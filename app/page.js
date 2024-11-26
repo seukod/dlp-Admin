@@ -27,7 +27,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchAndRenderData("API/libro");
+        const data = await fetchAndRenderData("api/libro");
         console.log("Datos obtenidos de la API:", data);
 
         if (data && Array.isArray(data.libros)) {
@@ -57,19 +57,31 @@ export default function Home() {
     }
     setLibros(nuevosLibros);
   };
-
-  // Guardar cambios del libro editado
   const guardarCambiosLibro = async (index) => {
-    const libroActualizado = libros[index];
-
-    // Asegúrate de definir la URL de la API y el ID del libro
-    const apiUrl = "API/libro"; // Reemplaza esto con la URL correcta de tu API
-    const id = libroActualizado.id; // Asegúrate de que el libro tenga un ID
+    const libroActualizado = {
+      id: libros[index].id,
+      titulo: libros[index].titulo,
+      autores: libros[index].autores,
+      caratula: libros[index].caratula,
+      isbn: libros[index].isbn,
+      tags: libros[index].tags,
+      donante: libros[index].donante,
+      fecha_donacion: libros[index].fecha_donacion,
+      prestado: libros[index].prestado,
+      borrado: libros[index].borrado,
+    };
 
     // Llama a la función cambioAPI
-    await cambioAPI(apiUrl, id, libroActualizado);
+    const resultado = await cambioAPI(libroActualizado.id, libroActualizado);
+    if (resultado) {
+        // Actualiza el estado o realiza alguna acción si es necesario
+        console.log('Libro actualizado correctamente:', resultado);
+    } else {
+        console.error('No se pudo actualizar el libro.');
+    }
 };
-
+  // Guardar cambios del libro editado
+  
   // Alternar edición
   const editarLibro = (index) => {
     setLibroEditado(libroEditado === index ? null : index);

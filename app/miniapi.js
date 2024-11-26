@@ -1,5 +1,7 @@
 // miniapi.js
-import { PUT } from './API/libro/route';
+//creacion de api 
+
+import { PUT } from './api/libro/route';
 
 export const fetchAndRenderData = async (apiUrl) => {
     try {
@@ -15,24 +17,27 @@ export const fetchAndRenderData = async (apiUrl) => {
       return null; // Retorna null en caso de error
     }
   };
-  export const cambioAPI = async (apiUrl, id, libroActualizado) => {
-    try {
-        const response = await PUT(id, libroActualizado);
-        if (response) {
-            console.log('Libro actualizado:', response);
-            const nuevosLibros = [...libros];
-            const index = nuevosLibros.findIndex(libro => libro.id === id); // Encuentra el índice del libro actualizado
-            if (index !== -1) {
-                nuevosLibros[index] = response; // Actualiza el libro en el índice encontrado
-                setLibros(nuevosLibros);
-                setLibroEditado(null);
-            } else {
-                console.error('Libro no encontrado para actualizar');
-            }
-        } else {
-            console.error('Error al actualizar el libro');
-        }
-    } catch (error) {
-        console.error('Error al guardar cambios:', error);
+ // miniapi.js
+ export const cambioAPI = async (id, libroActualizado) => {
+  try {
+    const response = await fetch('/api/libro', { // No incluye el ID en la URL
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...libroActualizado, id }), // Incluye el ID en el cuerpo
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json(); // Obtiene el error del JSON
+      throw new Error(`Error al actualizar el libro: ${errorData.error || 'Error desconocido'}`); 
     }
+
+    const data = await response.json(); // Obtiene los datos JSON de la respuesta
+    console.log('Libro actualizado:', data);
+    return data;
+  } catch (error) {
+      console.error('Error al guardar cambios:', error.message);
+      return null;
+  }
 };
