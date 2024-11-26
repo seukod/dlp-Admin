@@ -158,7 +158,7 @@ export default function Home() {
       setPrestamosFiltrados(prestamos);
     } else {
       const prestamosOrdenados = [...prestamos].sort((a, b) => {
-        if (key.includes('fecha')) {
+        if (key.includes('fecha')&& a[key] != null && b[key] != null) {
           const fechaA = new Date(a[key].split('/').reverse().join('-'));
           const fechaB = new Date(b[key].split('/').reverse().join('-'));
           return direction === 'asc' ? fechaA - fechaB : fechaB - fechaA;
@@ -253,7 +253,7 @@ export default function Home() {
                       <button onClick={() => editarPrestamo(index)}>Editar</button>
                     </Td>
                     <Td>{prestamo.id}</Td>
-                    <Td>{prestamo.libro}</Td>
+                    <Td>{prestamo.id_libro}</Td>
                     
                     <Td>
                       {prestamoEditado === index ? (
