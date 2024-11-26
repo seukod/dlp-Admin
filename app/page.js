@@ -89,6 +89,21 @@ export default function Home() {
 
   return (
     <>
+
+      <div style={{
+        position: 'absolute', 
+        top: '20px', 
+        right: '20px', 
+        zIndex: 10
+      }}>
+        <Image 
+          src="/logoAdmin.png" 
+          alt="Logo" 
+          width={180} 
+          height={100} 
+        />
+      </div>
+
       <LeftDrawer />
       <h1>CATÁLOGO LIBROS</h1>
       <TableContainer>
