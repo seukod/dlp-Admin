@@ -1,38 +1,38 @@
 // miniapi.js
-import { PUT } from './API/libro/route';
 
-export const fetchAndRenderData = async (apiUrl) => {
-    try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      console.log(data);
-      return data; // Retorna los datos obtenidos
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return null; // Retorna null en caso de error
+export async function fetchAndRenderData(endpoint) {
+  try {
+    // Cambié la URL a /api/libro
+    const response = await fetch(`/API/libro`);
+    if (!response.ok) throw new Error('Error al obtener datos desde la API interna');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export async function cambioAPI(id, data) {
+  try {
+    // Asegurarse de que los datos están siendo enviados como JSON
+    const response = await fetch('/API/libro', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json', // Asegúrate de que el tipo de contenido sea JSON
+      },
+      body: JSON.stringify(data), // Convertir el objeto 'data' a una cadena JSON
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error en la API interna:', errorData);
+      throw new Error(`Error en la API interna: ${errorData.message || 'Desconocido'}`);
     }
-  };
-  export const cambioAPI = async (apiUrl, id, libroActualizado) => {
-    try {
-        const response = await PUT(id, libroActualizado);
-        if (response) {
-            console.log('Libro actualizado:', response);
-            const nuevosLibros = [...libros];
-            const index = nuevosLibros.findIndex(libro => libro.id === id); // Encuentra el índice del libro actualizado
-            if (index !== -1) {
-                nuevosLibros[index] = response; // Actualiza el libro en el índice encontrado
-                setLibros(nuevosLibros);
-                setLibroEditado(null);
-            } else {
-                console.error('Libro no encontrado para actualizar');
-            }
-        } else {
-            console.error('Error al actualizar el libro');
-        }
-    } catch (error) {
-        console.error('Error al guardar cambios:', error);
-    }
-};
+
+    // No estamos esperando respuesta, así que no retornamos nada
+    console.log('Datos enviados correctamente a la API interna');
+  } catch (error) {
+    console.error('Error en PUT:', error);
+  }
+}
