@@ -65,26 +65,33 @@ export default function Home() {
   //   setPrestamosFiltrados(prestamosActualizados);
   // }, []);
 
-  // funcion que convierte de iso 8601 a DD/MM/AAAA
-  const convertirFecha = (fechaISO) => {
+  // Función para convertir fechas de ISO 8601 a DD/MM/AAAA
+  const convertirFechaEdit = (fechaISO) => {
     if (!fechaISO) return '';
-    
     const fecha = new Date(fechaISO);
-    const dia = String(fecha.getDate()).padStart(2, '0'); // Añade 0 al día si es menor a 10
-    const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses empiezan en 0, así que sumamos 1
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
     const año = fecha.getFullYear();
-  
     return `${dia}/${mes}/${año}`;
   };
-  const esFechaValida = (fecha) => {
 
-    if (fecha === "00/00/0000") return true
+  // Función para convertir fechas de DD/MM/AAAA a ISO 8601
+  const convertirFechaAISO = (fechaDDMMYYYY) => {
+    if (!fechaDDMMYYYY) return '';
+    const [dia, mes, año] = fechaDDMMYYYY.split('/').map(Number);
+    return new Date(año, mes - 1, dia).toISOString();
+  };
+  const esFechaValida = (fecha) => {
     const regexFecha = /^\d{2}\/\d{2}\/\d{4}$/; // Formato DD/MM/AAAA
-    if (!regexFecha.test(fecha)) return false; // Verifica formato
-    
-    const [dia, mes, año] = fecha.split('/').map(Number); // Divide en partes numéricas
-    const fechaObjeto = new Date(año, mes - 1, dia); // Crea el objeto Date (mes empieza en 0)
-  
+    if (!regexFecha.test(fecha)) return false; // Verifica el formato
+
+    const [dia, mes, año] = fecha.split('/').map(Number); // Divide la fecha en partes numéricas
+
+    // Verifica que no sea "00/00/0000"
+    if (dia === 0 && mes === 0 && año === 0) return false;
+
+    const fechaObjeto = new Date(año, mes - 1, dia); // Crea un objeto Date para validación
+
     // Verifica que los valores originales coincidan con los del objeto Date
     return (
       fechaObjeto.getFullYear() === año &&
@@ -102,49 +109,37 @@ export default function Home() {
 
   const editarPrestamo = (index) => {
     if (prestamoEditado === index) {
-      // Si ya estamos editando la misma fila, limpiamos la edición
-      setPrestamoEditado(null);
+      setPrestamoEditado(null); // Cierra la edición si ya está en modo edición
     } else {
-      // Si estamos editando una fila nueva, establecemos los valores temporales
-      setPrestamoEditado(index);
+      setPrestamoEditado(index); // Activa la edición para este índice
       setValoresTemporales({
-        fecha_prestamo: prestamos[index].fecha_prestamo,
-        fecha_devolucion: prestamos[index].fecha_devolucion,
-        fecha_limite: prestamos[index].fecha_limite,
+        fecha_prestamo: convertirFechaEdit(prestamos[index].fecha_prestamo),
+        fecha_devuelto: convertirFechaEdit(prestamos[index].fecha_devuelto),
+        fecha_limite: convertirFechaEdit(prestamos[index].fecha_limite),
       });
     }
   };
-
+  const obtenerEstadoPrestamo = (fechaDevolucion, fechaLimite) => {
+    // Si la fecha de devolución es diferente de null, el estado es "devuelto"
+    if (fechaDevolucion) {
+      return 'devuelto';
+    }
+  
+    // Si la fecha límite es mayor que la fecha actual, el estado es "prestado"
+    const fechaLimiteArray = fechaLimite.split('/');
+    const fechaLimiteDate = new Date(`${fechaLimiteArray[2]}-${fechaLimiteArray[1]}-${fechaLimiteArray[0]}`);
+    const fechaActual = new Date();
+  
+    if (fechaLimiteDate > fechaActual) {
+      return 'prestado';
+    }
+  
+    // Si la fecha límite ha pasado, el estado es "atrasado"
+    return 'atrasado';
+  };
   const manejarCambio = (nuevoValor, index, campo) => {
-    if (
-      (campo === 'fechaPrestamo' || campo === 'fechaDevolucion' || campo === 'fechaLimite') &&
-      !esFechaValida(nuevoValor)
-    ) {
-      alert('La fecha ingresada no es válida. Por favor, usa el formato DD/MM/AAAA.');
-      return; // Detener si la fecha no es válida
-    }
-    
     const nuevosPrestamos = [...prestamos];
-    nuevosPrestamos[index][campo] = nuevoValor;
-
-    if (campo === 'fechaDevolucion') {
-      //Cambiar estado al marcar devolución
-      if (nuevoValor !== '00/00/00') {
-        nuevosPrestamos[index].estado = 'cerrado';
-        nuevosPrestamos[index].asunto = 'devuelto';
-      }
-    }
-    //Cambiar estado al marcar fecha límite
-    if(campo === 'fechaLimite'){
-      if (esFechaLimiteVencida(nuevoValor)){
-        nuevosPrestamos[index].estado = 'abierto';
-        nuevosPrestamos[index].asunto = 'prestado' 
-      }
-      else{
-        nuevosPrestamos[index].estado = 'abierto'
-        nuevosPrestamos[index].asunto = 'atrasado'
-      }
-    }
+    nuevosPrestamos[index][campo] = convertirFechaAISO(nuevoValor);
     setPrestamos(nuevosPrestamos);
   };
 
@@ -194,15 +189,12 @@ export default function Home() {
   // Guardar cambios al dejar de interactuar
   const guardarCambios = (campo, index) => {
     const nuevoValor = valoresTemporales[campo];
-    if (nuevoValor) {
+    if (nuevoValor && esFechaValida(nuevoValor)) {
       manejarCambio(nuevoValor, index, campo);
-      // Limpiar valores temporales después de guardar
-      setValoresTemporales({
-        fecha_prestamo: '',
-        fecha_devolucion: '',
-        fecha_limite: '',
-      });
+    } else {
+      alert('Por favor, ingresa una fecha válida.');
     }
+    setValoresTemporales({ fecha_prestamo: '', fecha_devuelto: '', fecha_limite: '' });
   };
 
   const getSortIcon = (key) => {
@@ -225,13 +217,9 @@ export default function Home() {
             <Thead>
               <Tr>
                 <Th className="esqizq"></Th>
-                <Th>ID</Th>
-                <Th
-                  onClick={() => ordenarLibros('libro')}
-                  style={{ cursor: 'pointer' }}
-                >
-                  Libro {getSortIcon('libro')}
-                </Th>
+                <Th>ID Prestamo</Th>
+                <Th>Id libro</Th>
+                
                 <Th
                   onClick={() => ordenarLibros('fecha_prestamo')}
                   style={{ cursor: 'pointer' }}
@@ -250,8 +238,7 @@ export default function Home() {
                 >
                   Fecha Límite {getSortIcon('fecha_limite')}
                 </Th>
-                <Th>estado</Th>
-                <Th className="esqder">asunto</Th>
+                <Th className="esqder">estado</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -267,45 +254,48 @@ export default function Home() {
                     </Td>
                     <Td>{prestamo.id}</Td>
                     <Td>{prestamo.libro}</Td>
+                    
                     <Td>
                       {prestamoEditado === index ? (
                         <input
                           type="text"
-                          value={valoresTemporales.fecha_prestamo || prestamo.fecha_prestamo}
+                          value={valoresTemporales.fecha_prestamo || convertirFechaEdit(prestamo.fecha_prestamo)}
                           className="camposEdit"
                           onChange={(e) => manejarCambioTemporal('fecha_prestamo', e.target.value)}
                           onBlur={() => guardarCambios('fecha_prestamo', index)}
                         />
                       ) : (
-                        prestamo.fecha_prestamo
+                        convertirFechaEdit(prestamo.fecha_prestamo)
                       )}
                     </Td>
                     <Td>
                       {prestamoEditado === index ? (
                         <input
                           type="text"
-                          value={valoresTemporales.fecha_devuelto || prestamo.fecha_devuelto}
+                          value={valoresTemporales.fecha_devuelto || convertirFechaEdit(prestamo.fecha_devuelto)}
                           className="camposEdit"
                           onChange={(e) => manejarCambioTemporal('fecha_devuelto', e.target.value)}
                           onBlur={() => guardarCambios('fecha_devuelto', index)}
                         />
                       ) : (
-                        prestamo.fecha_devuelto
+                        convertirFechaEdit(prestamo.fecha_devuelto)
                       )}
                     </Td>
                     <Td>
                       {prestamoEditado === index ? (
                         <input
                           type="text"
-                          value={valoresTemporales.fecha_limite || prestamo.fecha_limite}
+                          value={valoresTemporales.fecha_limite || convertirFechaEdit(prestamo.fecha_limite)}
                           className="camposEdit"
                           onChange={(e) => manejarCambioTemporal('fecha_limite', e.target.value)}
-                          onBlur={() => guardarCambios('fecha_limite, index')}
+                          onBlur={() => guardarCambios('fecha_limite', index)}
                         />
                       ) : (
-                        prestamo.fecha_limite
+                        convertirFechaEdit(prestamo.fecha_limite)
                       )}
                     </Td>
+
+                    <Td>{obtenerEstadoPrestamo(prestamo.fecha_devuelto, prestamo.fecha_limite)}</Td>
                   </Tr>
                 ))
               )}
