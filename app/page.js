@@ -67,8 +67,8 @@ export default function Home() {
       tags: libros[index].tags,
       donante: libros[index].donante,
       fecha_donacion: libros[index].fecha_donacion,
-      prestado: libros[index].prestado,
-      borrado: libros[index].borrado,
+      estado: libros[index].estado,
+      
     };
   
     // Llama a la función cambioAPI que hace el PUT
