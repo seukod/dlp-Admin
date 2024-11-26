@@ -27,7 +27,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchAndRenderData("api/libro");
+        const data = await fetchAndRenderData("API/libro");
         console.log("Datos obtenidos de la API:", data);
 
         if (data && Array.isArray(data.libros)) {

@@ -7,6 +7,7 @@ export async function GET() {
   try {
     const resp = await fetch(url);
     const data = await resp.json();
+    console.log(data)
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error al obtener los libros:', error);
@@ -18,7 +19,7 @@ export async function GET() {
 export async function PUT(req) {
   const { id } = req.nextUrl.searchParams; // Obtiene el ID del libro desde la URL
   const libro = await req.json(); // Obtiene el objeto libro del cuerpo de la solicitud
-  const url = `https://dlp-api.vercel.app/libros/`; // URL correcta con ID del libro
+  const url = 'https://dlp-api.vercel.app/libros'; // URL correcta con ID del libro
 
   try {
     const resp = await fetch(url, {

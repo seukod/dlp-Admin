@@ -1,7 +1,7 @@
 // miniapi.js
 //creacion de api 
 
-import { PUT } from './api/libro/route';
+
 
 export const fetchAndRenderData = async (apiUrl) => {
     try {
@@ -30,7 +30,7 @@ export const fetchAndRenderData = async (apiUrl) => {
 
     if (!response.ok) {
       const errorData = await response.json(); // Obtiene el error del JSON
-      throw new Error(`Error al actualizar el libro: ${errorData.error || 'Error desconocido'}`); 
+      throw new Error(`Error al actualizar el libro: ${errorData.error || 'Error desconocido'}`);
     }
 
     const data = await response.json(); // Obtiene los datos JSON de la respuesta
