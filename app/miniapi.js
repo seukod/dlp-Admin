@@ -1,43 +1,38 @@
 // miniapi.js
-//creacion de api 
 
-
-
-export const fetchAndRenderData = async (apiUrl) => {
-    try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      console.log(data);
-      return data; // Retorna los datos obtenidos
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return null; // Retorna null en caso de error
-    }
-  };
- // miniapi.js
- export const cambioAPI = async (id, libroActualizado) => {
+export async function fetchAndRenderData(endpoint) {
   try {
-    const response = await fetch('/api/libro', { // No incluye el ID en la URL
+    // Cambié la URL a /api/libro
+    const response = await fetch(`/API/libro`);
+    if (!response.ok) throw new Error('Error al obtener datos desde la API interna');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export async function cambioAPI(id, data) {
+  try {
+    // Asegurarse de que los datos están siendo enviados como JSON
+    const response = await fetch('/API/libro', {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json', // Asegúrate de que el tipo de contenido sea JSON
       },
-      body: JSON.stringify({ ...libroActualizado, id }), // Incluye el ID en el cuerpo
+      body: JSON.stringify(data), // Convertir el objeto 'data' a una cadena JSON
     });
 
     if (!response.ok) {
-      const errorData = await response.json(); // Obtiene el error del JSON
-      throw new Error(`Error al actualizar el libro: ${errorData.error || 'Error desconocido'}`);
+      const errorData = await response.json();
+      console.error('Error en la API interna:', errorData);
+      throw new Error(`Error en la API interna: ${errorData.message || 'Desconocido'}`);
     }
 
-    const data = await response.json(); // Obtiene los datos JSON de la respuesta
-    console.log('Libro actualizado:', data);
-    return data;
+    // No estamos esperando respuesta, así que no retornamos nada
+    console.log('Datos enviados correctamente a la API interna');
   } catch (error) {
-      console.error('Error al guardar cambios:', error.message);
-      return null;
+    console.error('Error en PUT:', error);
   }
-};
+}
