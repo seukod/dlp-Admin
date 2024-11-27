@@ -40,9 +40,7 @@ const LeftDrawer = () => {
             <Button w="100%" mb={2} as={Link} href="/prestamo">
               Préstamo
             </Button>
-            <Button w="100%" mb={2} as={Link} href="/historial">
-              Historial de actividades
-            </Button>
+            
           </DrawerBody>
         </DrawerContent>
       </Drawer>
