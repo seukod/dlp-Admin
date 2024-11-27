@@ -8,6 +8,8 @@
 # testing
 /coverage
 
+/app/.historial
+.historial
 # next.js
 /.next/
 /out/
