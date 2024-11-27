@@ -59,7 +59,7 @@ export default function Home() {
   };
   const guardarCambiosLibro = async (index) => {
     const libroActualizado = {
-      id: libros[index].id,  // ID del libro que quieres actualizar
+      id: libros[index].id,
       titulo: libros[index].titulo,
       autores: libros[index].autores,
       caratula: libros[index].caratula,
@@ -67,19 +67,25 @@ export default function Home() {
       tags: libros[index].tags,
       donante: libros[index].donante,
       fecha_donacion: libros[index].fecha_donacion,
-      estado: libros[index].estado,
-      
+      prestado: libros[index].prestado,
+      borrado: libros[index].borrado,
     };
-    console.log(index, "Este es el valor que trae el guardarCambiosLibro")
-    // Llama a la función cambioAPI que hace el PUT
-    await cambioAPI(libroActualizado.id, libroActualizado);
   
-    // Después de hacer el PUT, solo actualizas el estado
-    const nuevosLibros = [...libros];
-    nuevosLibros[index] = libroActualizado;  // Actualiza los datos del libro en el frontend
-    setLibros(nuevosLibros);  // Refleja los cambios en la interfaz
-    console.log('Libro actualizado correctamente:', libroActualizado);
+    try {
+      console.log('Enviando actualización del libro:', libroActualizado);
+      await cambioAPI(libroActualizado); // Llamada a la función PUT
+  
+      // Actualizar estado local después del PUT exitoso
+      const nuevosLibros = [...libros];
+      nuevosLibros[index] = libroActualizado;
+      setLibros(nuevosLibros);
+  
+      console.log('Libro actualizado correctamente en el frontend.');
+    } catch (error) {
+      console.error('Error al guardar cambios:', error);
+    }
   };
+  
   
 
   

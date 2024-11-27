@@ -3,7 +3,7 @@
 export async function fetchAndRenderData(endpoint) {
   try {
     // Cambié la URL a /api/libro
-    const response = await fetch(`/API/libro`);
+    const response = await fetch(endpoint,{method: 'GET'});
     if (!response.ok) throw new Error('Error al obtener datos desde la API interna');
     const data = await response.json();
     return data;
@@ -13,26 +13,27 @@ export async function fetchAndRenderData(endpoint) {
   }
 }
 
-export async function cambioAPI(id, data) {
+export async function cambioAPI(libroActualizado) {
   try {
-    // Asegurarse de que los datos están siendo enviados como JSON
     const response = await fetch('/API/libro', {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json', // Asegúrate de que el tipo de contenido sea JSON
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data), // Convertir el objeto 'data' a una cadena JSON
+      body: JSON.stringify(libroActualizado), // Enviar solo el libro actualizado
     });
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('Error en la API interna:', errorData);
-      throw new Error(`Error en la API interna: ${errorData.message || 'Desconocido'}`);
+      console.error('Error al actualizar el libro:', errorData);
+      throw new Error(errorData.message || 'Error desconocido');
     }
 
-    // No estamos esperando respuesta, así que no retornamos nada
-    console.log('Datos enviados correctamente a la API interna');
+    const result = await response.json();
+    console.log('Libro actualizado correctamente:', result);
+    return result;
   } catch (error) {
-    console.error('Error en PUT:', error);
+    console.error('Error en cambioAPI:', error);
+    throw error;
   }
 }
