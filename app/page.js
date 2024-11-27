@@ -160,6 +160,7 @@ export default function Home() {
                       <input
                         type="text"
                         value={libro.titulo}
+                        className='camposEdit'
                         onChange={(e) => manejarCambio(e, index, 'titulo')}
                         onBlur={() => guardarCambiosLibro(index)}
                       />
@@ -184,6 +185,7 @@ export default function Home() {
                     {libroEditado === index ? (
                       <input
                         type="text"
+                        className='camposEdit'
                         value={Array.isArray(libro.tags) ? libro.tags.join(', ') : ''}
                         onChange={(e) => manejarCambio(e, index, 'tags')}
                         onBlur={() => guardarCambiosLibro(index)}
