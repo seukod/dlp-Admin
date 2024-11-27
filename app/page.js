@@ -25,6 +25,7 @@ export default function Home() {
 
   // Fetch inicial de datos
   useEffect(() => {
+    
     const fetchData = async () => {
       try {
         const data = await fetchAndRenderData("API/libro");
@@ -86,6 +87,9 @@ export default function Home() {
       const nuevosLibros = [...libros];
       nuevosLibros[index] = libroActualizado;
       setLibros(nuevosLibros);
+      // Después de un PUT exitoso, guarda los libros actualizados en localStorage
+      localStorage.setItem('libros', JSON.stringify(nuevosLibros));
+
   
       console.log('Libro actualizado correctamente en el frontend.');
     } catch (error) {
