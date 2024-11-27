@@ -70,7 +70,7 @@ export default function Home() {
       prestado: libros[index].prestado,
       borrado: libros[index].borrado,
     };
-  
+    console.log(index, "Este es el valor que trae el guardarCambiosLibro")
     // Llama a la función cambioAPI que hace el PUT
     await cambioAPI(libroActualizado.id, libroActualizado);
   
