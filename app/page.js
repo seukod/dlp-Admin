@@ -142,6 +142,7 @@ export default function Home() {
               <Th>Editar</Th>
               <Th onClick={() => ordenarLibros('id')}>ID ⇅</Th>
               <Th onClick={() => ordenarLibros('titulo')}>Título ⇅</Th>
+              <Th>ISBN</Th>
               <Th>Carátula</Th>
               <Th>Autores</Th>
               <Th>Tags</Th>
@@ -178,6 +179,7 @@ export default function Home() {
                       libro.titulo
                     )}
                   </Td>
+                  <Td>{libro.isbn}</Td>
                   <Td>
                     {libro.caratula ? (
                       <Image

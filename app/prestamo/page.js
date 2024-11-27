@@ -214,7 +214,7 @@ export default function Home() {
             <Thead>
               <Tr>
                 <Th></Th>
-                <Th className='"esqizq"'>ID Prestamo</Th>
+                <Th className="esqizq">ID Prestamo</Th>
                 <Th>Id libro</Th>
                 
                 <Th

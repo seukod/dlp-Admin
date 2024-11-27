@@ -1,4 +1,4 @@
-// miniapi.js
+// miniapi.js api
 
 export async function fetchAndRenderData(endpoint) {
   try {
