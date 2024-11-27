@@ -83,6 +83,8 @@ export default function Home() {
       // Después de un PUT exitoso, guarda los libros actualizados en localStorage
       localStorage.setItem('libros', JSON.stringify(nuevosLibros));
 
+
+      //TODO pragma nocache
   
       console.log('Libro actualizado correctamente en el frontend.');
     } catch (error) {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const API_URL = 'https://dlp-api.vercel.app/libros'; // API externa
+const API_URL = 'https://dlp-api.vercel.app/libros?x=2'; // API externa
 
 
 // Manejador para GET
