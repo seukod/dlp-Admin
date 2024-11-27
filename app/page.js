@@ -69,7 +69,7 @@ export default function Home() {
       donante: libros[index].donante,
       fecha_donacion: libros[index].fecha_donacion,
       prestado: libros[index].prestado,
-      borrado: libros[index].borrado,
+      borrado: libros[index].borrado
     };
   
     try {
