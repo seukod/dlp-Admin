@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import EditButton from '@/app/components/EditButton';
 import { fetchAndRenderData } from '../miniapi';
+import Image from 'next/image';
 import {
   Table,
   Thead,
@@ -9,6 +10,7 @@ import {
   Tr,
   Td,
   Th,
+  Button,
   TableCaption,
   TableContainer,
 } from '@chakra-ui/react';
@@ -38,33 +40,6 @@ export default function Home() {
     direction: 'initial',
   });
         
-  // useEffect(() => {
-  //   const prestamosActualizados = prestamos.map((prestamo) => {
-  //     if (prestamo.fechaDevolucion !== "00/00/00" && prestamo.fechaDevolucion !== "") {
-  //       // Si hay fecha de devolución, marcar como cerrado y devuelto
-  //       prestamo.estado = "cerrado";
-  //       prestamo.asunto = "devuelto";
-  //     } else if (prestamo.fechaPrestamo !== "00/00/00") {
-  //       // Si no hay fecha de devolución pero hay fecha de préstamo
-  //       prestamo.estado = "abierto";
-  //       if (esFechaLimiteVencida(prestamo.fechaLimite)) {
-  //         prestamo.asunto = "atrasado";
-  //       } else {
-  //         prestamo.asunto = "prestado";
-  //       }
-  //     } else {
-  //       // Si no hay fecha de préstamo
-  //       prestamo.estado = "cerrado";
-  //       prestamo.asunto = "devuelto";
-  //     }
-  
-  //     return prestamo;
-  //   });
-
-  //   setPrestamos(prestamosActualizados);
-  //   setPrestamosFiltrados(prestamosActualizados);
-  // }, []);
-
   // Función para convertir fechas de ISO 8601 a DD/MM/AAAA
   const convertirFechaEdit = (fechaISO) => {
     if (!fechaISO) return '';
@@ -216,8 +191,8 @@ export default function Home() {
             <TableCaption>Haga click en el lápiz para editar</TableCaption>
             <Thead>
               <Tr>
-                <Th className="esqizq"></Th>
-                <Th>ID Prestamo</Th>
+                <Th></Th>
+                <Th className='"esqizq"'>ID Prestamo</Th>
                 <Th>Id libro</Th>
                 
                 <Th
@@ -250,7 +225,14 @@ export default function Home() {
                 prestamos.map((prestamo, index) => (
                   <Tr key={index}>
                     <Td>
-                      <button onClick={() => editarPrestamo(index)}>Editar</button>
+                    <Button onClick={() => editarPrestamo(index)}>
+                      <Image
+                        src={prestamoEditado === index ? '/tick-icon.png' : '/lapiz.png'}
+                        alt={prestamoEditado === index ? 'Guardar' : 'Editar'}
+                        width={22}
+                        height={22}
+                      />
+                    </Button>
                     </Td>
                     <Td>{prestamo.id}</Td>
                     <Td>{prestamo.id_libro}</Td>

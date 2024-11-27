@@ -67,8 +67,8 @@ export default function Home() {
       tags: libros[index].tags,
       donante: libros[index].donante,
       fecha_donacion: libros[index].fecha_donacion,
-      prestado: libros[index].prestado,
-      borrado: libros[index].borrado,
+      estado: libros[index].estado,
+      
     };
     console.log(index, "Este es el valor que trae el guardarCambiosLibro")
     // Llama a la función cambioAPI que hace el PUT
@@ -107,6 +107,21 @@ export default function Home() {
 
   return (
     <>
+
+      <div style={{
+        position: 'absolute', 
+        top: '20px', 
+        right: '20px', 
+        zIndex: 10
+      }}>
+        <Image 
+          src="/logoAdmin.png" 
+          alt="Logo" 
+          width={180} 
+          height={100} 
+        />
+      </div>
+
       <LeftDrawer />
       <h1>CATÁLOGO LIBROS</h1>
       <TableContainer>
