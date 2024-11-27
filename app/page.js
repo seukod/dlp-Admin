@@ -1,4 +1,5 @@
 'use client';
+//pagina catalogo
 
 import React, { useState, useEffect } from 'react';
 import { fetchAndRenderData } from './miniapi';
