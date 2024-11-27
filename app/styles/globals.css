@@ -111,7 +111,7 @@ tr{
   padding: 4px; /* Añadir un poco de espacio interno */
   border-radius: 10px;
   box-sizing: border-box; /* Asegura que padding no aumente el tamaño */
-  width: 100px; /* Ajusta el ancho fijo según tus necesidades */
+  width: 150px; /* Ajusta el ancho fijo según tus necesidades */
   max-width: 100%; /* Limita el ancho máximo para que no se desborde */
   
   
