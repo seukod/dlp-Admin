@@ -10,7 +10,9 @@
 :root {
   --nav: #adcfce;
 }
-
+input{
+  background: linear-gradient(180deg, #121219 10%, #5d5889 100%)!important;
+}
 html {
 
   justify-content: center;
