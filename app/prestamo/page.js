@@ -1,4 +1,5 @@
 'use client';
+import { cambioAPI, cambioAPIp } from '../miniapi';
 import React, { useState, useEffect } from 'react';
 import EditButton from '@/app/components/EditButton';
 import { fetchAndRenderData } from '../miniapi';
@@ -162,7 +163,8 @@ export default function Home() {
   };
   
   // Guardar cambios al dejar de interactuar
-  const guardarCambios = (campo, index) => {
+  const guardarCambios = async (campo, index) => {
+    
     const nuevoValor = valoresTemporales[campo];
     if (nuevoValor && esFechaValida(nuevoValor)) {
       manejarCambio(nuevoValor, index, campo);
@@ -170,6 +172,26 @@ export default function Home() {
       alert('Por favor, ingresa una fecha válida.');
     }
     setValoresTemporales({ fecha_prestamo: '', fecha_devuelto: '', fecha_limite: '' });
+    const prestamoActuaizado ={
+      id : prestamos[index].id,
+      id_libro: prestamos[index].id_libro,
+      usuario: prestamos[index].usuario,
+      fecha_prestamo: prestamos[index].fecha_prestamo,
+      fecha_devuelto: prestamos[index].fecha_devuelto,
+      fecha_limite: prestamos[index].fecha_limite,
+      borrado: prestamos[index].borrado
+    }
+    try {
+      console.log('Enviando actualización del libro:', );
+      await cambioAPIp(prestamoActuaizado, '/API/prestamo'); // Llamada a la función PUT
+  
+      
+  
+      console.log('Libro actualizado correctamente en el frontend.');
+    } catch (error) {
+      console.error('Error al guardar cambios:', error);
+    }
+  
   };
 
   const getSortIcon = (key) => {
@@ -192,7 +214,7 @@ export default function Home() {
             <Thead>
               <Tr>
                 <Th></Th>
-                <Th className='"esqizq"'>ID Prestamo</Th>
+                <Th className="esqizq">ID Prestamo</Th>
                 <Th>Id libro</Th>
                 
                 <Th

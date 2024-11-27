@@ -76,12 +76,12 @@ export default function Home() {
       donante: libros[index].donante,
       fecha_donacion: libros[index].fecha_donacion,
       prestado: libros[index].prestado,
-      borrado: libros[index].borrado,
+      borrado: libros[index].borrado
     };
   
     try {
       console.log('Enviando actualización del libro:', libroActualizado);
-      await cambioAPI(libroActualizado); // Llamada a la función PUT
+      await cambioAPI(libroActualizado, '/API/libro'); // Llamada a la función PUT
   
       // Actualizar estado local después del PUT exitoso
       const nuevosLibros = [...libros];
@@ -172,6 +172,7 @@ export default function Home() {
               <Th>Editar</Th>
               <Th onClick={() => ordenarLibros('id')}>ID ⇅</Th>
               <Th onClick={() => ordenarLibros('titulo')}>Título ⇅</Th>
+              <Th>ISBN</Th>
               <Th>Carátula</Th>
               <Th>Autores</Th>
               <Th>Tags</Th>
@@ -208,6 +209,7 @@ export default function Home() {
                       libro.titulo
                     )}
                   </Td>
+                  <Td>{libro.isbn}</Td>
                   <Td>
                     {libroEditado === index ? (
                       <input
