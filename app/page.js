@@ -77,7 +77,7 @@ export default function Home() {
     try {
       console.log('Enviando actualización del libro:', libroActualizado);
       await cambioAPI(libroActualizado, '/API/libro'); // Llamada a la función PUT
-      handleRefresh();
+      //handleRefresh();
       // Actualizar estado local después del PUT exitoso
       const nuevosLibros = [...libros];
       nuevosLibros[index] = libroActualizado;
@@ -93,9 +93,9 @@ export default function Home() {
       console.error('Error al guardar cambios:', error);
     }
   };
-  const handleRefresh = () => {
-    setRefresh(prev => !prev); // Cambia el estado para forzar la recarga
-  };
+  //const handleRefresh = () => {
+    //setRefresh(prev => !prev); // Cambia el estado para forzar la recarga
+  //};
   
 
   

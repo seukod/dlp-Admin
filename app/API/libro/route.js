@@ -29,7 +29,7 @@ export async function PUT(req) {
     const libroActualizado = await req.json();
 
     // Crear la URL para la API externa, usando el id del libro actualizado
-    const url = `https://dlp-api.vercel.app/libros?id=${libroActualizado.id}`;
+    const url = `https://dlp-api.vercel.app/libros`;
 
     // Hacer el PUT a la API externa con el libro actualizado
     const response = await fetch(url, {
