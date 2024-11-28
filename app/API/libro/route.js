@@ -18,7 +18,7 @@ export async function GET() {
   }
 }
 import fetch from 'node-fetch';
-
+ 
 export async function PUT(req) {
   try {
     const libroActualizado = await req.json();
