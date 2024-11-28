@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/libros",  
+        "destination": "https://dlp-api.vercel.app/libros"  
+      }
+    ]
+  }
+  
