@@ -1,4 +1,5 @@
 'use client';
+//pagina catalogo
 
 import React, { useState, useEffect } from 'react';
 import { fetchAndRenderData } from './miniapi';
@@ -22,6 +23,7 @@ export default function Home() {
   const [libros, setLibros] = useState([]);
   const [libroEditado, setLibroEditado] = useState(null);
   const [orden, setOrden] = useState({ campo: null, ascendente: true });
+  const [refresh, setRefresh] = useState(false);
 
   // Fetch inicial de datos
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function Home() {
     };
 
     fetchData();
-  }, []);
+  }, [refresh]);
 
   // Manejar cambios en los campos
   const manejarCambio = (e, index, campo) => {
@@ -82,7 +84,7 @@ export default function Home() {
     try {
       console.log('Enviando actualización del libro:', libroActualizado);
       await cambioAPI(libroActualizado, '/API/libro'); // Llamada a la función PUT
-  
+      handleRefresh();
       // Actualizar estado local después del PUT exitoso
       const nuevosLibros = [...libros];
       nuevosLibros[index] = libroActualizado;
@@ -90,13 +92,17 @@ export default function Home() {
       // Después de un PUT exitoso, guarda los libros actualizados en localStorage
       localStorage.setItem('libros', JSON.stringify(nuevosLibros));
 
-  
+
+      //TODO pragma nocache
+      //handleRefresh();
       console.log('Libro actualizado correctamente en el frontend.');
     } catch (error) {
       console.error('Error al guardar cambios:', error);
     }
   };
-  
+  const handleRefresh = () => {
+    setRefresh(prev => !prev); // Cambia el estado para forzar la recarga
+  };
   
   // validar formato del ibsn
   const validarISBN13 = (isbn) => {

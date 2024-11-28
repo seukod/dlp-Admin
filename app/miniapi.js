@@ -3,7 +3,11 @@
 export async function fetchAndRenderData(endpoint) {
   try {
     // Cambié la URL a /api/libro
-    const response = await fetch(endpoint,{method: 'GET'});
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' }
+    });
+    return response.json();
     if (!response.ok) throw new Error('Error al obtener datos desde la API interna');
     const data = await response.json();
     return data;
