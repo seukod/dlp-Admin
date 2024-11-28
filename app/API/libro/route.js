@@ -18,7 +18,7 @@ export async function GET() {
   }
 }
 
- 
+             
 export async function PUT(req) {
   try {
     const libroActualizado = await req.json();
