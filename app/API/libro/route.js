@@ -4,7 +4,7 @@ const API_URL = 'https://dlp-api.vercel.app/libros'; // API externa
 
 
 // Manejador para GET
-export default async function GET(req) {
+export  async function GET(req) {
   try {
     // Solicitar los datos de la API externa
     const response = await fetch(API_URL);
