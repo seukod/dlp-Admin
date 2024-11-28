@@ -17,7 +17,7 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-import fetch from 'node-fetch';
+
  
 export async function PUT(req) {
   try {
