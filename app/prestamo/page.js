@@ -76,13 +76,6 @@ export default function Home() {
     );
   };
   
-  const esFechaLimiteVencida = (fechaLimite) => {
-    const [dia, mes, año] = fechaLimite.split('/');
-    const fecha = new Date(`${año}-${mes}-${dia}`);
-    const fechaActual = new Date();
-    return fecha < fechaActual;
-  };
-
   const editarPrestamo = (index) => {
     if (prestamoEditado === index) {
       setPrestamoEditado(null); // Cierra la edición si ya está en modo edición
@@ -95,18 +88,30 @@ export default function Home() {
       });
     }
   };
+
   const obtenerEstadoPrestamo = (fechaDevolucion, fechaLimite) => {
-    // Si la fecha de devolución es diferente de null, el estado es "devuelto"
+    // Si la fecha de devolución no es null, el estado es "devuelto"
     if (fechaDevolucion) {
       return 'devuelto';
     }
   
-    // Si la fecha límite es mayor que la fecha actual, el estado es "prestado"
-    const fechaLimiteArray = fechaLimite.split('/');
-    const fechaLimiteDate = new Date(`${fechaLimiteArray[2]}-${fechaLimiteArray[1]}-${fechaLimiteArray[0]}`);
+    // Convertir fechaActual a DD/MM/AAAA
     const fechaActual = new Date();
+    const fechaActualDDMMYYYY = convertirFechaEdit(fechaActual.toISOString());
   
-    if (fechaLimiteDate > fechaActual) {
+    // Convertir fechaLimite de ISO 8601 a DD/MM/AAAA
+    const fechaLimiteDDMMYYYY = convertirFechaEdit(fechaLimite);
+  
+    // Si las fechas están en el mismo formato DD/MM/AAAA, compararlas
+    const [diaActual, mesActual, añoActual] = fechaActualDDMMYYYY.split('/').map(Number);
+    const [diaLimite, mesLimite, añoLimite] = fechaLimiteDDMMYYYY.split('/').map(Number);
+  
+    const fechaActualNormalizada = new Date(añoActual, mesActual - 1, diaActual);
+    const fechaLimiteNormalizada = new Date(añoLimite, mesLimite - 1, diaLimite);
+  
+    // Comparar fechas normalizadas
+    if (fechaLimiteNormalizada >= fechaActualNormalizada) {
+      console.log('Fecha límite es mayor o igual a la actual. Prestado.');
       return 'prestado';
     }
   
