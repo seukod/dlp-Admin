@@ -218,8 +218,8 @@ export default function Home() {
             <TableCaption>Haga click en el lápiz para editar</TableCaption>
             <Thead>
               <Tr>
-                <Th></Th>
-                <Th className="esqizq">ID Prestamo</Th>
+                <Th className="esqizq"></Th>
+                <Th >ID Prestamo</Th>
                 <Th>Id libro</Th>
                 
                 <Th
