@@ -3,7 +3,7 @@ const nextConfig = {
     async headers() {
         return [
             {
-                source: "/:path*",
+                source: "/API/:path*",
                 headers: [
                     { key: "Access-Control-Allow-Credentials", value: "true" },
                     { key: "Access-Control-Allow-Origin", value: "https://dlp-admin-dlp.vercel.app, https://dlp-admin-dlp.vercel.app/API/prestamo, https://dlp-admin-dlp.vercel.app/API/libro, https://dlp-prestamo.vercel.app, https://dlp-donacion.vercel.app, https://dlp-dashboard.vercel.app, http://localhost:3000/, https://localhost:3000/, http://localhost:3001/, https://localhost:3000/" },
