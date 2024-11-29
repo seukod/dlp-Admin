@@ -29,7 +29,7 @@ export async function PUT(req) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(libroActualizado),
     });
-
+    if(response==null) throw new Error("Response nulo");
     if (!response.ok) throw new Error('Error al actualizar el libro');
 
     return NextResponse.json({ message: 'Libro actualizado con éxito' });
