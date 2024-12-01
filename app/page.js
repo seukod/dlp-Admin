@@ -83,13 +83,8 @@ export default function Home() {
   
     try {
       console.log('Enviando actualización del libro:', libroActualizado);
-<<<<<<< HEAD
-      await cambioAPI(libroActualizado, '/API/libro'); // Llamada a la función PUT
-      //handleRefresh();
-=======
       await cambioAPI(libroActualizado, '/api/libro'); // Llamada a la función PUT
       handleRefresh();
->>>>>>> salvacion2
       // Actualizar estado local después del PUT exitoso
       const nuevosLibros = [...libros];
       nuevosLibros[index] = libroActualizado;
