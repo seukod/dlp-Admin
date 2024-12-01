@@ -30,7 +30,7 @@ export default function Home() {
     
     const fetchData = async () => {
       try {
-        const data = await fetchAndRenderData("API/libro");
+        const data = await fetchAndRenderData("api/libro");
         console.log("Datos obtenidos de la API:", data);
 
         if (data && Array.isArray(data.libros)) {
@@ -61,6 +61,13 @@ export default function Home() {
     setLibros(nuevosLibros);
   };
   const guardarCambiosLibro = async (index) => {
+    const isbn = libros[index].isbn; // Obtener el ISBN del libro
+    if (!validarISBN13(isbn)) {
+      alert('Por favor, ingresa un ISBN válido de 13 dígitos.');
+      return;  // Detener el proceso si el ISBN no es válido
+    }
+
+
     const libroActualizado = {
       id: libros[index].id,
       titulo: libros[index].titulo,
@@ -71,13 +78,18 @@ export default function Home() {
       donante: libros[index].donante,
       fecha_donacion: libros[index].fecha_donacion,
       prestado: libros[index].prestado,
-      borrado: libros[index].borrado,
+      borrado: libros[index].borrado
     };
   
     try {
       console.log('Enviando actualización del libro:', libroActualizado);
+<<<<<<< HEAD
       await cambioAPI(libroActualizado, '/API/libro'); // Llamada a la función PUT
       //handleRefresh();
+=======
+      await cambioAPI(libroActualizado, '/api/libro'); // Llamada a la función PUT
+      handleRefresh();
+>>>>>>> salvacion2
       // Actualizar estado local después del PUT exitoso
       const nuevosLibros = [...libros];
       nuevosLibros[index] = libroActualizado;
@@ -97,7 +109,30 @@ export default function Home() {
     //setRefresh(prev => !prev); // Cambia el estado para forzar la recarga
   //};
   
-
+  // validar formato del ibsn
+  const validarISBN13 = (isbn) => {
+    // Eliminar caracteres no numéricos (como guiones)
+    isbn = isbn.replace(/[^0-9]/g, '');
+  
+    // Verificar que sea exactamente un número de 13 dígitos
+    if (isbn.length !== 13) {
+      return false;
+    }
+  
+    // Calcular la suma ponderada para la validación del ISBN-13
+    let suma = 0;
+    for (let i = 0; i < 12; i++) {
+      // Multiplicar alternando entre 1 y 3
+      suma += parseInt(isbn[i]) * (i % 2 === 0 ? 1 : 3);
+    }
+  
+    // El dígito de control es el valor que completa la suma para que el total sea múltiplo de 10
+    const digitoControl = 10 - (suma % 10);
+    const digitoControlFinal = digitoControl === 10 ? 0 : digitoControl;
+  
+    // Verificar si el dígito de control coincide con el último dígito
+    return parseInt(isbn[12]) === digitoControlFinal;
+  };
   
   
   
@@ -187,18 +222,38 @@ export default function Home() {
                   </Td>
                   <Td>{libro.isbn}</Td>
                   <Td>
-                    {libro.caratula ? (
-                      <Image
-                        src={`data:image/jpeg;base64,${libro.caratula}`}
-                        alt={libro.titulo}
-                        width={50}
-                        height={75}
+                    {libroEditado === index ? (
+                      <input
+                        type="text"
+                        value={libro.isbn}
+                        className='camposEdit'
+                        onChange={(e) => manejarCambio(e, index, 'isbn')}
+                        onBlur={() => guardarCambiosLibro(index)}
                       />
                     ) : (
-                      'Sin Carátula'
+                      libro.caratula ? (
+                        <Image
+                          src={`data:image/jpeg;base64,${libro.caratula}`}
+                          alt={libro.titulo}
+                          width={50}
+                          height={75}
+                        />
+                      ) : 'Sin Carátula'
                     )}
                   </Td>
-                  <Td>{libro.autores}</Td>
+                  <Td>
+                    {libroEditado === index ? (
+                      <input
+                        type="text"
+                        className='camposEdit'
+                        value={libro.autores}
+                        onChange={(e) => manejarCambio(e, index, 'autores')}
+                        onBlur={() => guardarCambiosLibro(index)}
+                      />
+                    ) : (
+                      libro.autores
+                    )}
+                  </Td>
                   <Td>
                     {libroEditado === index ? (
                       <input
