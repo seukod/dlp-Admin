@@ -94,8 +94,8 @@ export default function Home() {
       nuevosLibros[index] = libroActualizado;
       setLibros(nuevosLibros);
       // Después de un PUT exitoso, guarda los libros actualizados en localStorage
-      localStorage.setItem('libros', JSON.stringify(nuevosLibros));
-
+      
+      
 
       //TODO pragma nocache
       //handleRefresh();
