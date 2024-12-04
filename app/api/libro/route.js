@@ -24,15 +24,14 @@ export async function GET(req) {
 
 
 export async function PUT(req) {
-  console.log(req, "request");
-  console.log(req.body, "request body");
-  console.log(req.body.body, "request body.body")
   try {
     // Obtener los datos del cuerpo de la solicitud
     const libroActualizado = await req.json();
-
+    console.log(req, "request");
+    console.log(req.body, "request body");
+    console.log(req.body.body, "request body.body")
     // Crear la URL para la API externa, usando el id del libro actualizado
-    const url = `https://dlp-api.vercel.app/libros`;
+    const url = `https://dlp-api.vercel.app/libros/`;
 
     // Hacer el PUT a la API externa con el libro actualizado
     const response = await fetch(url, {
