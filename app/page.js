@@ -80,7 +80,7 @@ export default function Home() {
       prestado: libros[index].prestado,
       borrado: libros[index].borrado
     };
-    console.log(libroActualizado)
+    console.log(libroActualizado, "en guardarCambiosLibro");
   
     try {
       console.log('Enviando actualización del libro:', libroActualizado); //ahsjdjas

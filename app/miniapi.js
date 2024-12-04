@@ -26,7 +26,7 @@ export async function cambioAPIp(prestamos, url) {
 
     if (!response.ok) {
       const errorData = await response.text(); // Cambiar a text() para leer posibles respuestas vacías
-      console.error('Error al actualizar el libro:', errorData);
+      console.error('Error al actualizar el prestamo:', errorData);
       throw new Error(errorData || 'Error desconocido');
     }
 
@@ -47,6 +47,7 @@ export async function cambioAPIp(prestamos, url) {
 
 
 export async function cambioAPI(libroActualizado, url) {
+  console.log(libroActualizado, "dentro de cambioapi con", url );
   try {
     const response = await fetch(url, {
       method: 'PUT',
