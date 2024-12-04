@@ -24,6 +24,7 @@ export default function Home() {
   const [libroEditado, setLibroEditado] = useState(null);
   const [orden, setOrden] = useState({ campo: null, ascendente: true });
   const [refresh, setRefresh] = useState(false);
+  localStorage.clear();
 
   // Fetch inicial de datos
   useEffect(() => {
