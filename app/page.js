@@ -26,30 +26,26 @@ export default function Home() {
   const [orden, setOrden] = useState({ campo: null, ascendente: true });
   //const [refresh, setRefresh] = useState(false);
 
-  // Función para obtener datos de la API
-  const fetchData = async () => {
-    try {
-    
-      const data = await fetchAndRenderData("api/libro");
-      console.log("Datos obtenidos de la API:", data);
-
-      if (data && Array.isArray(data.libros)) {
-        setLibros(data.libros);
-      } else {
-        console.error("Estructura de datos no válida:", data);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchAndRenderData("api/libro");
+        console.log("Datos obtenidos de la API:", data);
+        if (data && Array.isArray(data.libros)) {
+          setLibros(data.libros);
+        } else {
+          console.error("Estructura de datos no válida:", data);
+          setLibros([]);
+        }
+      } catch (error) {
+        console.error("Error al obtener los datos de la API:", error);
         setLibros([]);
       }
-    } catch (error) {
-      console.error("Error al obtener los datos de la API:", error);
-      setLibros([]);
-    }
-  };
-
-  // Fetch inicial de datos
-  useEffect(() => {
+    };
+  
+    // Llamar a fetchData inicialmente
     fetchData();
   }, []);
-
   // Manejar cambios en los campos
   const manejarCambio = (e, index, campo) => {
     const nuevosLibros = [...libros];
