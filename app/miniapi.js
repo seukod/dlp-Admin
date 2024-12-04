@@ -1,5 +1,5 @@
 // miniapi.js api
-
+import { NextResponse } from 'next/server';
 export async function fetchAndRenderData(endpoint) {
   try {
     // Cambié la URL a /api/libro
@@ -58,7 +58,7 @@ export async function cambioAPI(libroActualizado, url) {
     });
 
 
-    const result = await response.json();
+    const result = NextResponse.json(response);
     console.log('Libro actualizado correctamente:', result);
     return result;
   } catch (error) {
