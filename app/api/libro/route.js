@@ -43,9 +43,6 @@ export async function PUT(req) {
       body: JSON.stringify(libroActualizado), // Enviar el libro actualizado como cuerpo
     });
 
-    if (!response.ok) {
-      throw new Error('Error al actualizar el libro');
-    }
 
     // Responder con éxito si todo va bien
     return NextResponse.json({ message: 'Libro actualizado con éxito' });
