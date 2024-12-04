@@ -20,6 +20,7 @@ export async function GET(req) {
 
 
 export async function PUT(req) {
+  console.log('Solicitud PUT recibida');
   try {
     // Leer el cuerpo de la solicitud
     const body = await req.json(); // Asegura que el cuerpo se lea correctamente
