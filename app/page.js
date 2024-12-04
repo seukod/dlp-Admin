@@ -89,11 +89,16 @@ export default function Home() {
       await cambioAPI(libroActualizado, url); // Llamada a la función PUT
       console.log('Libro actualizado correctamente en el frontend.');
   
-      // Forzar un nuevo fetch
-      await fetchData();// Cambiar el estado de refresh
+      // Actualiza el estado local con el libro actualizado
+      const nuevosLibros = [...libros];
+      nuevosLibros[index] = libroActualizado; // Reemplaza el libro en el estado local
+      setLibros(nuevosLibros); // Actualiza el estado local
+  
     } catch (error) {
       console.error('Error al guardar cambios:', error);
       alert('Ocurrió un error al guardar los cambios.'); // Notificar al usuario
+      // Si hay un error, puedes optar por hacer un fetch para asegurarte de que los datos estén actualizados
+      await fetchData(); // Esto es opcional, dependiendo de tu lógica
     }
   };
   
