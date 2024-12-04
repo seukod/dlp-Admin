@@ -48,7 +48,9 @@ export async function cambioAPIp(prestamos, url) {
 
 // Función principal para manejar la solicitud PUT a la API de libros (local)
 export async function cambioAPI(req) {
-  console.log('Solicitud PUT recibida en API local');
+  console.log(req, "req")
+  console.log(req.body, "Req.body")
+  console.log(req.json())
   try {
     // Leer el cuerpo de la solicitud
     const body = await req.json(); // Asegura que el cuerpo se lea correctamente
@@ -66,16 +68,24 @@ export async function cambioAPI(req) {
       body: JSON.stringify(body), // Enviar el cuerpo del libro actualizado
     });
 
-    // Si la respuesta no es exitosa, mostrar el error
+    // Verificar si la respuesta fue exitosa
     if (!response.ok) {
       const errorText = await response.text(); // Obtener el texto de error
       console.error('Error de API externa:', errorText);
       throw new Error(`Error al actualizar el libro: ${errorText}`);
     }
 
-    // Obtener la respuesta de la API externa
-    const data = await response.json();
-    console.log('Respuesta de la API externa:', data); // Verificar que la respuesta es correcta
+    // Intentar leer la respuesta como JSON
+    let data;
+    try {
+      data = await response.json();
+      console.log('Respuesta de la API externa:', data); // Verificar que la respuesta es correcta
+    } catch (jsonError) {
+      // Si no es un JSON válido, manejar el error
+      console.error('Error al procesar la respuesta JSON:', jsonError.message);
+      data = await response.text(); // En caso de que no sea JSON, leemos como texto
+      console.log('Respuesta en texto:', data);
+    }
 
     // Devolver la respuesta al frontend
     return NextResponse.json(data);
