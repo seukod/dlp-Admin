@@ -68,18 +68,6 @@ export async function cambioAPI(req) {
       throw new Error(`Error al actualizar el libro: ${errorText}`);
     }
 
-    // Intentar leer la respuesta como JSON
-    let data;
-    try {
-      data = await response.json();
-      console.log('Respuesta de la API externa:', data); // Verificar que la respuesta es correcta
-    } catch (jsonError) {
-      // Si no es un JSON válido, manejar el error
-      console.error('Error al procesar la respuesta JSON:', jsonError.message);
-      data = await response.text(); // En caso de que no sea JSON, leemos como texto
-      console.log('Respuesta en texto:', data);
-    }
-
     // Devolver la respuesta al frontend
     return NextResponse.json(data);
   } catch (error) {
