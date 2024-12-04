@@ -8,6 +8,7 @@ export async function GET() {
   try {
     // Agregar un parámetro de fecha y hora para hacer la URL única
     const timestamp = new Date().toISOString();
+    console.log("timestam:", timestamp);
     const uniqueURL = `${API_URL}?t=${timestamp}`;
 
     // Solicitar los datos de la API externa con caché desactivado
