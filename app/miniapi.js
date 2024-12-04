@@ -48,14 +48,7 @@ export async function cambioAPIp(prestamos, url) {
 
 // Función principal para manejar la solicitud PUT a la API de libros (local)
 export async function cambioAPI(req) {
-  console.log(req, "req")
-  console.log(req.body, "Req.body")
-  console.log(req.json())
   try {
-    // Leer el cuerpo de la solicitud
-    const body = await req.json(); // Asegura que el cuerpo se lea correctamente
-    console.log(body, "request body"); // Imprimir los datos para asegurarse de que estén correctos
-
     // Crear la URL para la API externa
     const url = `https://dlp-api.vercel.app/libros`;
 
@@ -65,7 +58,7 @@ export async function cambioAPI(req) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body), // Enviar el cuerpo del libro actualizado
+      body: JSON.stringify(req), // Enviar el cuerpo del libro actualizado
     });
 
     // Verificar si la respuesta fue exitosa
