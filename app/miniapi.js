@@ -2,18 +2,14 @@
 import { NextResponse } from 'next/server';
 export async function fetchAndRenderData(endpoint) {
   try {
+    localStorage.clear()
     // Cambié la URL a /api/libro
     const response = await fetch(endpoint, {
       method: 'GET',
       headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' }
     });
-    return NextResponse.json(response, {
-      headers: {
-        'Cache-Control': 'no-store',  // Evita que la respuesta se almacene en caché
-        'Pragma': 'no-cache',         // Para navegadores más antiguos
-        'Expires': '0',               // Define que los datos ya han expirado
-      },
-    }); 
+    return response.json();
+    
   } catch (error) {
     console.error(error);
     return null;
