@@ -24,7 +24,7 @@ export default function Home() {
   const [libros, setLibros] = useState([]);
   const [libroEditado, setLibroEditado] = useState(null);
   const [orden, setOrden] = useState({ campo: null, ascendente: true });
-  const [refresh, setRefresh] = useState(false);
+  //const [refresh, setRefresh] = useState(false);
 
   // Función para obtener datos de la API
   const fetchData = async () => {
@@ -48,7 +48,7 @@ export default function Home() {
   // Fetch inicial de datos
   useEffect(() => {
     fetchData();
-  }, [refresh]);
+  }, []);
 
   // Manejar cambios en los campos
   const manejarCambio = (e, index, campo) => {
