@@ -11,7 +11,13 @@ export async function GET(req) {
     if (!response.ok) throw new Error('Error al obtener datos desde la API externa');
 
     const data = await response.json();
-    return NextResponse.json(data);  // Devuelve los datos obtenidos
+    return NextResponse.json(data, {
+      headers: {
+        'Cache-Control': 'no-store',  // Evita que la respuesta se almacene en caché
+        'Pragma': 'no-cache',         // Para navegadores más antiguos
+        'Expires': '0',               // Define que los datos ya han expirado
+      },
+    });  // Devuelve los datos obtenidos
   } catch (error) {
     console.error(error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
