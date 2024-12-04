@@ -1,5 +1,6 @@
 // miniapi.js api
 import { NextResponse } from 'next/server';
+
 export async function fetchAndRenderData(endpoint) {
   try {
     // Obtener el timestamp actual para evitar caché

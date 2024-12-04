@@ -16,7 +16,8 @@ export async function GET() {
     const response = await fetch(uniqueURL, {
       headers: { 
         'Cache-Control': 'no-cache', 
-        'Pragma': 'no-cache' 
+        'Pragma': 'no-cache',
+        'cache': 'no-store' 
       }
     });
 
