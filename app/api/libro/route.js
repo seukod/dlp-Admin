@@ -12,6 +12,9 @@ export async function GET(req) {
     });
     if (!response.ok) throw new Error('Error al obtener datos desde la API externa');
 
+    const headers = new Headers(response.headers);
+    headers.set('Cache-Control', 'no-store');
+
     const data = await response.json();
     return NextResponse.json(data, {
       headers: {

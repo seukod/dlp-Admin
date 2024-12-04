@@ -188,6 +188,7 @@ export default function Home() {
     }
     try {
       console.log('Enviando actualización del libro:', );
+      const url = "https://dlp-api.vercel.app/prestamos"
       await cambioAPI(prestamoActuaizado, url); // Llamada a la función PUT
   
       
