@@ -5,12 +5,13 @@ const API_URL = 'https://dlp-api.vercel.app/libros'; // API externa
 
 // Manejador para GET
 export async function GET() {
+  const timestamp = new Date()
+    
+  const uniqueURL = `${API_URL}?t=${timestamp}`;
+  console.log("timestam:", timestamp, uniqueURL);
   try {
     // Agregar un parámetro de fecha y hora para hacer la URL única
-    const timestamp = new Date()
     
-    const uniqueURL = `${API_URL}?t=${timestamp}`;
-    console.log("timestam:", timestamp, uniqueURL);
     // Solicitar los datos de la API externa con caché desactivado
     const response = await fetch(uniqueURL, {
       headers: { 
