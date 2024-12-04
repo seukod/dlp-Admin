@@ -28,7 +28,6 @@ export default function Home() {
   // Función para obtener datos de la API
   const fetchData = async () => {
     try {
-    
       const data = await fetchAndRenderData("api/libro");
       console.log("Datos obtenidos de la API:", data);
 
@@ -44,11 +43,15 @@ export default function Home() {
     }
   };
 
-  // Fetch inicial de datos
-  useEffect(() => {
-    fetchData();
-  }, [refresh]);
 
+  useEffect(() => {
+    fetchData(); // Obtener datos al montar el componente
+
+    const intervalId = setInterval(() => {
+      fetchData(); // Obtener datos cada 10 segundos (10000 ms)
+    }, 10000);
+    return () => clearInterval(intervalId); // Limpiar el intervalo al desmontar el componente
+  }, []);
   // Manejar cambios en los campos
   const manejarCambio = (e, index, campo) => {
     const nuevosLibros = [...libros];
