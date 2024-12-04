@@ -90,7 +90,7 @@ export default function Home() {
       console.log('Libro actualizado correctamente en el frontend.');
   
       // Forzar un nuevo fetch
-      setRefresh(prev => !prev); // Cambiar el estado de refresh
+      await fetchData();// Cambiar el estado de refresh
     } catch (error) {
       console.error('Error al guardar cambios:', error);
       alert('Ocurrió un error al guardar los cambios.'); // Notificar al usuario
