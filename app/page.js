@@ -30,7 +30,7 @@ export default function Home() {
     
     const fetchData = async () => {
       try {
-        const data = await fetchAndRenderData("API/libro");
+        const data = await fetchAndRenderData("API/libro"); 
         console.log("Datos obtenidos de la API:", data);
 
         if (data && Array.isArray(data.libros)) {
