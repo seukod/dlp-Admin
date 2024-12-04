@@ -30,11 +30,7 @@ export default function Home() {
     
     const fetchData = async () => {
       try {
-<<<<<<< HEAD
-        const data = await fetchAndRenderData("API/libro"); 
-=======
         const data = await fetchAndRenderData("api/libro");
->>>>>>> parent of ad9d9df (Update page.js)
         console.log("Datos obtenidos de la API:", data);
 
         if (data && Array.isArray(data.libros)) {
@@ -87,7 +83,7 @@ export default function Home() {
     console.log(libroActualizado)
   
     try {
-      console.log('Enviando actualización del libro:', libroActualizado);
+      console.log('Enviando actualización del libro:', libroActualizado); //ahsjdjas
       await cambioAPI(libroActualizado, '/api/libro'); // Llamada a la función PUT
       handleRefresh();
       // Actualizar estado local después del PUT exitoso
