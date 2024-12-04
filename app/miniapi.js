@@ -58,6 +58,7 @@ export async function cambioAPI(libroActualizado, url) {
     });
 
 
+    const result = await response.json();
     console.log('Libro actualizado correctamente:', result);
     return result;
   } catch (error) {
