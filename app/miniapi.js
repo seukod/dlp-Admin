@@ -2,19 +2,22 @@
 import { NextResponse } from 'next/server';
 export async function fetchAndRenderData(endpoint) {
   try {
-    localStorage.clear()
-    // Cambié la URL a /api/libro
-    const response = await fetch(endpoint, {
+    // Obtener el timestamp actual para evitar caché
+    const timestamp = Date.now();
+    
+    // Agregar el parámetro de tiempo a la URL
+    const response = await fetch(`${endpoint}?t=${timestamp}`, {
       method: 'GET',
       headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' }
     });
-    return response.json();
     
+    return response.json();
   } catch (error) {
     console.error(error);
     return null;
   }
 }
+
 
 
 
