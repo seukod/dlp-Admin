@@ -6,25 +6,34 @@ const API_URL = 'https://dlp-api.vercel.app/libros'; // API externa
 // Manejador para GET
 export async function GET() {
   try {
-    // Solicitar los datos de la API externa
-    const response = await fetch(API_URL,{
-      headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' }
+    // Agregar un parámetro de fecha y hora para hacer la URL única
+    const timestamp = new Date().toISOString();
+    const uniqueURL = `${API_URL}?t=${timestamp}`;
+
+    // Solicitar los datos de la API externa con caché desactivado
+    const response = await fetch(uniqueURL, {
+      headers: { 
+        'Cache-Control': 'no-cache', 
+        'Pragma': 'no-cache' 
+      }
     });
-    if (!response.ok) throw new Error('Error al obtener datos desde la API externa');
 
-    const headers = new Headers(response.headers);
-    headers.set('Cache-Control', 'no-store');
+    if (!response.ok) {
+      throw new Error(`Error al obtener datos desde la API externa: ${response.statusText}`);
+    }
 
+    // Procesar los datos y devolver la respuesta con control de caché
     const data = await response.json();
     return NextResponse.json(data, {
       headers: {
-        'Cache-Control': 'no-store',  // Evita que la respuesta se almacene en caché
-        'Pragma': 'no-cache',         // Para navegadores más antiguos
-        'Expires': '0',               // Define que los datos ya han expirado
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'Surrogate-Control': 'no-store',
       },
-    });  // Devuelve los datos obtenidos
+    });
   } catch (error) {
-    console.error(error.message);
+    console.error('Error al manejar GET:', error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
