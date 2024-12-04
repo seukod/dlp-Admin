@@ -30,6 +30,7 @@ export default function Home() {
     
     const fetchData = async () => {
       try {
+        localStorage.clear();
         const data = await fetchAndRenderData("api/libro");
         console.log("Datos obtenidos de la API:", data);
 
