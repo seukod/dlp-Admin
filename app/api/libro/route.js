@@ -26,7 +26,6 @@ export async function GET(req) {
 export async function PUT(req) {
   try {
     // Obtener los datos del cuerpo de la solicitud
-    const libroActualizado = await req.json();
     console.log(req, "request");
     console.log(req.body, "request body");
     console.log(req.body.body, "request body.body")
@@ -39,7 +38,7 @@ export async function PUT(req) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(libroActualizado), // Enviar el libro actualizado como cuerpo
+      body: JSON.stringify(req.body), // Enviar el libro actualizado como cuerpo
     });
 
     if (!response.ok) {
