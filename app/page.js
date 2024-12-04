@@ -86,11 +86,15 @@ export default function Home() {
     try {
       const url = `https://dlp-api.vercel.app/libros`;
       console.log('Enviando actualización del libro:', libroActualizado);
-      await cambioAPI(libroActualizado, url); // Llamada a la función PUT
-      // Refrescar la lista de libros
-     // Volver a obtener los datos después de guardar
-      console.log('Libro actualizado correctamente en el frontend.');
-      await fetchData(); 
+      const respuesta = await cambioAPI(libroActualizado, url); // Llamada a la función PUT
+  
+      if (respuesta.error) { // Verifica si hay un error en la respuesta
+        console.error('Error al actualizar el libro:', respuesta.error);
+        alert('Ocurrió un error al guardar los cambios.'); // Notificar al usuario
+      } else {
+        console.log('Libro actualizado correctamente en el frontend.');
+        await fetchData(); // Volver a obtener los datos después de guardar
+      }
     } catch (error) {
       console.error('Error al guardar cambios:', error);
       alert('Ocurrió un error al guardar los cambios.'); // Notificar al usuario
