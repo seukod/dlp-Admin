@@ -7,7 +7,7 @@ const API_URL = 'https://dlp-api.vercel.app/libros'; // API externa
 export async function GET() {
   try {
     // Agregar un parámetro de fecha y hora para hacer la URL única
-    const timestamp = new Date().toISOString();
+    const timestamp = new Date()
     console.log("timestam:", timestamp);
     const uniqueURL = `${API_URL}?t=${timestamp}`;
 

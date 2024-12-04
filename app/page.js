@@ -100,9 +100,7 @@ export default function Home() {
       console.error('Error al guardar cambios:', error);
     }
   };
-  const handleRefresh = () => {
-    setRefresh(prev => !prev); // Cambia el estado para forzar la recarga
-  };
+
   
   // validar formato del ibsn
   const validarISBN13 = (isbn) => {
