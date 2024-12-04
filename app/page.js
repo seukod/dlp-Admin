@@ -93,12 +93,32 @@ export default function Home() {
       const nuevosLibros = [...libros];
       nuevosLibros[index] = libroActualizado;
       setLibros(nuevosLibros);
-      // Después de un PUT exitoso, guarda los libros actualizados en localStorage
-      
-      
 
-      //TODO pragma nocache
-      //handleRefresh();
+      useEffect(() => {
+    
+        const fetchData = async () => {
+          try {
+            localStorage.clear();
+            const data = await fetchAndRenderData("api/libro");
+            console.log("Datos obtenidos de la API:", data);
+    
+            if (data && Array.isArray(data.libros)) {
+              setLibros(data.libros);
+            } else {
+              console.error("Estructura de datos no válida:", data);
+              setLibros([]);
+            }
+          } catch (error) {
+            console.error("Error al obtener los datos de la API:", error);
+            setLibros([]);
+          }
+        };
+    
+        fetchData();
+      }, [refresh]);
+
+
+      
       console.log('Libro actualizado correctamente en el frontend.');
     } catch (error) {
       console.error('Error al guardar cambios:', error);
