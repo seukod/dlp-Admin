@@ -4,7 +4,7 @@ export async function fetchAndRenderData(endpoint) {
   try {
     // Obtener el timestamp actual para evitar caché
     const timestamp = Date.now();
-    
+    console.log(timestamp);
     // Agregar el parámetro de tiempo a la URL
     const response = await fetch(`${endpoint}?t=${timestamp}`, {
       method: 'GET',
