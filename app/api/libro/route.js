@@ -32,8 +32,11 @@ export async function GET() {
         'Pragma': 'no-cache',
         'Expires': '0',
         'Surrogate-Control': 'no-store',
+        'X-Debug-Timestamp': timestamp.toISOString(),
+        'X-Debug-UniqueURL': uniqueURL
       },
     });
+    
   } catch (error) {
     console.error('Error al manejar GET:', error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
