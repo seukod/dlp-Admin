@@ -23,7 +23,7 @@ export default function Home() {
   const [prestamos, setPrestamos] = useState([]); // Inicializa como un array vacío
 
   useEffect(() => {
-    fetchAndRenderData("API/prestamo").then((data) => {
+    fetchAndRenderData("../api/prestamo").then((data) => {
       if (data && data.prestamos) {
         setPrestamos(data.prestamos);
         setPrestamosFiltrados(data.prestamos);
