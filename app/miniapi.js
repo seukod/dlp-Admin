@@ -54,7 +54,7 @@ export async function cambioAPI(libroActualizado, url) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(libroActualizado), // Enviar solo el libro actualizado
+      body: libroActualizado, // Enviar solo el libro actualizado
     });
 
     if (!response.ok) {
