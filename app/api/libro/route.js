@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-
+export const fetchCache = 'force-no-store';
 const API_URL = 'https://dlp-api.vercel.app/libros'; // API externa
 
 
@@ -17,7 +17,7 @@ export async function GET() {
       headers: { 
         'Cache-Control': 'no-cache', 
         'Pragma': 'no-cache',
-        'cache': 'no-store' 
+        cache: 'no-store' 
       }
     });
 

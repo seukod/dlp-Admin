@@ -9,7 +9,7 @@ export async function fetchAndRenderData(endpoint) {
     // Agregar el parámetro de tiempo a la URL
     const response = await fetch(`${endpoint}?t=${timestamp}`, {
       method: 'GET',
-      headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' }
+      headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache', cache: 'no-store'  }
     });
     console.log('Headers en la respuesta:', Array.from(response.headers.entries()));
     return response.json();
