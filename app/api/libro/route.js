@@ -26,11 +26,11 @@ export async function GET(req) {
 export async function PUT(req) {
   try {
     // Obtener los datos del cuerpo de la solicitud
-    console.log(req, "request");
-    console.log(req.body, "request body");
-    console.log(req.body.body, "request body.body")
-    // Crear la URL para la API externa, usando el id del libro actualizado
-    const url = `https://dlp-api.vercel.app/libros/`;
+    const body = await req.json(); // Asegura que el cuerpo se lea correctamente
+    console.log(body, "request body");
+
+    // Crear la URL para la API externa
+    const url = `https://dlp-api.vercel.app/libros`;
 
     // Hacer el PUT a la API externa con el libro actualizado
     const response = await fetch(url, {
@@ -38,15 +38,17 @@ export async function PUT(req) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(req.body), // Enviar el libro actualizado como cuerpo
+      body: JSON.stringify(body), // Enviar el cuerpo del libro actualizado
     });
 
     if (!response.ok) {
-      throw new Error('Error al actualizar el libro');
+      const errorText = await response.text();
+      throw new Error(`Error al actualizar el libro: ${errorText}`);
     }
 
-    // Responder con éxito si todo va bien
-    return NextResponse.json(response);
+    // Responder con éxito
+    const data = await response.json();
+    return NextResponse.json(data);
   } catch (error) {
     console.error(error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });

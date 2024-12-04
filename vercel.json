@@ -1,0 +1,10 @@
+{
+    "rewrites": [
+      {
+        "source": "/libros",
+        "destination": "/api/libros",
+        "methods": ["PUT", "GET", "POST"]
+      }
+    ]
+  }
+  
