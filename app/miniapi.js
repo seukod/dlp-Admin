@@ -23,11 +23,10 @@ export async function fetchAndRenderData(endpoint) {
 
 
 // Función principal para manejar la solicitud PUT a la API de libros (local)
+// Función principal para manejar la solicitud PUT a la API de libros (local)
+// Función principal para manejar la solicitud PUT a la API de libros (local)
 export async function cambioAPI(req, url) {
   try {
-    // Crear la URL para la API externa
-    
-
     // Realizar el PUT en la API externa
     const response = await fetch(url, {
       method: 'PUT',
@@ -44,11 +43,11 @@ export async function cambioAPI(req, url) {
       throw new Error(`Error al actualizar el libro: ${errorText}`);
     }
 
-    // Devolver la respuesta al frontend
-    return NextResponse.json(response);
+    // Devolver la respuesta en formato JSON
+    return await response.json(); // Cambiado aquí
   } catch (error) {
     console.error('Error al manejar la solicitud PUT:', error.message);
     // Devolver el error al cliente con estado 500
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return { error: error.message }; // Cambiado aquí
   }
 }
