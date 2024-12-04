@@ -89,16 +89,13 @@ export default function Home() {
       await cambioAPI(libroActualizado, url); // Llamada a la función PUT
       console.log('Libro actualizado correctamente en el frontend.');
   
-      // Actualizar el estado local directamente
-      const nuevosLibros = [...libros];
-      nuevosLibros[index] = libroActualizado; // Actualiza el libro en el estado
-      setLibros(nuevosLibros);
+      // Forzar un nuevo fetch
+      setRefresh(prev => !prev); // Cambiar el estado de refresh
     } catch (error) {
       console.error('Error al guardar cambios:', error);
       alert('Ocurrió un error al guardar los cambios.'); // Notificar al usuario
     }
   };
-
   
   // validar formato del ibsn
   const validarISBN13 = (isbn) => {
