@@ -28,7 +28,7 @@ export default function Home() {
   // Función para obtener datos de la API
   const fetchData = async () => {
     try {
-      localStorage.clear();
+    
       const data = await fetchAndRenderData("api/libro");
       console.log("Datos obtenidos de la API:", data);
 
@@ -87,9 +87,10 @@ export default function Home() {
       const url = `https://dlp-api.vercel.app/libros`;
       console.log('Enviando actualización del libro:', libroActualizado);
       await cambioAPI(libroActualizado, url); // Llamada a la función PUT
-      await fetchData(); // Refrescar la lista de libros
+      // Refrescar la lista de libros
      // Volver a obtener los datos después de guardar
       console.log('Libro actualizado correctamente en el frontend.');
+      await fetchData(); 
     } catch (error) {
       console.error('Error al guardar cambios:', error);
       alert('Ocurrió un error al guardar los cambios.'); // Notificar al usuario
