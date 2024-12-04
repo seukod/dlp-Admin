@@ -69,7 +69,7 @@ export async function cambioAPI(req) {
     }
 
     // Devolver la respuesta al frontend
-    return NextResponse.json(data);
+    return NextResponse.json(response);
   } catch (error) {
     console.error('Error al manejar la solicitud PUT:', error.message);
     // Devolver el error al cliente con estado 500
