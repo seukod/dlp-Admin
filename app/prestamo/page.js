@@ -188,7 +188,7 @@ export default function Home() {
     }
     try {
       console.log('Enviando actualización del libro:', );
-      await cambioAPIp(prestamoActuaizado, '/API/prestamo'); // Llamada a la función PUT
+      await cambioAPI(prestamoActuaizado, url); // Llamada a la función PUT
   
       
   

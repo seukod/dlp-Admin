@@ -47,10 +47,10 @@ export async function cambioAPIp(prestamos, url) {
 
 
 // Función principal para manejar la solicitud PUT a la API de libros (local)
-export async function cambioAPI(req) {
+export async function cambioAPI(req, url) {
   try {
     // Crear la URL para la API externa
-    const url = `https://dlp-api.vercel.app/libros`;
+    
 
     // Realizar el PUT en la API externa
     const response = await fetch(url, {
