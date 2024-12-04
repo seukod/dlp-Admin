@@ -94,7 +94,7 @@ export default function Home() {
       nuevosLibros[index] = libroActualizado;
       setLibros(nuevosLibros);
 
-      
+         
       console.log('Libro actualizado correctamente en el frontend.');
     } catch (error) {
       console.error('Error al guardar cambios:', error);
