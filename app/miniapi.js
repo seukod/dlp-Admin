@@ -57,13 +57,7 @@ export async function cambioAPI(libroActualizado, url) {
       body: libroActualizado, // Enviar solo el libro actualizado
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error('Error al actualizar el libro:', errorData);
-      throw new Error(errorData.message || 'Error desconocido');
-    }
 
-    const result = await response.json();
     console.log('Libro actualizado correctamente:', result);
     return result;
   } catch (error) {
