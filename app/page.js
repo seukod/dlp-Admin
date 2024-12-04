@@ -84,7 +84,7 @@ export default function Home() {
   
     try {
       console.log('Enviando actualización del libro:', libroActualizado); //ahsjdjas
-      await cambioAPI(libroActualizado, '/api/libro'); // Llamada a la función PUT
+      await cambioAPI(libroActualizado); // Llamada a la función PUT
       handleRefresh();
       // Actualizar estado local después del PUT exitoso
       const nuevosLibros = [...libros];

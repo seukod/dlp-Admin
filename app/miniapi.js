@@ -46,11 +46,10 @@ export async function cambioAPIp(prestamos, url) {
 
 
 
-
-export async function cambioAPI(libroActualizado, url) {
-  console.log(libroActualizado, "dentro de cambioapi con", url );
+export async function cambioAPI(libroActualizado) {
+  console.log(libroActualizado, "dentro de cambioapi con");
   try {
-    const response = await fetch(url, {
+    const response = await fetch("api/libro", {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
