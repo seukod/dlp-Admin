@@ -1,4 +1,3 @@
-// pages/cambiar-datos.js
 'use client'
 import { useEffect } from 'react';
 
@@ -6,7 +5,7 @@ const CambiarDatos = () => {
     useEffect(() => {
        
 
-        // Llama a la función para actualizar el libro
+    // Llama a la función para actualizar el libro
         actualizarLibro();
     }, []);
 

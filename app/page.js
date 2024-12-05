@@ -1,5 +1,5 @@
 'use client';
-//pagina catalogo
+
 
 import React, { useState, useEffect } from 'react';
 import { fetchAndRenderData } from './miniapi';
@@ -24,7 +24,7 @@ export default function Home() {
   const [libros, setLibros] = useState([]);
   const [libroEditado, setLibroEditado] = useState(null);
   const [orden, setOrden] = useState({ campo: null, ascendente: true });
-  //const [refresh, setRefresh] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +44,7 @@ export default function Home() {
     };
   
     // Llamar a fetchData inicialmente
-    fetchData();
+    fetchData();    
   }, []);
   // Manejar cambios en los campos
   const manejarCambio = (e, index, campo) => {
@@ -93,12 +93,11 @@ export default function Home() {
     } catch (error) {
       console.error('Error al guardar cambios:', error);
       alert('Ocurrió un error al guardar los cambios.'); // Notificar al usuario
-      // Si hay un error, puedes optar por hacer un fetch para asegurarte de que los datos estén actualizados
-      await fetchData(); // Esto es opcional, dependiendo de tu lógica
+      await fetchData(); 
     }
   };
   
-  // validar formato del ibsn
+  // Validar formato del ibsn
   const validarISBN13 = (isbn) => {
     // Eliminar caracteres no numéricos (como guiones)
     isbn = isbn.replace(/[^0-9]/g, '');
@@ -123,10 +122,6 @@ export default function Home() {
     return parseInt(isbn[12]) === digitoControlFinal;
   };
   
-  
-  
-
-  // Guardar cambios del libro editado
   
   // Alternar edición
   const editarLibro = (index) => {
